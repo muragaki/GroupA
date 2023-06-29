@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Books List</title>
+</head>
+<body>
+	<a th:href="@{/admin/books/booksedit}">書籍登録</a>
+	<table>
+		<tr>
+			<th>ジャンル</th>
+			<th>書名</th>
+			<th>著者</th>
+			<th>出版社</th>
+			<th>発売日</th>
+		</tr>
+		<tr th:each="book : {$bookslist}">
+			<td th:text="${books.genre.genreName}" / >
+			<td th:text="${books.bookName}" / >
+			<td th:text="${books.author}" / >
+			<td th:text="${books.releaseDate}" / >
+			<td th:text="${books.publisher.publisherName}" / >
+		</tr>
+	</table>
+</body>
+</html>

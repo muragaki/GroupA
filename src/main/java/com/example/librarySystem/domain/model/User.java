@@ -20,7 +20,7 @@ public class User {
 	private String userId;			//ユーザーID	
 	private String password;		//パスワード
 	private String firstName;		//名前(ファーストネーム)
-	private String lastName;		//苗字(ラストネーム
+	private String lastName;		//苗字(ラストネーム)
 	@Enumerated(EnumType.STRING)
 	private RoleName roleName;		//権限
 	

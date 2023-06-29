@@ -24,7 +24,7 @@ public class WebSecurityConfig {
 			login
 			.loginProcessingUrl("/login")		
 			.loginPage("/login")			//入力画面
-			.defaultSuccessUrl("/goods", true)	//ログイン成功時に以降するURL
+			.defaultSuccessUrl("/user/menu", true)	//ログイン成功時に以降するURL
 			.failureUrl("/login?error")		//ログイン失敗時に移行するURL
 			.permitAll()
 		).logout(logout ->
@@ -34,7 +34,7 @@ public class WebSecurityConfig {
 			authz
 			.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 			.requestMatchers("/").permitAll()
-			.requestMatchers("/goods").permitAll()
+			.requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
 			.requestMatchers("/signup").permitAll()
 			.requestMatchers("/admin/**").hasRole("ADMIN")
 			.anyRequest().authenticated()

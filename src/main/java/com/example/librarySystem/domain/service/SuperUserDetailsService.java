@@ -40,5 +40,9 @@ public class SuperUserDetailsService implements UserDetailsService{
 	public User findById(String userId) {
 		return userRepository.findById(userId).get();
 	}
+	
+	public boolean checkId(String userId) {
+		return userRepository.existsById(userId);
+	}
 
 }
