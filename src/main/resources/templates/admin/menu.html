@@ -5,7 +5,7 @@
 <title>Admin Menu</title>
 </head>
 <body>
-	<a th:href="@{/admin/books}">書籍検索</a>
+	<a th:href="@{'/admin/books'}">書籍検索</a>
 	<div sec:authorize="${hasRole('ADMIN')}"><a th:href="@{'/admin/menu'}">管理者画面</a></div>
 </body>
 </html>

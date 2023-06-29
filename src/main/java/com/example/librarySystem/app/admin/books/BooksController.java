@@ -3,12 +3,14 @@ package com.example.librarySystem.app.admin.books;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.librarySystem.domain.model.Books;
 import com.example.librarySystem.domain.service.BooksService;
 
+@Controller
 public class BooksController {
 	
 	@Autowired
