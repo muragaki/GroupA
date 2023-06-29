@@ -26,7 +26,7 @@ public class Books {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bookId;
 	@Size(min = 1 , max = 30)
-	private String bookName;
+	private String title;
 	@Size(min = 1 , max = 20)
 	private String author;
 	@Past

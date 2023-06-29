@@ -14,12 +14,12 @@
 			<th>出版社</th>
 			<th>発売日</th>
 		</tr>
-		<tr th:each="book : {$bookslist}">
-			<td th:text="${books.genre.genreName}" / >
-			<td th:text="${books.bookName}" / >
-			<td th:text="${books.author}" / >
-			<td th:text="${books.releaseDate}" / >
-			<td th:text="${books.publisher.publisherName}" / >
+		<tr th:each="book : ${bookslist}">
+			<td th:text="${book.genre.genreName}" / >	
+			<td th:text="${book.title}" / >
+			<td th:text="${book.author}" / >
+			<td th:text="${book.releaseDate}" / >
+			<td th:text="${book.publisher.publisherName}" / >
 		</tr>
 	</table>
 </body>
