@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class SearchBooksForm {
+public class AdminSearchBooksForm {
 	
 	@NotNull
 	@Size(max = 30)

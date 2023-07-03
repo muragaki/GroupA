@@ -20,7 +20,7 @@
 		</tr>
 		
 		
-		<form th:action="@{/admin/books/bookssearch}"} method="post" th:object="${searchBooksForm}">
+		<form th:action="@{/admin/books/bookssearch}"} method="post" th:object="${adminSearchBooksForm}">
 			<tr>
 				<td>
 					<select name="genre" th:field="*{genreId}">

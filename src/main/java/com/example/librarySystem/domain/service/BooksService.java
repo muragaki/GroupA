@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.librarySystem.app.admin.books.SearchBooksForm;
+import com.example.librarySystem.app.admin.books.AdminSearchBooksForm;
 import com.example.librarySystem.domain.model.Books;
 import com.example.librarySystem.domain.repository.BooksRepository;
 
@@ -31,7 +31,7 @@ public class BooksService {
 		return booksRepository.findAllByOrderByBookId();
 	}
 	
-	public List<Books> searchBooks(SearchBooksForm form){
+	public List<Books> searchBooks(AdminSearchBooksForm form){
 		
 		int flag = 0;
 		List<Books> list = null;

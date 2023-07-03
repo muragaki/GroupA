@@ -38,17 +38,17 @@ public class AdminBooksController {
 		return new AdminBooksForm();
 	}
 	
-	@ModelAttribute("searchBooksForm")
-	public SearchBooksForm setSearchBooksForm() {
-		return new SearchBooksForm();
+	@ModelAttribute("adminSearchBooksForm")
+	public AdminSearchBooksForm setSearchBooksForm() {
+		return new AdminSearchBooksForm();
 	}
 
 	@RequestMapping("admin/books")
-	public String books(SearchBooksForm searchBooksForm ,Model model) {
+	public String books(AdminSearchBooksForm adminsearchBooksForm ,Model model) {
 		
-		System.out.println(searchBooksForm);
+		System.out.println(adminsearchBooksForm);
 		
-		List<Books> bookslist = booksService.searchBooks(searchBooksForm);
+		List<Books> bookslist = booksService.searchBooks(adminsearchBooksForm);
 		List<Genre> genrelist = genreService.readSearchAll();
 		List<Publisher> publisherlist = publisherService.readSearchAll();
 		
@@ -60,9 +60,9 @@ public class AdminBooksController {
 	}
 	
 	@PostMapping("admin/books/bookssearch")
-	public String booksSearch(SearchBooksForm searchBooksForm ,Model model) {
+	public String booksSearch(AdminSearchBooksForm adminsearchBooksForm ,Model model) {
 		
-		System.out.println(searchBooksForm);
+		System.out.println(adminsearchBooksForm);
 		
 		return "forward:/admin/books";
 	}
@@ -81,7 +81,7 @@ public class AdminBooksController {
 	}
 	
 	@PostMapping("admin/books/booksadd")
-	public String booksAdd(@Validated AdminBooksForm adminBookForm, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
+	public String booksAdd(@Validated AdminBooksForm adminBooksForm, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
 		
 		if(br.hasErrors()) {
 			List<Genre> genrelist = genreService.readAll();
@@ -92,8 +92,8 @@ public class AdminBooksController {
 			return "admin/books/booksedit";
 		}
 		
-		Books book = new Books(null, adminBookForm.getTitle(), adminBookForm.getAuthor() , adminBookForm.getReleaseDate()
-							  ,adminBookForm.getGenreId(), null, adminBookForm.getPublisherId(), null, adminBookForm.getOverview());
+		Books book = new Books(null, adminBooksForm.getTitle(), adminBooksForm.getAuthor() , adminBooksForm.getReleaseDate()
+							  ,adminBooksForm.getGenreId(), null, adminBooksForm.getPublisherId(), null, adminBooksForm.getOverview());
 		
 		book = booksService.addBook(book);
 		
