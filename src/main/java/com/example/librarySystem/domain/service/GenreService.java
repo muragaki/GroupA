@@ -17,4 +17,10 @@ public class GenreService {
 	public List<Genre> readAll(){
 		return genreRepository.findAllByOrderByGenreId();
 	}
+	
+	public List<Genre> readSearchAll(){
+		List<Genre> list = genreRepository.findAllByOrderByGenreId();
+		list.add(0, new Genre(0,"ALL"));
+		return list;
+	}
 }

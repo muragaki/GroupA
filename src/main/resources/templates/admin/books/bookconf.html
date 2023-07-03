@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>書籍登録確認</title>
+</head>
+<body>
+  <h2>書籍確認</h2>
+  <h3>下記の内容で登録致しました。</h3>
+  
+  <div th:object="${book}">
+    <label for="title">書名:</label>
+    <span id="title" th:text="*{title}"></span><br><br>
+
+    <label for="author">著者:</label>
+    <span id="author" th:text="*{author}"></span><br><br>
+
+    <label for="publisher">出版社:</label>
+    <span id="publisher" th:text="*{publisher.publisherName}"></span><br><br>
+
+    <label for="publication_date">発刊年月日:</label>
+    <span id="publication_date" th:text="*{releaseDate}"></span><br><br>
+
+    <label for="genre_id">ジャンル:</label>
+    <span id="genre_id" th:text="*{genre.genreName}"></span><br><br>
+
+    <label for="overview">概要:</label>
+    <span id="overview" th:text="*{overview}"></span><br><br>
+  </div>
+  <a th:href="@{/admin/books}">書籍一覧へ戻る</a>
+
+</body>
+</html>

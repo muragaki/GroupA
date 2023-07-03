@@ -18,4 +18,10 @@ public class PublisherService {
 		return publisherRepository.findAllByOrderByPublisherId();
 	}
 	
+	public List<Publisher> readSearchAll(){
+		List<Publisher> list = publisherRepository.findAllByOrderByPublisherId();
+		list.add(0, new Publisher(0, "ALL"));
+		return list;
+	}
+	
 }

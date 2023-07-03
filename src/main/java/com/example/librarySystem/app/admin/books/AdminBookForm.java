@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class BookForm {
+public class AdminBookForm {
 
 	@Size(min = 1 , max = 30)
 	private String title;

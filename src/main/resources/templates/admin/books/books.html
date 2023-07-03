@@ -6,6 +6,55 @@
 </head>
 <body>
 	<a th:href="@{/admin/books/booksedit}">書籍登録</a>
+	
+	
+	<table>
+		<tr>
+			<th>ジャンル</th>
+			<th>書名</th>
+			<th>著者</th>
+			<th>出版社</th>
+			<th>検索日(開始日)</th>
+			<th>検索日(終了日)</th>
+			<th>概要</th>
+		</tr>
+		
+		
+		<form th:action="@{/admin/books/bookssearch}"} method="post" th:object="${searchBooksForm}">
+			<tr>
+				<td>
+					<select name="genre" th:field="*{genreId}">
+						<option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreId}" />
+					</select>
+				</td>
+				<td>
+					<input type="text" th:value="*{title}" th:field="*{title}">
+				</td>
+				<td>
+					<input type="text" th:value="*{author}" th:field="*{author}">
+				</td>
+				<td>
+					<select name="publisher" th:field="*{publisherId}">
+						<option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherId}" />
+					</select>
+				</td>
+				<td>
+					<input type="date" th:value="*{fromDate}" th:field="*{fromDate}">
+				</td>
+				<td>
+					<input type="date" th:value="*{toDate}" th:field="*{toDate}">
+				</td>
+				<td>
+					<input type="text" th:value="*{overview}" th:field="*{overview}">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="submit" text="検索">
+				</td>
+			</tr>
+		</form>
+		
 	<table>
 		<tr>
 			<th>ジャンル</th>

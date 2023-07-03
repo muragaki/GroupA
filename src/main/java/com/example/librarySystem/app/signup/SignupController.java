@@ -53,7 +53,7 @@ public class SignupController {
 							,RoleName.USER);
 		
 		superUserDetailsService.userregist(user);
-		return "reject:/login";
+		return "redirect:/login";
 		
 	}
 	

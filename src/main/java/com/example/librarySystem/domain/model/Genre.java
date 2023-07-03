@@ -6,10 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "genre")
 public class Genre {
 
@@ -18,4 +22,5 @@ public class Genre {
 	private Integer genreId;
 	@Size(min=1 ,max = 10)
 	private String genreName;
+	
 }
