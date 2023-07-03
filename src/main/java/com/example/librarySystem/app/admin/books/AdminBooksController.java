@@ -33,7 +33,7 @@ public class AdminBooksController {
 	@Autowired
 	PublisherService publisherService;
 	
-	@ModelAttribute("adminBookForm")
+	@ModelAttribute("adminBooksForm")
 	public AdminBooksForm setAdminBookForm() {
 		return new AdminBooksForm();
 	}
