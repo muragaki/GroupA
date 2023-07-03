@@ -34,8 +34,8 @@ public class AdminBooksController {
 	PublisherService publisherService;
 	
 	@ModelAttribute("adminBookForm")
-	public AdminBookForm setAdminBookForm() {
-		return new AdminBookForm();
+	public AdminBooksForm setAdminBookForm() {
+		return new AdminBooksForm();
 	}
 	
 	@ModelAttribute("searchBooksForm")
@@ -81,7 +81,7 @@ public class AdminBooksController {
 	}
 	
 	@PostMapping("admin/books/booksadd")
-	public String booksAdd(@Validated AdminBookForm adminBookForm, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
+	public String booksAdd(@Validated AdminBooksForm adminBookForm, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
 		
 		if(br.hasErrors()) {
 			List<Genre> genrelist = genreService.readAll();
