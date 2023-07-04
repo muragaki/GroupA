@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>利用書籍詳細</title>
+  <link th:href="@{/css/user/books.bookdetail.css}" rel="styleSheet">
+</head>
+<body>
+  <h2>利用書籍詳細</h2>
+
+  <div class="container">
+    <div class="book-details" th:if="${book != null}">
+      <p><strong>書籍名:</strong> <span th:text="${book.title}"></span></p>
+      <p><strong>著者:</strong> <span th:text="${book.author}"></span></p>
+      <p><strong>出版年月日:</strong> <span th:text="${book.releaseDate}"></span></p>
+      <p><strong>ジャンル:</strong> <span th:text="${book.genre.genreName}"></span></p>
+      <p><strong>出版社:</strong> <span th:text="${book.publisher.publisherName}"></span></p>
+      <p><strong>概要:</strong></p>
+      <p th:utext="${book.overview}"></p>
+    </div>
+    <div class="no-record" th:unless="${book != null}">
+      <p>利用書籍の詳細情報はありません。</p>
+    </div>
+  </div>
+  
+  <br>
+  <div th:if="${check == 'true'}">
+	  <form th:action="@{/user/books/lend}">
+		  <input type="hidden" name="bookId" th:value="${book.bookId}">
+		  <input type="submit" value="貸出">
+ 	 </form>
+  </div>
+  <div th:if="${check == 'false'}">
+	 貸出中
+  </div>
+</body>
+</html>

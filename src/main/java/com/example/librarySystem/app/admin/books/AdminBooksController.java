@@ -43,7 +43,7 @@ public class AdminBooksController {
 		return new AdminBooksForm();
 	}
 	
-	@ModelAttribute("adminBooksForm")
+	@ModelAttribute("colBooksForm")
 	public ColBooksForm setColBookForm() {
 		return new ColBooksForm();
 	}
@@ -114,14 +114,14 @@ public class AdminBooksController {
 	
 	@GetMapping("admin/books/booksconf/{id}")
 	public String booksconf(@PathVariable Integer id ,Model model) {
-		Books book = booksService.readByBooksId(id).get();
+		Books book = booksService.readByBooksId(id);
 		model.addAttribute("book", book);
 		return "admin/books/bookconf";
 	}
 	
 	@RequestMapping("admin/books/edit/{id}")
 	public String edit(@PathVariable Integer id,AdminBooksForm adminBooksForm,Model model) {
-		Books book = booksService.readByBooksId(id).get();
+		Books book = booksService.readByBooksId(id);
 		
 		adminBooksForm.setAdminBooksForm(book);
 		
@@ -161,4 +161,5 @@ public class AdminBooksController {
 		
 		return "redirect:/admin/books/addcolbook/{id}";
 	}
+	
 }

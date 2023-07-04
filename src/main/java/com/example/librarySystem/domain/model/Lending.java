@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
@@ -28,7 +30,10 @@ public class Lending {
 	@NotNull
 	private String userId;
 	@NotNull
-	private Integer colBooksId;
+	private Long colBooksId;
+	@ManyToOne
+	@JoinColumn(name="colBooksId", insertable=false, updatable=false)
+	private ColBooks colBooks;
 	@Past
 	private LocalDateTime loanDateTime;
 	@Future

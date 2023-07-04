@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>貸出確定</title>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>書名</td>
+			<td th:text="${books.title}"/>
+		</tr>
+		<tr>
+			<td>著者</td>
+			<td th:text="${books.author}"/>
+		</tr>
+		<tr>
+			<td>貸出日</td>
+			<td th:text="${lending.loanDateTime}"/>
+		</tr>
+		<tr>
+			<td>返却予定日</td>
+			<td th:text="${lending.scheduledReturnDate}" />
+		</tr>
+		
+	</table>
+	
+	<a th:href="@{/user/books}">書籍一覧に戻る</a>
+
+</body>
+</html>

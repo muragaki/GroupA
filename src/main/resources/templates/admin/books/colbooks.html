@@ -20,7 +20,7 @@
 			  <th>貸出状況</th>
 		  </tr>
 		  <tr th:each="book : ${colBooksList}">
-			<td th:text="'${book.bookId}' + '-' + '${book.identifyNumber}'" />
+			<td th:text="|${book.booksId}-${book.identifyNumber}|" />
 			<td th:text="${book.registrationDate}" />
 			<td th:text="${book.situation}" />
 		  </tr>

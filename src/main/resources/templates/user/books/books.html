@@ -18,11 +18,11 @@
 		</tr>
 		
 		
-		<form th:action="@{/user/books/bookssearch}"} method="post" th:object="${userSearchBooksForm}">
+		<form th:action="@{/user/books}"} method="post" th:object="${userSearchBooksForm}">
 			<tr>
 				<td>
-					<select name="genre" th:field="*{genreId}">
-						<option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreId}" />
+					<select name="genre" th:field="*{genreName}">
+						<option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreName}" />
 					</select>
 				</td>
 				<td>
@@ -32,8 +32,8 @@
 					<input type="text" th:value="*{author}" th:field="*{author}">
 				</td>
 				<td>
-					<select name="publisher" th:field="*{publisherId}">
-						<option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherId}" />
+					<select name="publisher" th:field="*{publisherName}">
+						<option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherName}" />
 					</select>
 				</td>
 				<td>
@@ -60,13 +60,19 @@
 			<th>著者</th>
 			<th>出版社</th>
 			<th>発売日</th>
+			<th>詳細</th>
 		</tr>
 		<tr th:each="book : ${bookslist}">
 			<td th:text="${book.genre.genreName}" / >	
 			<td th:text="${book.title}" / >
 			<td th:text="${book.author}" / >
 			<td th:text="${book.releaseDate}" / >
-			<td th:text="${book.publisher.publisherName}" / >
+			<td th:text="${book.publisher.publisherName}" />
+			<td>
+				<form th:action="@{/user/books/{id}(id=${book.bookId})}">
+					<input type="submit" value="詳細">
+				</form>
+			</td>
 		</tr>
 	</table>
 </body>

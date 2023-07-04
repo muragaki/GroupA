@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>貸出画面</title>
+</head>
+<body>
+	<form th:action="@{/user/books/lendconf}" method="post" th:object="${lendForm}">
+		<input type="hidden" name="bookId" th:value="*{bookId}">
+		<input type="date" th:field="*{scheduledReturnDate}">
+		<input type="submit" value="登録">
+	</form>
+	<a th:href="@{/user/books/{id}(id=${lendForm.bookId})}">詳細に戻る</a>
+
+</body>
+</html>

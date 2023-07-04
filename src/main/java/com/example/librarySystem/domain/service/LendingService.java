@@ -17,4 +17,8 @@ public class LendingService {
 	public List<Lending> findUserList(String userId){
 		return lendingRepository.findByUserId(userId);
 	}
+	
+	public Lending saveLend(Lending lending) {
+		return lendingRepository.save(lending);
+	}
 }

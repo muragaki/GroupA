@@ -34,8 +34,8 @@
 					<input type="text" th:value="*{author}" th:field="*{author}">
 				</td>
 				<td>
-					<select name="publisher" th:field="*{publisherId}">
-						<option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherId}" />
+					<select name="publisher" th:field="*{publisherName}">
+						<option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherName}" />
 					</select>
 				</td>
 				<td>

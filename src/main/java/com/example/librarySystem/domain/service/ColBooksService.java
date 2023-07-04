@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.example.librarySystem.domain.model.ColBooks;
 import com.example.librarySystem.domain.repository.ColBooksRepository;
 
-
 @Service
 public class ColBooksService {
 	
@@ -29,8 +28,28 @@ public class ColBooksService {
 			number=list.get(0).getIdentifyNumber()+1;
 		}
 		
-		colBooksRepository.save(new ColBooks(null, booksId, number, date, 0, null));
+		colBooksRepository.save(new ColBooks(null,booksId,number, date, 0,null));
 		
 	}
-
+	
+	public boolean findLendCheck(Integer bookId){
+		if(colBooksRepository.findByBooksIdAndSituation(bookId,0).isEmpty()){
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
+	public Long readLendColBooksId(Integer bookId) {
+		return colBooksRepository.findByBooksIdAndSituation(bookId, 0).get(0).getColBooksId();
+	}
+	
+	public ColBooks readColBooksId(Long colBooksId) {
+		return colBooksRepository.findById(colBooksId).get();
+	}
+	
+	public void saveColBooks(ColBooks colBooks) {
+		colBooksRepository.save(colBooks);
+	}
+	
 }

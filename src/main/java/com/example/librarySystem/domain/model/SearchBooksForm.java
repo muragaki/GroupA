@@ -23,7 +23,7 @@ public class SearchBooksForm {
 	@NotNull
 	private String genreName;
 	@NotNull
-	private Integer publisherId;
+	private String publisherName;
 	@NotNull
 	private String overview;
 	
@@ -50,13 +50,13 @@ public class SearchBooksForm {
 			this.genreName = name;
 		}
 	}
-	/*
+	
 	public void setPublisherName(String name) {
 		if(name.equals("ALL")) {
 			this.publisherName = "";
 		}else {
 			this.publisherName = name;
 		}
-	}*/
+	}
 	
 }

@@ -1,0 +1,26 @@
+@charset "UTF-8";
+body {
+      margin: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .book-details {
+      margin-top: 2rem;
+    }
+
+    .book-details p {
+      margin-bottom: 0.5rem;
+    }
+
+    .no-record {
+      text-align: center;
+      margin-top: 2rem;
+    }

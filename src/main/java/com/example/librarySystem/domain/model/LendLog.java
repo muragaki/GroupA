@@ -26,7 +26,7 @@ public class LendLog {
 	@NotNull
 	private String userId;
 	@NotNull
-	private Integer colBooksId;
+	private Long colBooksId;
 	@Past
 	private LocalDateTime loanDateTime;
 	@Past
