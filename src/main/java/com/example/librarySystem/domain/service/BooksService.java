@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.librarySystem.app.admin.books.AdminSearchBooksForm;
 import com.example.librarySystem.domain.model.Books;
+import com.example.librarySystem.domain.model.SearchBooksForm;
 import com.example.librarySystem.domain.repository.BooksRepository;
 
 @Service
@@ -19,7 +19,7 @@ public class BooksService {
 	@Autowired
 	BooksRepository booksRepository;
 	
-	public Books addBook(Books books) {
+	public Books saveBook(Books books) {
 		return booksRepository.save(books);
 	}
 	
@@ -31,32 +31,32 @@ public class BooksService {
 		return booksRepository.findAllByOrderByBookId();
 	}
 	
-	public List<Books> searchBooks(AdminSearchBooksForm form){
+	public List<Books> searchBooks(SearchBooksForm form){
 		
-		int flag = 0;
+		//int flag = 0;
 		List<Books> list = null;
-		
-		if(form.getGenreId() != 0 ){
+		/*
+		if(form.getGenreName() != 0 ){
 			flag = GENREFLAG;
 		}
 		
 		if(form.getPublisherId() != 0) {
 			flag = PUBLISHERFLAG;
 		}
-		
-		switch(flag) {
-			case 0:
-				list = booksRepository.findSearch(form.getTitle(),form.getAuthor(),form.getFromDate(),form.getToDate(),form.getOverview());
-				break;
+		*/
+		// switch(flag) {
+		//	case 0:
+				list = booksRepository.findSearch(form.getGenreName(),form.getTitle(),form.getAuthor(),form.getFromDate(),form.getToDate(),form.getOverview());
+		/*		break;
 			case GENREFLAG:
-				list = booksRepository.findSearchGenre(form.getGenreId(),form.getTitle(),form.getAuthor(),form.getFromDate(),form.getToDate(),form.getOverview());
+				list = booksRepository.findSearchGenre(form.getGenreName(),form.getTitle(),form.getAuthor(),form.getFromDate(),form.getToDate(),form.getOverview());
 				break;
 			case PUBLISHERFLAG:
 				list = booksRepository.findSearchPublisher(form.getTitle(),form.getAuthor(),form.getPublisherId(),form.getFromDate(),form.getToDate(),form.getOverview());
 				break;
 			case GENREFLAG+PUBLISHERFLAG:
-				list = booksRepository.findSearchGenreAndPublisher(form.getGenreId(),form.getTitle(),form.getAuthor(),form.getPublisherId(),form.getFromDate(),form.getToDate(),form.getOverview());
-		}
+				list = booksRepository.findSearchGenreAndPublisher(form.getGenreName(),form.getTitle(),form.getAuthor(),form.getPublisherId(),form.getFromDate(),form.getToDate(),form.getOverview());
+		}*/
 		
 		
 		return list;

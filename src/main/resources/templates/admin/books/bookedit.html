@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>書籍編集</title>
+</head>
+<body>
+  <h2>書籍登録</h2>
+  <form th:action="@{/admin/books/booksave}" method="POST" th:object="${adminBooksForm}">
+	<input type="hidden" th:field="*{bookId}" th:value="*{bookId}">
+	<label for="title">書名:</label>
+    <input type="text" th:field="*{title}"><br><br>
+
+    <label for="author">著者:</label>
+    <input type="text" id="author" name="author" th:field="*{author}"><br><br>
+
+    <label for="publish_date">発刊年月日:</label>
+    <input type="date" id="releaseDate" name="publish_date" th:field="*{releaseDate}"><br><br>
+
+    <label for="genre_id">ジャンル:</label>
+    <select name="genre" th:field="*{genreId}">
+		<option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreId}" />
+	</select><br><br>
+
+    <label for="publisher_id">出版社:</label>
+    <select name="publisher" th:field="*{publisherId}">
+		<option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherId}" />
+	</select><br><br>
+	
+    <label for="overview">概要:</label>
+    <textarea id="overview" name="overview" th:field="*{overview}"></textarea><br><br>
+
+    <input type="submit" value="登録">
+  </form>
+  <br>	
+  <form th:action="@{/admin/books/addcolbook/{id}(id=${adminBooksForm.bookId})}">
+	  <input type="submit" value="蔵書登録">
+  </form>
+ 	
+</body>
+</html>

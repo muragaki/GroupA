@@ -6,7 +6,7 @@
 </head>
 <body>
   <h2>書籍登録</h2>
-  <form th:action="@{/admin/books/booksadd}" method="POST" th:object="${adminBooksForm}">
+  <form th:action="@{/admin/books/booksave}" method="POST" th:object="${adminBooksForm}">
 	<label for="title">書名:</label>
     <input type="text" th:field="*{title}"><br><br>
 

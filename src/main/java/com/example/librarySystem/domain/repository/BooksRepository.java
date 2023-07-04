@@ -14,21 +14,23 @@ public interface BooksRepository extends JpaRepository<Books, Integer> {
 	public List<Books> findAllByOrderByBookId();
 	
 	@Query("SELECT book FROM Books book "
-			+ "WHERE book.title LIKE %:title% "
+			+ "JOIN Genre genre ON book.genreId = genre.genreId "
+			+ "WHERE book.genre.genreName LIKE %:genrename% "
+			+ "AND book.title LIKE %:title% "
 			+ "AND book.author LIKE %:author% "
 			+ "AND book.releaseDate BETWEEN :fromdate AND :todate "
 			+ "AND book.overview LIKE %:overview%")
-	public List<Books> findSearch(@Param("title") String title, @Param("author") String author,
+	public List<Books> findSearch(@Param("genrename") String genrename,@Param("title") String title, @Param("author") String author,
 								  @Param("fromdate") LocalDate fromdate,@Param("todate") LocalDate todate,
 								  @Param("overview") String overview);
-	
+	/*
 	@Query("SELECT book FROM Books book "
 			+ "WHERE book.genreId = :genreId "
 			+ "AND book.title LIKE %:title% "
 			+ "AND book.author LIKE %:author% "
 			+ "AND book.releaseDate BETWEEN :fromdate AND :todate "
 			+ "AND book.overview LIKE %:overview%")
-	public List<Books> findSearchGenre(@Param("genreId") Integer genreId, @Param("title") String title, @Param("author") String author,
+	public List<Books> findSearchGenre(@Param("genrename") String genrename, @Param("title") String title, @Param("author") String author,
 									   @Param("fromdate") LocalDate fromdate,@Param("todate") LocalDate todate,
 									   @Param("overview") String overview);
 	
@@ -43,13 +45,16 @@ public interface BooksRepository extends JpaRepository<Books, Integer> {
 										   @Param("overview") String overview);
 	
 	@Query("SELECT book FROM Books book "
-			+ "WHERE book.genreId = :genreId "
+			+ "JOIN Genre genre "
+			+ "ON book.genreId = genre.genreId "
+			+ "WHERE book.genre.genreName = %:genrename% "
 			+ "AND book.title LIKE %:title% "
 			+ "AND book.author LIKE %:author% "
 			+ "AND book.publisherId = :publisherId "
 			+ "AND book.releaseDate BETWEEN :fromdate AND :todate "
 			+ "AND book.overview LIKE %:overview%")
-	public List<Books> findSearchGenreAndPublisher(@Param("genreId") Integer genreId,@Param("title") String title, @Param("author") String author,
+	public List<Books> findSearchGenreAndPublisher(@Param("genrename") String genrename,@Param("title") String title, @Param("author") String author,
 												   @Param("publisherId") Integer publisherId, @Param("fromdate") LocalDate fromdate,@Param("todate") LocalDate todate,
 												   @Param("overview") String overview);
+												   */
 }

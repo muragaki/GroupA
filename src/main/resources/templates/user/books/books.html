@@ -5,8 +5,6 @@
 <title>Books List</title>
 </head>
 <body>
-	<a th:href="@{/admin/books/newbooks}">書籍登録</a>
-	
 	
 	<table>
 		<tr>
@@ -20,11 +18,11 @@
 		</tr>
 		
 		
-		<form th:action="@{/admin/books/bookssearch}"} method="post" th:object="${adminSearchBooksForm}">
+		<form th:action="@{/user/books/bookssearch}"} method="post" th:object="${userSearchBooksForm}">
 			<tr>
 				<td>
-					<select name="genre" th:field="*{genreName}">
-						<option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreName}" />
+					<select name="genre" th:field="*{genreId}">
+						<option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreId}" />
 					</select>
 				</td>
 				<td>
@@ -62,7 +60,6 @@
 			<th>著者</th>
 			<th>出版社</th>
 			<th>発売日</th>
-			<th>編集</th>
 		</tr>
 		<tr th:each="book : ${bookslist}">
 			<td th:text="${book.genre.genreName}" / >	
@@ -70,11 +67,6 @@
 			<td th:text="${book.author}" / >
 			<td th:text="${book.releaseDate}" / >
 			<td th:text="${book.publisher.publisherName}" / >
-			<td>
-				<form th:action="@{/admin/books/edit/{id}(id=${book.bookId})}">
-					<input type="submit" value="編集">
-				</form>
-			</td>
 		</tr>
 	</table>
 </body>
