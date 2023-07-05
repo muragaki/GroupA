@@ -39,5 +39,11 @@ public class LendLog {
 	private LocalDateTime loanDateTime;
 	@Past
 	private LocalDateTime returnDateTime;
+	
+	public LendLog(Lending lending) {
+		this.userId=lending.getUserId();
+		this.colBooksId=lending.getColBooksId();
+		this.loanDateTime=lending.getLoanDateTime();
+	}
 
 }

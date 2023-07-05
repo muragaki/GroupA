@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://:www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>leging list</title>
+</head>
+<body>
+	<h3>貸出一覧</h3>
+	<table>
+		<tr>
+			<th>書名</th>
+			<th>作者</th>
+			<th>出版社</th>
+			<th>貸出日</th>
+			<th>返却予定日</th>
+			<th>返却</th>
+		</tr>
+		<tr th:each="lending : ${lendinglist}">
+			<td th:text="${lending.colBooks.books.title}" />
+			<td th:text="${lending.colBooks.books.author}" />
+			<td th:text="${lending.colBooks.books.publisher.publisherName}" />
+			<td th:text="${lending.loanDateTime}" />
+			<td th:text="${lending.scheduledReturnDate}" />
+			<td>
+				<form th:action="@{/user/lending/return}" method="post">
+					<input type="hidden" name="lendingId" th:value="${lending.lendingId}">
+					<input type="submit" value="返却">
+				</form>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

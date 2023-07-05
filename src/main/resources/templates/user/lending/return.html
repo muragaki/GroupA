@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Return Book</title>
+</head>
+<body>
+	<h3>返却確認</h3>
+	
+ 	<table th:object="${lending}">
+		 <tr>
+			 <td>識別番号</td>
+			 <td th:text="*{colBooks.books.title}" />
+		 </tr>
+		 <tr>
+			 <td>書名</td>
+			 <td th:text="*{colBooks.books.title}" />
+		 </tr>
+		 <tr>
+			 <td>著者</td>
+			 <td th:text="*{colBooks.books.author}" />
+		 </tr>
+		 <tr>
+			 <td>著者</td>
+			 <td th:text="*{colBooks.books.publisher.publisherName}" />
+		 </tr>
+		 <tr>
+			 <td>貸出日</td>
+		 	<td th:text="*{loanDateTime}" />
+		 </tr>
+		 <tr>
+			 <td>返却予定日</td>
+			<td th:text="*{scheduledReturnDate}" />
+		 </tr>
+	 </table>
+	 <br>
+	 <form th:action="@{/user/lending/returnconf}" method="post">
+		 <input type="hidden" name="lendingId" th:value="${lending.lendingId}">
+		 <input type="submit" value="返却">
+	 </form>
+
+</body>
+</html>
