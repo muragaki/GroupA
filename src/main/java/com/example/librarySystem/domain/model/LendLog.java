@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -25,8 +27,14 @@ public class LendLog {
 	private Long lendlogId;
 	@NotNull
 	private String userId;
+	@ManyToOne
+	@JoinColumn(name="userId", insertable=false, updatable=false)
+	private User user;
 	@NotNull
 	private Long colBooksId;
+	@ManyToOne
+	@JoinColumn(name="colBooksId", insertable=false, updatable=false)
+	private ColBooks colBooks;
 	@Past
 	private LocalDateTime loanDateTime;
 	@Past

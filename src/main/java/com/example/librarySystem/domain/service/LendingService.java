@@ -21,4 +21,8 @@ public class LendingService {
 	public Lending saveLend(Lending lending) {
 		return lendingRepository.save(lending);
 	}
+	
+	public void deleteLend(Long lendingId) {
+		lendingRepository.deleteById(lendingId);
+	}
 }

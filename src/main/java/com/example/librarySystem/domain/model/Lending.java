@@ -26,9 +26,12 @@ public class Lending {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer lendingId;
+	private Long lendingId;
 	@NotNull
 	private String userId;
+	@ManyToOne
+	@JoinColumn(name="userId", insertable=false, updatable=false)
+	private User user;
 	@NotNull
 	private Long colBooksId;
 	@ManyToOne
@@ -40,6 +43,11 @@ public class Lending {
 	private LocalDate scheduledReturnDate;
 	
 	
-	
-	
+	public Lending(@NotNull String userId, @NotNull Long colBooksId,
+			@Past LocalDateTime loanDateTime, @Future LocalDate scheduledReturnDate) {
+		this.userId = userId;
+		this.colBooksId = colBooksId;
+		this.loanDateTime = loanDateTime;
+		this.scheduledReturnDate = scheduledReturnDate;
+	}
 }
