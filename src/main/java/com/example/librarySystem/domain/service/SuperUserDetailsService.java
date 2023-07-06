@@ -33,6 +33,10 @@ public class SuperUserDetailsService implements UserDetailsService{
 		userRepository.save(user);
 	}
 	
+	public void userRewrite(User user) {
+		userRepository.save(user);
+	}
+	
 	public List<User> getUserAll(){
 		return userRepository.findAll();
 	}

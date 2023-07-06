@@ -59,7 +59,7 @@
 		<td th:text="${lending.colBooks.books.title}"></td>
 		<td th:text="${lending.colBooks.books.author}"></td>
 		<td th:text="${lending.colBooks.books.publisher.publisherName}"></td>
-		<td th:text="${lending.loanDateTime}"></td>
+		<td th:text="${#temporals.format(lending.loanDateTime,'yyyy/MM/dd HH:mm:ss')}"></td>
 		<td th:text="${lending.scheduledReturnDate}"></td>
     </tr>
     </table>
@@ -76,10 +76,16 @@
 		<td th:text="${lendLog.colBooks.books.title}"></td>
 		<td th:text="${lendLog.colBooks.books.author}"></td>
 		<td th:text="${lendLog.colBooks.books.publisher.publisherName}"></td>
-		<td th:text="${lendLog.loanDateTime}"></td>
-		<td th:text="${lendLog.returnDateTime}"></td>
+		<td th:text="${#temporals.format(lendLog.loanDateTime,'yyyy/MM/dd HH:mm:ss')}"></td>
+		<td th:text="${#temporals.format(lendLog.returnDateTime,'yyyy/MM/dd HH:mm:ss')}"></td>
 	</tr>
     </table>
+      <div class="edit-button">
+		  <form th:action="@{/admin/user/useredit}">
+			  <input type="hidden" name="userId" th:value="${u.userId}">
+			  <input type="submit" value="編集 ">
+		  </form>
+    </div>
   </div>
 </body>
 </html>
