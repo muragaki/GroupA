@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>ユーザー一覧</title>
+</head>
+<body>
+  <h2>ユーザー一覧</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ユーザー名</th>
+        <th>姓</th>
+        <th>名</th>
+        <th>権限</th>
+        <th>詳細</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="user : ${userlist}"></td>
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.roleName}"></td>
+        <td>
+		<form th:action="@{'/admin/user/userdetail'}" method="post">
+			<input type="hidden" name="userId" th:value="${user.userId}"/>
+        	<input type="submit" value="詳細"/>
+		</form>
+      <tr>
+    </tbody>
+  </table>
+</body>
+</html>

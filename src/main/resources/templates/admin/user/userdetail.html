@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>ユーザー詳細</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <style>
+    body {
+      margin: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .user-details {
+      margin-top: 2rem;
+    }
+
+    .user-details p {
+      margin-bottom: 0.5rem;
+    }
+
+    .no-record {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>ユーザー詳細</h2>
+
+  <div class ="userdetail">
+    <div class ="userdetail" th:if="${u != null}">
+      <p><strong>ユーザーID:</strong> <span th:text="${u.userId}"></span></p>
+      <p><strong>姓:</strong> <span th:text="${u.firstName}"></span></p>
+      <p><strong>名:</strong> <span th:text="${u.lastName}"></span></p>
+      <p><strong>権限:</strong> <span th:text="${u.roleName}"></span></p>
+    </div>
+    <div class ="no-record" th:unless="${u != null}">
+      <p>ユーザーの詳細情報はありません。</p>
+    </div>
+    
+    <table>
+		<tr>
+			<th>書籍名</th>
+			<th>作者</th>
+			<th>出版社</th>
+			<th>貸出日</th>
+			<th>返却予定日</th>
+		</tr>
+    <tr th:each="lending : ${lendinglist}">
+		<td th:text="${lending.colBooks.books.title}"></td>
+		<td th:text="${lending.colBooks.books.author}"></td>
+		<td th:text="${lending.colBooks.books.publisher.publisherName}"></td>
+		<td th:text="${lending.loanDateTime}"></td>
+		<td th:text="${lending.scheduledReturnDate}"></td>
+    </tr>
+    </table>
+    
+    <table>
+		<tr>
+			<th>書籍名</th>
+			<th>作者</th>
+			<th>出版社</th>
+			<th>貸出日</th>
+			<th>返却日</th>
+		</tr>
+	<tr th:each="lendLog : ${lendLoglist}">
+		<td th:text="${lendLog.colBooks.books.title}"></td>
+		<td th:text="${lendLog.colBooks.books.author}"></td>
+		<td th:text="${lendLog.colBooks.books.publisher.publisherName}"></td>
+		<td th:text="${lendLog.loanDateTime}"></td>
+		<td th:text="${lendLog.returnDateTime}"></td>
+	</tr>
+    </table>
+  </div>
+</body>
+</html>
