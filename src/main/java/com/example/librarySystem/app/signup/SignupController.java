@@ -41,7 +41,7 @@ public class SignupController {
 	}
 	
 	@PostMapping("signup")
-	public String signupconf(@ModelAttribute("signupForm") @Validated SignupForm signupForm, BindingResult br,Model model) {
+	public String signupconf(@Validated SignupForm signupForm, BindingResult br,Model model) {
 		if(br.hasErrors()) {
 			return "/login/signup";
 		}

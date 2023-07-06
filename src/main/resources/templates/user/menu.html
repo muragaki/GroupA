@@ -25,7 +25,9 @@
 <div sec:authorize="${hasRole('ADMIN')}"><li><a th:href="@{'/admin/menu'}">管理者メニュー</a></li></div>
     
     
-<li><a th:href="@{'/logout'}">ログアウト</a></li>
-  </ul>
+	<form th:action="@{'/logout'}" method="post">
+		<button>ログアウト</button>
+	</form>
+</ul>
 </body>
 </html>
