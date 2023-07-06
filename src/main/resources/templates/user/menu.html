@@ -20,7 +20,7 @@
 <li><a th:href="@{/user/lending}">借受状況一覧</a></li>
     
    
-<li><a th:href="usage_history.html">利用履歴</a></li>
+<li><a th:href="@{/user/lendlog}">利用履歴</a></li>
 
 <div sec:authorize="${hasRole('ADMIN')}"><li><a th:href="@{'/admin/menu'}">管理者メニュー</a></li></div>
     

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>leging list</title>
+</head>
+<body>
+	<h3>貸出一覧</h3>
+	<table>
+		<tr>
+			<th>書名</th>
+			<th>作者</th>
+			<th>出版社</th>
+			<th>貸出日</th>
+			<th>返却日</th>
+		</tr>
+		<tr th:each="lendlog : ${lendloglist}">
+			<td th:text="${lendlog.colBooks.books.title}" />
+			<td th:text="${lendlog.colBooks.books.author}" />
+			<td th:text="${lendlog.colBooks.books.publisher.publisherName}" />
+			<td th:text="${#temporals.format(lendlog.loanDateTime,'yyyy/MM/dd HH:mm:ss')}" />
+			<td th:text="${#temporals.format(lendlog.returnDateTime,'yyyy/MM/dd HH:mm:ss')}" />
+		</tr>
+	</table>
+
+</body>
+</html>
