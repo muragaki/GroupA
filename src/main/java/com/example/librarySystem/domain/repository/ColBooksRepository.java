@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.librarySystem.domain.model.ColBooks;
+import com.example.librarySystem.domain.model.SituationName;
 
 public interface ColBooksRepository extends JpaRepository<ColBooks, Long> {
 	
@@ -12,6 +13,6 @@ public interface ColBooksRepository extends JpaRepository<ColBooks, Long> {
 	
 	List<ColBooks> findByBooksIdOrderByIdentifyNumberDesc(Integer booksId);
 	
-	List<ColBooks> findByBooksIdAndSituation(Integer booksId,Integer situation);
+	List<ColBooks> findByBooksIdAndSituationName(Integer booksId,SituationName situationName);
 
 }

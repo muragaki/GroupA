@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.librarySystem.domain.model.ColBooks;
+import com.example.librarySystem.domain.model.SituationName;
 import com.example.librarySystem.domain.repository.ColBooksRepository;
 
 @Service
@@ -28,12 +29,12 @@ public class ColBooksService {
 			number=list.get(0).getIdentifyNumber()+1;
 		}
 		
-		colBooksRepository.save(new ColBooks(null,booksId,number, date, 0,null));
+		colBooksRepository.save(new ColBooks(null,booksId,number, date, SituationName.AVAILABLE,null));
 		
 	}
 	
 	public boolean findLendCheck(Integer bookId){
-		if(colBooksRepository.findByBooksIdAndSituation(bookId,0).isEmpty()){
+		if(colBooksRepository.findByBooksIdAndSituationName(bookId,SituationName.AVAILABLE).isEmpty()){
 			return false;
 		}else {
 			return true;
@@ -41,7 +42,7 @@ public class ColBooksService {
 	}
 	
 	public Long readLendColBooksId(Integer bookId) {
-		return colBooksRepository.findByBooksIdAndSituation(bookId, 0).get(0).getColBooksId();
+		return colBooksRepository.findByBooksIdAndSituationName(bookId, SituationName.AVAILABLE).get(0).getColBooksId();
 	}
 	
 	public ColBooks readColBooksId(Long colBooksId) {

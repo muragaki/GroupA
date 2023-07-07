@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.librarySystem.domain.model.ColBooks;
 import com.example.librarySystem.domain.model.Lending;
+import com.example.librarySystem.domain.model.SituationName;
 import com.example.librarySystem.domain.service.ColBooksService;
 import com.example.librarySystem.domain.service.LendLogService;
 import com.example.librarySystem.domain.service.LendingService;
@@ -57,7 +58,7 @@ public class UserLendingController {
 		
 		Lending lending = lendingService.readByLendingId(lendingId);
 		ColBooks colBooks = colBooksService.readColBooksId(lending.getColBooksId());
-		colBooks.setSituation(0);
+		colBooks.setSituationName(SituationName.AVAILABLE);
 		
 		lendLogService.saveLendingNow(lending);
 		colBooksService.saveColBooks(colBooks);
