@@ -32,5 +32,9 @@
   <div th:if="${check == 'false'}">
 	 貸出中
   </div>
+  <form th:action="@{/user/books/reserve}" method="post">
+		  <input type="hidden" name="bookId" th:value="${book.bookId}">
+		  <input type="submit" value="予約">
+ 	 </form>
 </body>
 </html>
