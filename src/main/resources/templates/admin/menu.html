@@ -3,10 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin Menu</title>
+<style>
+    body {
+      background-image: url('https://cdn.pixabay.com/photo/2019/09/26/06/26/eyes-4505196_1280.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 10rem;
+      color: #000;
+    }
+</style>
 </head>
 <body>
+	 <h2>管理者メニュー</h2>
 	<a th:href="@{'/admin/books'}">書籍検索</a><br>
-	<a th:href="@{'/admin/user'}">利用者一覧</a>
-	<div sec:authorize="${hasRole('ADMIN')}"><a th:href="@{'/admin/menu'}">管理者画面</a></div>
+	<a th:href="@{'/admin/user'}">利用者一覧</a><br>
+	<a th:href="@{'/admin/lending'}">利用一覧</a><br>
+	<a th:href="@{'/admin/lendlog'}">貸出履歴一覧</a>
+	<div sec:authorize="${hasRole('ADMIN')}"><a th:href="@{'/user/menu'}">利用者画面</a></div>
 </body>
 </html>

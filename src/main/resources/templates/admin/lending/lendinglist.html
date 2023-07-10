@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>利用一覧</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <style>
+    body {
+      margin: 2rem;
+      background-color: #e0f8d8;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background-color: #f8f8f8;
+    }
+
+    th,
+    td {
+      padding: 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .no-records {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .search-form {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .search-input {
+      padding: 0.5rem;
+      width: 200px;
+    }
+
+    .search-button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .search-button {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: white;
+      border: none;
+      margin-left: 1rem;
+    }
+
+    .search-inputs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .search-inputs label {
+      margin-right: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>利用一覧</h2>
+
+  <div class="container">
+    <div class="search-form">
+      <form th:action="@{/lending/search}" method="get">
+        <div class="search-inputs">
+          <label for="startDate">開始日:</label>
+          <input class="search-input" type="date" id="startDate" name="startDate" th:value="${startDate}">
+          <label for="endDate">終了日:</label>
+          <input class="search-input" type="date" id="endDate" name="endDate" th:value="${endDate}">
+          <button class="search-button" type="submit">検索</button>
+        </div>
+      </form>
+    </div>
+
+    <table th:if="${lendinglist != null && lendinglist.size() > 0}">
+      <thead>
+        <tr>
+          <th>識別ID</th>
+          <th>書籍名</th>
+          <th>作者</th>
+          <th>出版社</th>
+          <th></th>
+          <th>ユーザーID</th>
+          <th>貸出日</th>
+          <th>返却予定日</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="lendinglist : ${lendinglist}">
+          <td th:text="|${lendinglist.colBooks.booksId}-${lendinglist.colBooks.identifyNumber}|"></td>
+          <td th:text="${lendinglist.colBooks.books.title}"></td>
+          <td th:text="${lendinglist.colBooks.books.author}"></td>
+          <td th:text="${lendinglist.colBooks.books.publisher.publisherName}"></td>
+          <td></td>
+          <td th:text="${lendinglist.user.userId}"></td>
+          <td th:text="${#temporals.format(lendinglist.loanDateTime,'yyyy/MM/dd HH:mm:ss')}"></td>
+          <td th:text="${lendinglist.scheduledReturnDate}"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div th:unless="${lendinglist != null && lendinglist.size() > 0}" class="no-records">
+      <p>借受状況はありません。</p>
+    </div>
+  </div>
+</body>
+</html>

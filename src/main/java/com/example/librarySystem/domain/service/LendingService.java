@@ -29,4 +29,8 @@ public class LendingService {
 	public Lending readByLendingId(Long lendingId) {
 		return lendingRepository.findById(lendingId).get();
 	}
+	
+	public List<Lending> findAll(){
+		return lendingRepository.findAll();
+	}
 }

@@ -25,5 +25,7 @@ public class LendLogService {
 		lendLog.setReturnDateTime(LocalDateTime.now());
 		lendLogRepository.save(lendLog);
 	}
-	
+	public List<LendLog> findAll(){
+		return lendLogRepository.findAll();
+	}
 }
