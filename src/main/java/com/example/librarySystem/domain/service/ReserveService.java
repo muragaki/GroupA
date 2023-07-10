@@ -1,15 +1,20 @@
 package com.example.librarySystem.domain.service;
 
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.librarySystem.app.user.books.reserve.ReserveDateForm;
 import com.example.librarySystem.app.user.books.reserve.ReserveForm;
 import com.example.librarySystem.domain.model.ColBooks;
+import com.example.librarySystem.domain.model.Lending;
 import com.example.librarySystem.domain.model.Reserve;
 import com.example.librarySystem.domain.model.SituationName;
 import com.example.librarySystem.domain.repository.ColBooksRepository;
@@ -28,6 +33,8 @@ public class ReserveService {
 	@Autowired
 	LendingRepository lendingRepository;
 	
+	final long MAX_RESERVE_PERIOD =7L;
+	
 	public boolean checkReserveColBooks(ReserveForm reserveForm) {
 		
 		List<SituationName> situationNamelist = new ArrayList<SituationName>(Arrays.asList(SituationName.AVAILABLE,SituationName.LENDING));
@@ -44,20 +51,20 @@ public class ReserveService {
 	}
 	
 	public Long getReserveColBooksId(ReserveForm reserveForm) {
-		List<Long> colBooksList = this.readReserveColBooksIdList(reserveForm);
+		List<Long> colBooksList = this.searchReserveColBooksIdList(reserveForm);
 		
-		List<Reserve> reserveList = reserveRepository.findByColBooksIdInAndReserveDateAfterOrderByReserveDateAsc(colBooksList, reserveForm.getScheduledReturnDate());
+		Reserve reserve = reserveRepository.findTopByColBooksIdInAndReserveDateAfterOrderByReserveDateAsc(colBooksList, reserveForm.getScheduledReturnDate());
 		
-		if(reserveList.isEmpty()) {
+		if(reserve == null ) {
 			return colBooksList.get(0);
 		}
 		
-		return reserveList.get(0).getColBooksId();
+		return reserve.getColBooksId();
 		
 		
 	}
 	
-	public List<Long> readReserveColBooksIdList(ReserveForm reserveForm) {
+	public List<Long> searchReserveColBooksIdList(ReserveForm reserveForm) {
 		
 		List<SituationName> situationNamelist = new ArrayList<SituationName>(Arrays.asList(SituationName.AVAILABLE,SituationName.LENDING));
 		List<ColBooks> colBooksList = colBooksRepository.findByBooksIdAndSituationNameIn(reserveForm.getBooksId(), situationNamelist);
@@ -97,5 +104,84 @@ public class ReserveService {
 		
 	}
 	
-
+	
+	public TreeSet<Long> checkReserve(Integer booksId,LocalDate reserveDate){
+		TreeSet<Long> colBooksSet = new TreeSet<>();
+		
+		List<SituationName> situationNamelist = new ArrayList<SituationName>(Arrays.asList(SituationName.AVAILABLE,SituationName.LENDING));
+		List<ColBooks> colBooksList = colBooksRepository.findByBooksIdAndSituationNameIn(booksId, situationNamelist);
+		
+		if(colBooksList.isEmpty()) {
+			return colBooksSet;
+		}
+		
+		for(ColBooks cb : colBooksList) {
+			colBooksSet.add(cb.getColBooksId());
+		}
+		
+		List<Lending> lendinlist = lendingRepository.findByColBooksIdInAndScheduledReturnDateAfter(colBooksSet, reserveDate);
+		if(!lendinlist.isEmpty()) {
+			for(Lending lending : lendinlist) {
+				colBooksSet.remove(lending.getColBooksId());
+			}
+		}
+				
+		List<Long> reserveList = reserveRepository.selectByColBooksIdInAnd(colBooksSet,reserveDate);
+		if(!reserveList.isEmpty()) {
+			colBooksSet.removeAll(reserveList);
+		}
+		
+		System.out.println(colBooksSet);
+		
+		return colBooksSet;
+		
+		
+	}
+	
+	public TreeSet<Long> checkReserve(ReserveDateForm reserveDateForm) {
+		return this.checkReserve(reserveDateForm.getBooksId(), reserveDateForm.getReserveDate());
+	}
+	
+	
+	
+	public long searchMaxReservePeriod(TreeSet<Long> colBooksSet , LocalDate reserveDate) {
+		long maxPeriod = 0L;
+		
+		List<Reserve> reserveList = reserveRepository.findByColBooksIdInAndReserveDateAfterOrderByReserveDateDesc(colBooksSet, reserveDate);
+		
+		for(Reserve reserve : reserveList) {
+			System.out.println(reserve);
+		}
+		
+		if(reserveList.size() >= colBooksSet.size()) {
+			for(Reserve reserve : reserveList) {
+				long period = ChronoUnit.DAYS.between(reserveDate, reserve.getReserveDate());
+				if(maxPeriod < period) {
+					maxPeriod = period;
+					if(maxPeriod >= this.MAX_RESERVE_PERIOD) {
+						maxPeriod = this.MAX_RESERVE_PERIOD;
+						break;
+					}
+				}
+			}
+		}else {
+			maxPeriod = this.MAX_RESERVE_PERIOD;;	
+		}
+		
+		return maxPeriod;
+	}
+	
+	public long searchMaxReservePeriod(Integer booksId,LocalDate reserveDate) {
+		return searchMaxReservePeriod(checkReserve(booksId,reserveDate),reserveDate);
+	}
+	
+	public long searchMaxReservePeriod(ReserveDateForm reserveDateForm) {
+		return searchMaxReservePeriod(reserveDateForm.getBooksId(),reserveDateForm.getReserveDate());
+	}
+	
+	public long searchMaxReservePeriod(ReserveForm reserveForm) {
+		return searchMaxReservePeriod(reserveForm.getBooksId(),reserveForm.getReserveDate());
+	}
+	
+	
 }

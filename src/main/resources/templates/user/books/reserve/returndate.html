@@ -5,9 +5,11 @@
 <title>貸出画面</title>
 </head>
 <body>
-	<form th:action="@{/user/books/returndate}" method="post" th:object="${reserveDateForm}">
+	<form th:action="@{/user/books/reserveconf}" method="post" th:object="${reserveForm}">
 		<input type="hidden" name="booksId" th:value="*{booksId}">
-		<input type="date" th:field="*{reserveDate}"> 
+		<input type="hidden" name="reserveDate" th:value="*{reserveDate}"> 
+		<li th:text="${maxReserve}" />
+		<input type="date" th:field="*{scheduledReturnDate}"> 
 		<input type="submit" value="登録">
 		<ul th:if="${#fields.hasErrors('*')}">
 		<li th;each="err:${#fields.errors('*')}" th:text="${err}" />

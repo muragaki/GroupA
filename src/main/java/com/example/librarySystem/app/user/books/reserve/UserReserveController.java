@@ -16,6 +16,7 @@ import com.example.librarySystem.domain.service.ColBooksService;
 import com.example.librarySystem.domain.service.LendingService;
 import com.example.librarySystem.domain.service.ReserveService;
 import com.example.librarySystem.domain.service.SuperUserDetails;
+import com.example.librarySystem.validator.reserve.ReserveDateValidator;
 import com.example.librarySystem.validator.reserve.ReserveValidator;
 
 @Controller
@@ -33,6 +34,13 @@ public class UserReserveController {
 	@Autowired
 	ReserveValidator reserveValidator;
 	
+	@Autowired
+	ReserveDateValidator reserveDateValidator;
+	
+	@ModelAttribute("reserveDateForm")
+	public ReserveDateForm setReserveDateForm() {
+		return new ReserveDateForm();
+	}
 	
 	@ModelAttribute("reserveForm")
 	public ReserveForm setReserveForm() {
@@ -46,20 +54,36 @@ public class UserReserveController {
 	
 	
 	@PostMapping("user/books/reserve")
-	public String reserve(@RequestParam("bookId") Integer bookId, ReserveForm reserveForm, Model model) {
-		reserveForm.setBooksId(bookId);
+	public String reserve(@RequestParam("bookId") Integer bookId, ReserveDateForm reserveDateForm, Model model) {
+		reserveDateForm.setBooksId(bookId);
 		return "/user/books/reserve/reserve";
 	}
 	
-	@PostMapping("user/books/reserveconf")
-	public String reserveconf(@Validated ReserveForm reserveForm,BindingResult br,Model model) {
-		System.out.println(reserveForm);
-		
+	@PostMapping("user/books/returndate")
+	public String returndate(@Validated ReserveDateForm reserveDateForm,ReserveForm reserveForm, BindingResult br ,Model model) {
 		if(br.hasErrors()) {
 			return "/user/books/reserve/reserve";
 		}
 		
-		System.out.println(reserveService.checkReserveColBooks(reserveForm));
+		reserveForm.setBooksId(reserveDateForm.getBooksId());
+		reserveForm.setReserveDate(reserveDateForm.getReserveDate());
+		
+		int maxReserve = (int)reserveService.searchMaxReservePeriod(reserveDateForm);
+		model.addAttribute("maxReserve", maxReserve);
+		
+		return "/user/books/reserve/returndate";
+		
+	}
+	
+	@PostMapping("user/books/reserveconf")
+	public String reserveconf(@Validated ReserveForm reserveForm,BindingResult br,Model model) {
+		
+		if(br.hasErrors()) {
+			int maxReserve = (int)reserveService.searchMaxReservePeriod(reserveForm);
+			model.addAttribute("maxReserve", maxReserve);
+			return "/user/books/reserve/returndate";
+		}
+		
 		String userId = ((SuperUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser().getUserId();
 		
 		reserveService.saveReserve(reserveForm, userId);

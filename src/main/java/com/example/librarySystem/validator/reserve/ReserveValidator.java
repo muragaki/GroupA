@@ -1,6 +1,6 @@
 package com.example.librarySystem.validator.reserve;
 
-import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,17 +26,13 @@ public class ReserveValidator implements Validator {
 		
 		ReserveForm reserveForm = (ReserveForm)target;
 		
-		if(reserveForm.getReserveDate().isBefore( LocalDate.now())) {
-			errors.rejectValue("reserveDate", "明日以降の日付を選択して下さい。");
-		}
-		
-		
 		if(reserveForm.getReserveDate().isAfter(reserveForm.getScheduledReturnDate())) {
 			errors.rejectValue("scheduledReturnDate", "予約開始日移行の日付を選択して下さい。");
 		}
 		
-		if(!reserveService.checkReserveColBooks(reserveForm)) {
-			errors.reject("期間内に貸し出せる書籍がありません。別日を選択してください。");
+		if(ChronoUnit.DAYS.between(reserveForm.getReserveDate(),reserveForm.getScheduledReturnDate()) >
+												reserveService.searchMaxReservePeriod(reserveForm)) {
+			errors.reject("指定された期間を貸し出せる書籍がありません。別日を選択してください。");
 		}
 	}
 
