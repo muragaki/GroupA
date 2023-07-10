@@ -21,6 +21,6 @@
 	<a th:href="@{'/admin/user'}">利用者一覧</a><br>
 	<a th:href="@{'/admin/lending'}">利用一覧</a><br>
 	<a th:href="@{'/admin/lendlog'}">貸出履歴一覧</a>
-	<div sec:authorize="${hasRole('ADMIN')}"><a th:href="@{'/user/menu'}">利用者画面</a></div>
+	<a th:href="@{'/user/menu'}">利用者画面</a></div>
 </body>
 </html>
