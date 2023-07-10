@@ -22,6 +22,7 @@ import com.example.librarySystem.domain.model.ColBooks;
 import com.example.librarySystem.domain.model.Genre;
 import com.example.librarySystem.domain.model.Lending;
 import com.example.librarySystem.domain.model.Publisher;
+import com.example.librarySystem.domain.model.SituationName;
 import com.example.librarySystem.domain.service.BooksService;
 import com.example.librarySystem.domain.service.ColBooksService;
 import com.example.librarySystem.domain.service.GenreService;
@@ -112,7 +113,7 @@ public class UserBooksController {
 		lending=lendingService.saveLend(lending);
 		ColBooks colBooks = colBooksService.readColBooksId(lending.getColBooksId());
 		
-		colBooks.setSituation(1);
+		colBooks.setSituationName(SituationName.LENDING);
 		
 		colBooksService.saveColBooks(colBooks);
 		

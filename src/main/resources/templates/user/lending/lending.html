@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://:www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>leging list</title>
@@ -19,7 +19,7 @@
 			<td th:text="${lending.colBooks.books.title}" />
 			<td th:text="${lending.colBooks.books.author}" />
 			<td th:text="${lending.colBooks.books.publisher.publisherName}" />
-			<td th:text="${lending.loanDateTime}" />
+			<td th:text="${#temporals.format(lending.loanDateTime,'yyyy/MM/dd HH:mm:ss')}" />
 			<td th:text="${lending.scheduledReturnDate}" />
 			<td>
 				<form th:action="@{/user/lending/return}" method="post">

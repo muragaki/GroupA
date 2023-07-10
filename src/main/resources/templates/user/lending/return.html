@@ -26,7 +26,7 @@
 		 </tr>
 		 <tr>
 			 <td>貸出日</td>
-		 	<td th:text="*{loanDateTime}" />
+		 	<td th:text="*{#temporals.format(loanDateTime,'yyyy/MM/dd HH:mm:ss')}" />
 		 </tr>
 		 <tr>
 			 <td>返却予定日</td>
