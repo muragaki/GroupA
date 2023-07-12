@@ -12,8 +12,8 @@ public interface LendingRepository extends JpaRepository<Lending, Long> {
 	
 	List<Lending> findByUserId(String userId);
 	
-	List<Lending> findByColBooksIdAndScheduledReturnDateAfter(Long colBooskId, LocalDate scheduledReturnDate);
+	List<Lending> findByColBooksIdAndScheduledReturnDateGreaterThanEqual(Long colBooskId, LocalDate scheduledReturnDate);
 	
-	List<Lending> findByColBooksIdInAndScheduledReturnDateAfter(Set<Long> colBooksId , LocalDate scheduledReturnDate);
+	List<Lending> findByColBooksIdInAndScheduledReturnDateGreaterThanEqual(Set<Long> colBooksId , LocalDate scheduledReturnDate);
 
 }

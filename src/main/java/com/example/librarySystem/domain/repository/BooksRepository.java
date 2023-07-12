@@ -16,12 +16,12 @@ public interface BooksRepository extends JpaRepository<Books, Integer> {
 	@Query("SELECT book FROM Books book "
 			+ "JOIN Genre genre ON book.genreId = genre.genreId "
 			+ "JOIN Publisher publisher ON book.publisherId = publisher.publisherId "
-			+ "WHERE book.genre.genreName LIKE %:genrename% "
+			+ "WHERE book.genre.genreName LIKE :genrename "
 			+ "AND book.title LIKE %:title% "
 			+ "AND book.author LIKE %:author% "
-			+ "AND book.publisher.publisherName LIKE %:publishername%"
+			+ "AND book.publisher.publisherName LIKE :publishername "
 			+ "AND book.releaseDate BETWEEN :fromdate AND :todate "
-			+ "AND book.overview LIKE %:overview%")
+			+ "AND book.overview LIKE %:overview% ")
 	public List<Books> findSearch(@Param("genrename") String genrename,@Param("title") String title, 
 								  @Param("author") String author,@Param("fromdate") LocalDate fromdate,
 								  @Param("todate") LocalDate todate,@Param("publishername") String publishername,

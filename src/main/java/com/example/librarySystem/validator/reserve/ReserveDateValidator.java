@@ -27,12 +27,12 @@ public class ReserveDateValidator implements Validator {
 		ReserveDateForm reserveDateForm = (ReserveDateForm)target;
 		
 		if(reserveDateForm.getReserveDate().isBefore( LocalDate.now())) {
-			errors.rejectValue("reserveDate", "明日以降の日付を選択して下さい。");
+			errors.rejectValue("reserveDate", "com.example.librarySystem.validator.reserve.ReserveDateValidator.FutuerMessage");
 			return;
 		}
 		
-		if(reserveService.checkReserve(reserveDateForm).size()==0) {
-			errors.rejectValue("reserveDate", "該当日に貸し出せる書籍がありません。");
+		if(reserveService.checkReserveSet(reserveDateForm).size()==0) {
+			errors.rejectValue("reserveDate", "com.example.librarySystem.validator.reserve.ReserveDateValidator.NotLendBookMessage");
 			return;
 		}
 		

@@ -26,13 +26,19 @@ public class ReserveValidator implements Validator {
 		
 		ReserveForm reserveForm = (ReserveForm)target;
 		
-		if(reserveForm.getReserveDate().isAfter(reserveForm.getScheduledReturnDate())) {
-			errors.rejectValue("scheduledReturnDate", "予約開始日移行の日付を選択して下さい。");
-		}
+		System.out.println(reserveService.checkReserveSet(reserveForm.getBooksId(), reserveForm.getReserveDate(),-1L));
 		
-		if(ChronoUnit.DAYS.between(reserveForm.getReserveDate(),reserveForm.getScheduledReturnDate()) >
-												reserveService.searchMaxReservePeriod(reserveForm)) {
-			errors.reject("指定された期間を貸し出せる書籍がありません。別日を選択してください。");
+		if(reserveService.checkReserveSet(reserveForm.getBooksId(), reserveForm.getReserveDate(),-1L).size()==0) {
+			errors.rejectValue("reserveDate", "com.example.librarySystem.validator.receive.ReserveEditValidator.NotLendBookMessage");
+		}else {
+			if(reserveForm.getReserveDate().isAfter(reserveForm.getScheduledReturnDate())) {
+				errors.rejectValue("scheduledReturnDate", "com.example.librarySystem.validator.reserve.ReserveValidator.FutuerReserveMessage");
+			}
+
+			if(ChronoUnit.DAYS.between(reserveForm.getReserveDate(),reserveForm.getScheduledReturnDate()) >
+			reserveService.searchMaxReservePeriod(reserveForm)) {
+				errors.rejectValue("scheduledReturnDate","com.example.librarySystem.validator.reserve.ReserveValidator.NotReserveMessage");
+			}
 		}
 	}
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>予約一覧</title>
+</head>
+<body>
+	<h3>予約一覧</h3>
+	
+	<table>
+		<tr>
+			<th>予約番号</th>
+			<th>予約日</th>
+			<th>書名</th>
+			<th>著者</th>
+			<th>出版社</th>
+			<th>返却予定日</th>
+			<th>受付</th>
+		</tr>
+		<tr th:each="reserve : ${toDayReserveList}" th:object="${reserve}">
+			<td th:text="*{reserveId}" />
+			<td th:text="*{reserveDate}" />
+			<td th:text="*{colBooks.books.title}" />
+			<td th:text="*{colBooks.books.author}" />
+			<td th:text="*{colBooks.books.publisher.publisherName}" />
+			<td th:text="*{scheduledReturnDate}" />
+			<td>
+				<form th:action="@{/user/receive/receiving}" method="post">
+					<input type="hidden" name="reserveId" th:value="*{reserveId}">
+					<input type="submit" value="受付">
+				</form>
+			</td>
+			
+		</tr>
+	</table>
+	
+	<table>
+		<tr>
+			<th>予約番号</th>
+			<th>予約日</th>
+			<th>書名</th>
+			<th>著者</th>
+			<th>出版社</th>
+			<th>返却予定日</th>
+			<th>変更</th>
+		</tr>
+		<tr th:each="reserve : ${afterDayReserveList}" th:object="${reserve}">
+			<td th:text="*{reserveId}" />
+			<td th:text="*{reserveDate}" />
+			<td th:text="*{colBooks.books.title}" />
+			<td th:text="*{colBooks.books.author}" />
+			<td th:text="*{colBooks.books.publisher.publisherName}" />
+			<td th:text="*{scheduledReturnDate}" />
+			<td>
+				<form th:action="@{/user/receive/reservedetail}" method="post">
+					<input type="hidden" name="reserveId" th:value="*{reserveId}">
+					<input type="submit" value="変更">
+				</form>
+			</td>
+			
+		</tr>
+	</table>
+	
+	<a th:href="@{/user/menu}">メニューへ戻る</a>
+
+</body>
+</html>

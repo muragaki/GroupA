@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>予約編集</title>
+</head>
+<body>
+	<h3>予約編集</h3>
+	<form th:action="@{/user/receive/reservereconf}" method="post" >
+		<table>
+			<tr>
+				<th>予約開始日</th>
+				<td>
+					<input type="date" name="reserveDate" th:value="${reserveEditForm.reserveDate}">
+				</td>
+				<td>
+					<span th:errors="${reserveEditForm.reserveDate}" />
+				</td>
+			</tr>
+			<tr>
+				<th>返却予定日</th>
+				<td>
+					<input type="date" name="scheduledReturnDate" th:value="${reserveEditForm.scheduledReturnDate}">
+				</td>
+				<td>
+					<span th:errors="${reserveEditForm.scheduledReturnDate}" />
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="reserveId" th:value="${reserveEditForm.reserveId}">
+		<input type="hidden" name="booksId" th:value="${reserveEditForm.booksId}">
+		<input type="submit" value="変更確定">
+	</form>
+</body>
+</html>

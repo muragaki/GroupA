@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>予約貸出受付</title>
+</head>
+<body>
+	<h3>予約貸出受付</h3>
+	<table>
+		<tr>
+			<td>書名</td><td th:text="*{reserve.colBooks.books.title}" />
+		</tr>
+		<tr>
+			<td>著者</td><td th:text="*{reserve.colBooks.books.author}" />
+		</tr>
+		<tr>
+			<td>出版社</td><td th:text="*{reserve.colBooks.books.publisher.publisherName}" />
+		</tr>
+		<tr>
+			<td>予約日</td><td th:text="*{reserve.reserveDate}" />
+		</tr>
+		<tr>
+			<td>返却日</td><td th:text="*{reserve.scheduledReturnDate}" />
+		</tr>	
+	</table>
+	<div th:if="${notbook}">
+		<form th:action="@{/user/receive/receivesave}" method="post" th:object="${receiveForm}">
+			<input type="hidden" name="reserveId" th:value="${reserve.reserveId}">
+			<input type="hidden" name="colBooksId" th:value="${reserve.colBooksId}">
+			<input type="hidden" name="reserveDate" th:value="${reserve.reserveDate}">
+			<input type="hidden" name="scheduledReturnDate" th:value="${reserve.scheduledReturnDate}">
+			<input type="submit" th:value="${notbook}">
+		</form>
+	</div>
+	<div th:unless="${notbook}">
+		<li>貸し出せる書籍がありません。</li>
+	</div>
+	
+</body>
+</html>

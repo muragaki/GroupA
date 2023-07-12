@@ -9,9 +9,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.librarySystem.domain.model.Reserve;
 import com.example.librarySystem.domain.service.ColBooksService;
 import com.example.librarySystem.domain.service.LendingService;
 import com.example.librarySystem.domain.service.ReserveService;
@@ -37,10 +41,6 @@ public class UserReserveController {
 	@Autowired
 	ReserveDateValidator reserveDateValidator;
 	
-	@ModelAttribute("reserveDateForm")
-	public ReserveDateForm setReserveDateForm() {
-		return new ReserveDateForm();
-	}
 	
 	@ModelAttribute("reserveForm")
 	public ReserveForm setReserveForm() {
@@ -48,47 +48,45 @@ public class UserReserveController {
 	}
 	
 	@InitBinder("reserveForm")
-	public void initBinder(WebDataBinder webDataBinder) {
+	public void initBinderForReserveForm(WebDataBinder webDataBinder) {
 		webDataBinder.addValidators(reserveValidator);
 	}
 	
 	
 	@PostMapping("user/books/reserve")
-	public String reserve(@RequestParam("bookId") Integer bookId, ReserveDateForm reserveDateForm, Model model) {
+	public String reserve(@RequestParam("bookId") Integer bookId, ReserveForm reserveDateForm, Model model) {
 		reserveDateForm.setBooksId(bookId);
 		return "/user/books/reserve/reserve";
 	}
 	
-	@PostMapping("user/books/returndate")
-	public String returndate(@Validated ReserveDateForm reserveDateForm,ReserveForm reserveForm, BindingResult br ,Model model) {
+	
+	@PostMapping("user/books/reservesave")
+	public String reservesave(@Validated ReserveForm reserveForm,BindingResult br,Model model,RedirectAttributes redirectAttributes) {
+		
 		if(br.hasErrors()) {
 			return "/user/books/reserve/reserve";
 		}
 		
-		reserveForm.setBooksId(reserveDateForm.getBooksId());
-		reserveForm.setReserveDate(reserveDateForm.getReserveDate());
+		String userId = ((SuperUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser().getUserId();
 		
-		int maxReserve = (int)reserveService.searchMaxReservePeriod(reserveDateForm);
-		model.addAttribute("maxReserve", maxReserve);
+		Reserve reserve = reserveService.saveReserve(reserveForm, userId);
 		
-		return "/user/books/reserve/returndate";
+		redirectAttributes.addAttribute("id", reserve.getReserveId());
+		
+		
+		return "redirect:/user/books/reserveconf/{id}";
 		
 	}
 	
-	@PostMapping("user/books/reserveconf")
-	public String reserveconf(@Validated ReserveForm reserveForm,BindingResult br,Model model) {
-		
-		if(br.hasErrors()) {
-			int maxReserve = (int)reserveService.searchMaxReservePeriod(reserveForm);
-			model.addAttribute("maxReserve", maxReserve);
-			return "/user/books/reserve/returndate";
-		}
+	@RequestMapping("/user/books/reserveconf/{id}")
+	public String reserveConf(@PathVariable Long id,Model model) {
 		
 		String userId = ((SuperUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser().getUserId();
+		Reserve reserve = reserveService.readReserve(id,userId);
+
+		model.addAttribute("reserve",reserve);
 		
-		reserveService.saveReserve(reserveForm, userId);
-		
-		return "/user/books";
+		return "/user/books/reserve/reserveconf";
 		
 	}
 
