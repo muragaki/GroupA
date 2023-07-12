@@ -22,7 +22,7 @@
 		  <tr th:each="book : ${colBooksList}">
 			<td th:text="|${book.booksId}-${book.identifyNumber}|" />
 			<td th:text="${book.registrationDate}" />
-			<td th:text="${book.situation}" />
+			<td th:text="${book.situationName}" />
 		  </tr>
 	  </table>
 	

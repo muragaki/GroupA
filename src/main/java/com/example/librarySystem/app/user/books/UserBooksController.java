@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +30,9 @@ import com.example.librarySystem.domain.service.ColBooksService;
 import com.example.librarySystem.domain.service.GenreService;
 import com.example.librarySystem.domain.service.LendingService;
 import com.example.librarySystem.domain.service.PublisherService;
+import com.example.librarySystem.domain.service.ReserveService;
 import com.example.librarySystem.domain.service.SuperUserDetails;
+import com.example.librarySystem.validator.lending.LendValidator;
 
 @Controller
 public class UserBooksController {
@@ -49,9 +53,20 @@ public class UserBooksController {
 	@Autowired
 	LendingService lendingService;
 	
+	@Autowired
+	ReserveService reserveService;
+	
+	@Autowired
+	LendValidator lendValidator;
+	
 	@ModelAttribute("lendForm")
 	public LendForm setLendForm() {
 		return new LendForm();
+	}
+	
+	@InitBinder("lendForm")
+	public void initBinderForLnedForm(WebDataBinder webDataBinder) {
+		webDataBinder.addValidators(lendValidator);
 	}
 	
 	@ModelAttribute("userSerchBooksForm")
@@ -77,12 +92,16 @@ public class UserBooksController {
 	public String bookdetail(@PathVariable Integer id, Model model) {
 		
 		Books book = booksService.readByBooksId(id);
-		if(colBooksService.findLendCheck(id)) {
+		long period = reserveService.searchMaxReservePeriod(id, LocalDate.now() ,-1L);
+		
+		
+		if(colBooksService.findLendCheck(id) && period > 0 ) {
 			model.addAttribute("check", "true");
 		}else {
 			model.addAttribute("check", "false");
 		}
 		
+		model.addAttribute("period", period);
 		model.addAttribute("book", book);
 		
 		return "/user/books/bookdetail";
@@ -90,17 +109,18 @@ public class UserBooksController {
 	}
 	
 	@RequestMapping("user/books/lend")
-	public String booklend(@RequestParam Integer bookId, @Validated LendForm lendForm, Model model) {
+	public String booklend(@RequestParam Integer bookId,LendForm lendForm, Model model) {
 		
 		lendForm.setBookId(bookId);
+		lendForm.setReserveDate(LocalDate.now());
 		lendForm.setScheduledReturnDate(LocalDate.now().plusDays(1));	
 		
 		return "user/books/lend";
 	}
 	
 	@PostMapping("user/books/lendconf")
-	public String lendconf(LendForm lendForm, BindingResult br,Model model,RedirectAttributes redirectAttributes) {
-		System.out.println(lendForm);
+	public String lendconf(@Validated LendForm lendForm, BindingResult br,Model model,RedirectAttributes redirectAttributes) {
+		
 		if(br.hasErrors()) {
 			return "user/books/lend";
 		}

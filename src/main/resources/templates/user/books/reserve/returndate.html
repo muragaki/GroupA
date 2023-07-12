@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>貸出画面</title>
+</head>
+<body>
+	<form th:action="@{/user/books/reserveconf}" method="post" th:object="${reserveForm}">
+		<input type="hidden" name="booksId" th:value="*{booksId}">
+		<input type="hidden" name="reserveDate" th:value="*{reserveDate}"> 
+		<li th:text="${maxReserve}" />
+		<input type="date" th:field="*{scheduledReturnDate}"> 
+		<input type="submit" value="登録">
+		<ul th:if="${#fields.hasErrors('*')}">
+		<li th;each="err:${#fields.errors('*')}" th:text="${err}" />
+	</ul>
+	</form>
+	<a th:href="@{/user/books/{id}(id=${reserveForm.booksId})}">詳細に戻る</a>
+
+</body>
+</html>

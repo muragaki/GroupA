@@ -22,6 +22,8 @@
    
 <li><a th:href="@{/user/lendlog}">利用履歴</a></li>
 
+<li><a th:href="@{/user/receive}">予約一覧</a></li>
+
 <div sec:authorize="${hasRole('ADMIN')}"><li><a th:href="@{'/admin/menu'}">管理者メニュー</a></li></div>
     
     

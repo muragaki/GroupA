@@ -27,9 +27,27 @@ public class SearchBooksForm {
 	@NotNull
 	private String overview;
 	
+	
+	
+	public void setTitle(String title) {
+		if(title.equals("")) {
+			this.title="";
+		}else {
+			this.title = title;
+		}
+	}
+	
+	public void setAuthor(String author) {
+		if(author.equals("")) {
+			this.author="";
+		}else {
+			this.author = author;
+		}
+	}
+	
 	public void setFromDate(LocalDate fromDate) {
 		if(fromDate==null) {
-			this.fromDate = LocalDate.of(1900, 1, 1);
+			this.fromDate = LocalDate.of(1000, 1, 1);
 		}else {
 			this.fromDate=fromDate;
 		}
@@ -45,7 +63,7 @@ public class SearchBooksForm {
 	
 	public void setGenreName(String name) {
 		if(name.equals("ALL")) {
-			this.genreName = "";
+			this.genreName = "%";
 		}else {
 			this.genreName = name;
 		}
@@ -53,10 +71,30 @@ public class SearchBooksForm {
 	
 	public void setPublisherName(String name) {
 		if(name.equals("ALL")) {
-			this.publisherName = "";
+			this.publisherName = "%";
 		}else {
 			this.publisherName = name;
 		}
 	}
+	
+	public void setOverview(String overview) {
+		if(overview.equals("")) {
+			this.overview="";
+		}else {
+			this.overview = overview;
+		}
+	}
+
+	public SearchBooksForm() {
+		this.title = "";
+		this.author = "";
+		this.fromDate = LocalDate.of(1000, 1, 1);
+		this.toDate = LocalDate.now();
+		this.genreName = "%";
+		this.publisherName = "%";
+		this.overview = "";
+	}
+	
+	
 	
 }

@@ -5,9 +5,11 @@
 <title>貸出画面</title>
 </head>
 <body>
+	<h3>期間設定</h3>
 	<form th:action="@{/user/books/lendconf}" method="post" th:object="${lendForm}">
 		<input type="hidden" name="bookId" th:value="*{bookId}">
-		<input type="date" th:field="*{scheduledReturnDate}">
+		<input type="hidden" name="reserveDate" th:value="*{reserveDate}">
+		<input type="date" th:field="*{scheduledReturnDate}"><span th:errors="*{scheduledReturnDate}" /> 
 		<input type="submit" value="登録">
 	</form>
 	<a th:href="@{/user/books/{id}(id=${lendForm.bookId})}">詳細に戻る</a>

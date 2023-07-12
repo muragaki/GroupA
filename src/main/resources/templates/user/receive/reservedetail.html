@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>貸出画面</title>
+</head>
+<body>
+	<table th:object="${reserve}">
+		<tr>
+			<td>書名</td><td th:text="*{colBooks.books.title}" />
+		</tr>
+		<tr>
+			<td>著者</td><td th:text="*{colBooks.books.author}" />
+		</tr>
+		<tr>
+			<td>出版社</td><td th:text="*{colBooks.books.publisher.publisherName}" />
+		</tr>
+		<tr>
+			<td>予約日</td><td th:text="*{reserveDate}" />
+		</tr>
+		<tr>
+			<td>返却日</td><td th:text="*{scheduledReturnDate}" />
+		</tr>	
+	</table>
+	<form th:action="@{/user/receive/reserveedit}" method="post">
+		<input type="hidden" name="reserveId" th:value="${reserve.reserveId}">
+		<input type="submit" value="変更">
+	</form>
+	<form th:action="@{/user/receive/reservedelete}" method="post">
+		<input type="hidden" name="reserveId" th:value="${reserve.reserveId}">
+		<input type="submit" value="削除">
+	</form>
+	<br>
+	<a th:href="@{/user/receive}">書籍一覧へ戻る</a>
+</body>
+</html>
