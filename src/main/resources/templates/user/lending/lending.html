@@ -1,34 +1,98 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>leging list</title>
+  <meta charset="UTF-8">
+  <title>Lending List</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1558677949-260173506bbf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 10rem;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 8px;
+      margin-top: 2rem;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+
+    td:last-child {
+      text-align: center;
+    }
+
+    input[type="submit"],
+    button[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover,
+    button[type="submit"]:hover {
+      background-color: #558c5e;
+    }
+
+    div.return-button {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
-	<h3>貸出一覧</h3>
-	<table>
-		<tr>
-			<th>書名</th>
-			<th>作者</th>
-			<th>出版社</th>
-			<th>貸出日</th>
-			<th>返却予定日</th>
-			<th>返却</th>
-		</tr>
-		<tr th:each="lending : ${lendinglist}">
-			<td th:text="${lending.colBooks.books.title}" />
-			<td th:text="${lending.colBooks.books.author}" />
-			<td th:text="${lending.colBooks.books.publisher.publisherName}" />
-			<td th:text="${#temporals.format(lending.loanDateTime,'yyyy/MM/dd HH:mm:ss')}" />
-			<td th:text="${lending.scheduledReturnDate}" />
-			<td>
-				<form th:action="@{/user/lending/return}" method="post">
-					<input type="hidden" name="lendingId" th:value="${lending.lendingId}">
-					<input type="submit" value="返却">
-				</form>
-			</td>
-		</tr>
-	</table>
-
+  <h3>貸出状況</h3>
+  <table>
+    <tr>
+      <th>書名</th>
+      <th>作者</th>
+      <th>出版社</th>
+      <th>貸出日</th>
+      <th>返却予定日</th>
+      <th>返却</th>
+    </tr>
+    <tr th:each="lending : ${lendinglist}">
+      <td th:text="${lending.colBooks.books.title}"></td>
+      <td th:text="${lending.colBooks.books.author}"></td>
+      <td th:text="${lending.colBooks.books.publisher.publisherName}"></td>
+      <td th:text="${#temporals.format(lending.loanDateTime,'yyyy/MM/dd HH:mm:ss')}"></td>
+      <td th:text="${lending.scheduledReturnDate}"></td>
+      <td>
+        <form th:action="@{/user/lending/return}" method="post">
+          <input type="hidden" name="lendingId" th:value="${lending.lendingId}">
+          <input type="submit" value="返却">
+        </form>
+      </td>
+    </tr>
+  </table>
+  
+  <div class="return-button">
+    <form th:action="@{/user/menu}" method="get">
+      <button type="submit">TOPへ戻る</button>
+    </form>
+  </div>
 </body>
 </html>

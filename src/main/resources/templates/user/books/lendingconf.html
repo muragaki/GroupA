@@ -3,29 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <title>貸出確定</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+<style>
+body {
+  margin: 2rem;
+  background-image: url('https://cdn.pixabay.com/photo/2017/08/07/15/18/boy-2604853_1280.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+table {
+  margin: 0 auto;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+td:first-child {
+  text-align: right;
+}
+
+.message {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+</style>
 </head>
 <body>
-	<table>
-		<tr>
-			<td>書名</td>
-			<td th:text="${books.title}"/>
-		</tr>
-		<tr>
-			<td>著者</td>
-			<td th:text="${books.author}"/>
-		</tr>
-		<tr>
-			<td>貸出日</td>
-			<td th:text="${#temporals.format(lending.loanDateTime,'yyyy/MM/dd HH:mm:ss')}"/>
-		</tr>
-		<tr>
-			<td>返却予定日</td>
-			<td th:text="${lending.scheduledReturnDate}" />
-		</tr>
-		
-	</table>
-	
-	<a th:href="@{/user/books}">書籍一覧に戻る</a>
+<div class="container">
+  <h2>借受が確定しました。</h2>
+  <table>
+    <tr>
+      <td>書名</td>
+      <td th:text="${books.title}" />
+    </tr>
+    <tr>
+      <td>著者</td>
+      <td th:text="${books.author}" />
+    </tr>
+    <tr>
+      <td>貸出日</td>
+      <td th:text="${#temporals.format(lending.loanDateTime,'yyyy/MM/dd HH:mm:ss')}" />
+    </tr>
+    <tr>
+      <td>返却予定日</td>
+      <td th:text="${lending.scheduledReturnDate}" />
+    </tr>
+  </table>
 
+  <div class="message">
+    <a th:href="@{/user/books}">書籍一覧に戻る</a>
+  </div>
+</div>
 </body>
 </html>

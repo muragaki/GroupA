@@ -1,24 +1,106 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
 	<title>ログイン画面</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<style>
+		body {
+			background-image: url('https://cdn.pixabay.com/photo/2017/09/27/06/28/book-2791117_1280.jpg');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			font-family: Arial, sans-serif;
+		}
+
+		.container {
+			width: 400px;
+			padding: 2rem;
+			background-color: rgba(255, 255, 255, 0.9);
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			border-radius: 8px;
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 1rem;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+		}
+
+		label {
+			margin-bottom: 0.5rem;
+			font-weight: bold;
+		}
+
+		input[type="text"],
+		input[type="password"] {
+			padding: 0.5rem;
+			margin-bottom: 1rem;
+			border-radius: 4px;
+			border: 1px solid #ccc;
+		}
+
+		input[type="submit"] {
+			padding: 0.5rem;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #555;
+		}
+
+		.error {
+			color: red;
+			margin-bottom: 1rem;
+		}
+
+		.signup-link {
+			text-align: center;
+			margin-top: 1rem;
+		}
+
+		.signup-link a {
+			color: #333;
+			text-decoration: none;
+		}
+
+		.signup-link a:hover {
+			text-decoration: underline;
+		}
+	</style>
 </head>
 <body>
-	<h1>ログイン画面</h1>
-	<p th:if="${param.error}">
-		ログインエラーです
-	</p>
-	<form th:action="@{/login}" method="post">
-		<label for="username">ユーザー名：</label>
-		<input type="text" id="username" name="username" required><br>
+	<div class="container">
+		<h1>ログイン画面</h1>
+		<p class="error" th:if="${param.error}">ログインエラーです</p>
+		<form th:action="@{/login}" method="post">
+			<label for="username">ユーザー名：</label>
+			<input type="text" id="username" name="username" required>
 
-		<label for="password">パスワード：</label>
-		<input type="password" id="password" name="password" required><br>
+			<label for="password">パスワード：</label>
+			<input type="password" id="password" name="password" required>
 
-		<input type="submit" value="ログイン">
-	</form>
-	<hr>
-	<a th:href="@{signup}"><b>ユーザー登録</b></a>
+			<input type="submit" value="ログイン">
+		</form>
+		<div class="signup-link">
+			<a th:href="@{signup}">新規ユーザー登録</a>
+		</div>
+	</div>
 </body>
 </html>

@@ -1,79 +1,232 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Books List</title>
+  <meta charset="UTF-8">
+  <title>Books List</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url('https://images.unsplash.com/photo-1591951425328-48c1fe7179cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 10rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    th,
+    td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      color: #333;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    form {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+
+    .form-group label {
+      margin-right: 1rem;
+      font-weight: bold;
+      color: #666;
+      width: 8rem;
+      text-align: right;
+    }
+
+    .form-group input[type="text"],
+    .form-group select,
+    .form-group input[type="date"] {
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      flex: 1;
+    }
+
+    .form-group:last-child {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-group input[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .details-button {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .details-button:hover {
+      background-color: #558c5e;
+    }
+
+    .no-books {
+      text-align: center;
+      color: #999;
+    }
+
+    .form-button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .form-button {
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .form-button:hover {
+      background-color: #558c5e;
+    }
+
+    /* 追加 */
+    .no-underline {
+      text-decoration: none;
+    }
+  </style>
 </head>
+
 <body>
-	
-	<table>
-		<tr>
-			<th>ジャンル</th>
-			<th>書名</th>
-			<th>著者</th>
-			<th>出版社</th>
-			<th>検索日(開始日)</th>
-			<th>検索日(終了日)</th>
-			<th>概要</th>
-		</tr>
-		
-		
-		<form th:action="@{/user/books}"} method="post" th:object="${userSearchBooksForm}">
-			<tr>
-				<td>
-					<select name="genre" th:field="*{genreName}">
-						<option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreName}" />
-					</select>
-				</td>
-				<td>
-					<input type="text" th:value="*{title}" th:field="*{title}">
-				</td>
-				<td>
-					<input type="text" th:value="*{author}" th:field="*{author}">
-				</td>
-				<td>
-					<select name="publisher" th:field="*{publisherName}">
-						<option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherName}" />
-					</select>
-				</td>
-				<td>
-					<input type="date" th:value="*{fromDate}" th:field="*{fromDate}">
-				</td>
-				<td>
-					<input type="date" th:value="*{toDate}" th:field="*{toDate}">
-				</td>
-				<td>
-					<input type="text" th:value="*{overview}" th:field="*{overview}">
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="submit" text="検索">
-				</td>
-			</tr>
-		</form>
-		
-	<table>
-		<tr>
-			<th>ジャンル</th>
-			<th>書名</th>
-			<th>著者</th>
-			<th>出版社</th>
-			<th>発売日</th>
-			<th>詳細</th>
-		</tr>
-		<tr th:each="book : ${bookslist}">
-			<td th:text="${book.genre.genreName}" / >	
-			<td th:text="${book.title}" / >
-			<td th:text="${book.author}" / >
-			<td th:text="${book.releaseDate}" / >
-			<td th:text="${book.publisher.publisherName}" />
-			<td>
-				<form th:action="@{/user/books/{id}(id=${book.bookId})}">
-					<input type="submit" value="詳細">
-				</form>
-			</td>
-		</tr>
-	</table>
+  <div class="container">
+    <h1>Books List</h1>
+
+    <form th:action="@{/user/books}" method="post" th:object="${userSearchBooksForm}" class="text-center">
+      <div class="form-group">
+        <label for="genre">ジャンル:</label>
+        <select name="genre" id="genre" th:field="*{genreName}">
+          <option value="">全て</option>
+          <option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreName}" />
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="title">書名:</label>
+        <input type="text" id="title" th:value="*{title}" th:field="*{title}">
+      </div>
+      <div class="form-group">
+        <label for="author">著者:</label>
+        <input type="text" id="author" th:value="*{author}" th:field="*{author}">
+      </div>
+      <div class="form-group">
+        <label for="publisher">出版社:</label>
+        <select name="publisher" id="publisher" th:field="*{publisherName}">
+          <option value="">全て</option>
+          <option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherName}" />
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fromDate">検索日(開始日):</label>
+        <input type="date" id="fromDate" th:value="*{fromDate}" th:field="*{fromDate}">
+      </div>
+      <div class="form-group">
+        <label for="toDate">検索日(終了日):</label>
+        <input type="date" id="toDate" th:value="*{toDate}" th:field="*{toDate}">
+      </div>
+      <div class="form-group">
+        <label for="overview">概要:</label>
+        <input type="text" id="overview" th:value="*{overview}" th:field="*{overview}">
+      </div>
+      <div class="form-button-container">
+        <a th:href="@{'/user/menu'}" class="form-button no-underline">TOPへ戻る</a>
+        <input type="submit" value="検索" class="form-button">
+      </div>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ジャンル</th>
+          <th>書名</th>
+          <th>著者</th>
+          <th>出版社</th>
+          <th>発売日</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="book : ${bookslist}">
+          <td th:text="${book.genre.genreName}"></td>
+          <td th:text="${book.title}"></td>
+          <td th:text="${book.author}"></td>
+          <td th:text="${book.publisher.publisherName}"></td>
+          <td th:text="${book.releaseDate}"></td>
+          <td>
+            <form th:action="@{/user/books/{id}(id=${book.bookId})}">
+              <input type="submit" value="詳細" class="details-button">
+            </form>
+          </td>
+        </tr>
+        <tr th:if="${bookslist.size() == 0}">
+          <td colspan="6" class="no-books">該当する書籍がありません。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </body>
+
 </html>
