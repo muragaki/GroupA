@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -12,59 +13,82 @@
       margin: 0;
       padding: 10rem;
     }
+h2 {
+text-align: center;
+color: #333;
+}
 
-    h2 {
-      text-align: center;
-      color: #333;
-    }
+table {
+width: 100%;
+max-width: 400px;
+margin: 2rem auto;
+border-collapse: collapse;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    table {
-      width: 100%;
-      max-width: 400px;
-      margin: 2rem auto;
-      border-collapse: collapse;
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+th, td {
+padding: 1rem;
+text-align: center;
+border-bottom: 1px solid rgb(0, 64, 64);
+}
 
-    th, td {
-      padding: 1rem;
-      text-align: center;
-      border-bottom: 1px solid rgb(0, 64, 64);
-    }
+form {
+text-align: center;
+margin-top: 2rem;
+}
 
-    form {
-      text-align: center;
-      margin-top: 2rem;
-    }
+input[type="date"], input[type="submit"] {
+padding: 0.5rem 1rem;
+background-color: #6CAE75;
+color: #fff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
 
-    input[type="date"], input[type="submit"] {
-      padding: 0.5rem 1rem;
-      background-color: #6CAE75;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+input[type="date"] {
+width: 100%;
+max-width: 250px;
+margin-bottom: 1rem;
+background-color: #fff; /* 日付選択部分の背景色を白色に設定 /
+color: #333; / 日付選択部分のテキスト色を黒色に設定 */
+}
 
-    input[type="date"] {
-      width: 100%;
-      max-width: 250px;
-      margin-bottom: 1rem;
-    }
+input[type="date"]::-webkit-calendar-picker-indicator {
+background-color: transparent;
+padding: 0;
+}
 
-    input[type="submit"]:hover {
-      background-color: #558c5e;
-    }
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+display: none;
+}
 
-    a {
-      display: block;
-      text-align: center;
-      color: rgb(0, 64, 128);
-      text-decoration: none;
-      margin-top: 1rem;
-    }
+input[type="submit"]:hover {
+background-color: #558c5e;
+}
+
+.button-link {
+display: block;
+text-align: center;
+margin-top: 1rem;
+}
+
+.button-link a {
+display: inline-block;
+padding: 0.5rem 1rem;
+background-color: #6CAE75;
+color: #fff;
+text-decoration: none;
+border-radius: 4px;
+transition: background-color 0.3s ease;
+}
+
+.button-link a:hover {
+background-color: #558c5e;
+}
+
   </style>
 </head>
 <body>
@@ -72,16 +96,22 @@
   	<table>
     	<thead>
       		<tr>
-        	<th>返却日を選択してください。</th>
+        	<th style="border: none;">返却日を選択してください。</th>
      	 </tr>
    		</thead>
   	</table>
 	<form th:action="@{/user/books/lendconf}" method="post" th:object="${lendForm}">
 		<input type="hidden" name="bookId" th:value="*{bookId}">
 		<input type="hidden" name="reserveDate" th:value="*{reserveDate}">
+<<<<<<< HEAD
 		<input type="date" name="scheduledReturnDate" th:value="*{scheduledReturnDate}"><span th:errors="*{scheduledReturnDate}" /> 
+=======
+		<input type="date" th:field="*{scheduledReturnDate}" style="background-color: #fff; color: #333;"><span th:errors="*{scheduledReturnDate}" /> 
+>>>>>>> branch 'master1' of https://github.com/muragaki/GroupA.git
 		<input type="submit" value="登録">
 	</form>
-	<a th:href="@{/user/books/{id}(id=${lendForm.bookId})}">詳細に戻る</a>
+	<div class="button-link">
+		<a th:href="@{/user/books/{id}(id=${lendForm.bookId})}" style="background-color: #6CAE75;">詳細に戻る</a>
+	</div>
 </body>
 </html>

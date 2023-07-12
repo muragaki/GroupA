@@ -1,8 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>利用書籍詳細</title>
-  <link th:href="@{/css/user/books.bookdetail.css}" rel="styleSheet">
+  <style>
+    body {
+      background-image: url('https://cdn.pixabay.com/photo/2019/04/11/13/02/poster-4119748_1280.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 10rem;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .book-info {
+      margin-top: 2rem;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .no-info {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .button-container form {
+      margin: 0 0.5rem;
+    }
+
+    .button-container input[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button-container input[type="submit"]:hover {
+      background-color: #558c5e;
+    }
+
+    .return-button {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .return-button a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .return-button a:hover {
+      background-color: #558c5e;
+    }
+  </style>
 </head>
 <body>
   <h2>利用書籍詳細</h2>
@@ -22,19 +97,20 @@
     </div>
   </div>
   
-  <br>
-  <div th:if="${check == 'true'}">
-	  <form th:action="@{/user/books/lend}">
-		  <input type="hidden" name="bookId" th:value="${book.bookId}">
-		  <input type="submit" value="貸出">
- 	 </form>
+  <div class="button-container">
+    <form th:action="@{/user/books/lend}">
+      <input type="hidden" name="bookId" th:value="${book.bookId}">
+      <input type="submit" value="貸出" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
+    </form>
+    <form th:action="@{/user/books/reserve}" method="post">
+      <input type="hidden" name="bookId" th:value="${book.bookId}">
+      <input type="submit" value="予約" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
+    </form>
   </div>
-  <div th:if="${check == 'false'}">
-	 貸出中
-  </div>
-  <form th:action="@{/user/books/reserve}" method="post">
-		  <input type="hidden" name="bookId" th:value="${book.bookId}">
-		  <input type="submit" value="予約">
- 	 </form>
+
+  <div class="return-button">
+  <a href="javascript:history.back()" style="display: inline-block; padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; text-decoration: none; border-radius: 4px; transition: background-color 0.3s ease; font-size: 0.9rem;">戻る</a>
+</div>
+
 </body>
 </html>
