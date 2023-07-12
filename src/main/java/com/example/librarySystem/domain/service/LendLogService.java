@@ -22,7 +22,7 @@ public class LendLogService {
 	
 	public void saveLendingNow(Lending lending) {
 		LendLog lendLog = new LendLog(lending);
-		lendLog.setReturnDateTime(LocalDateTime.now());
+		lendLog.setReturnDateTime(LocalDateTime.now().minusSeconds(1));
 		lendLogRepository.save(lendLog);
 	}
 	public List<LendLog> findAll(){

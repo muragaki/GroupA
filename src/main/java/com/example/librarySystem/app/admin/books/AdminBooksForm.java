@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.example.librarySystem.domain.model.Books;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -14,10 +15,13 @@ import lombok.NoArgsConstructor;
 public class AdminBooksForm {
 
 	private Integer bookId;
+	@NotNull
 	@Size(min = 1 , max = 30)
 	private String title;
+	@NotNull
 	@Size(min = 1 , max = 20)
 	private String author;
+	@NotNull
 	@Past
 	private LocalDate releaseDate;
 	private Integer genreId;

@@ -15,13 +15,13 @@
   <form th:action="@{/admin/books/booksave}" method="POST" th:object="${adminBooksForm}">
 	<input type="hidden" th:field="*{bookId}" th:value="*{bookId}">
 	<label for="title">書名:</label>
-    <input type="text" th:field="*{title}"><br><br>
+    <input type="text" th:field="*{title}"><span th:errors="*{title}"></span> <br><br>
 
     <label for="author">著者:</label>
     <input type="text" id="author" name="author" th:field="*{author}"><br><br>
 
     <label for="publish_date">発刊年月日:</label>
-    <input type="date" id="releaseDate" name="publish_date" th:field="*{releaseDate}"><br><br>
+    <input type="date" id="releaseDate" name="releaseDate" th:value="*{releaseDate}"><br><br>
 
     <label for="genre_id">ジャンル:</label>
     <select name="genre" th:field="*{genreId}">

@@ -37,7 +37,7 @@ public class AdminBooksController {
 	
 	@Autowired
 	ColBooksService colBooksService;
-	
+		
 	@ModelAttribute("adminBooksForm")
 	public AdminBooksForm setAdminBookForm() {
 		return new AdminBooksForm();
@@ -94,14 +94,15 @@ public class AdminBooksController {
 	public String booksAdd(@Validated AdminBooksForm adminBooksForm, BindingResult br, Model model, RedirectAttributes redirectAttributes) {
 		
 		if(br.hasErrors()) {
+			
 			List<Genre> genrelist = genreService.readAll();
 			List<Publisher> publisherlist = publisherService.readAll();
 			
 			model.addAttribute("genrelist", genrelist);
 			model.addAttribute("publisherlist", publisherlist);
-			return "admin/books/booksedit";
+			return "admin/books/newbooks";
 		}
-		System.out.println(adminBooksForm);
+		
 		Books book = new Books(adminBooksForm.getBookId(), adminBooksForm.getTitle(), adminBooksForm.getAuthor() , adminBooksForm.getReleaseDate()
 							  ,adminBooksForm.getGenreId(), null, adminBooksForm.getPublisherId(), null, adminBooksForm.getOverview());
 		

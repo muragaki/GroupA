@@ -32,7 +32,7 @@ public class LendValidator implements Validator {
 		}
 		
 		if(lendForm.getReserveDate().isAfter(lendForm.getScheduledReturnDate())) {
-			errors.rejectValue("scheduledReturnDate", "com.example.librarySystem.validator.lending.lendValidator.FutureMessage");
+			errors.rejectValue("scheduledReturnDate", "com.example.librarySystem.validator.lending.LendValidator.FutureMessage");
 		}
 		
 		if(ChronoUnit.DAYS.between(lendForm.getReserveDate(),lendForm.getScheduledReturnDate()) >

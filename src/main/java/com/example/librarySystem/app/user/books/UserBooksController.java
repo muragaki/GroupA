@@ -128,7 +128,7 @@ public class UserBooksController {
 		String userId = ((SuperUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser().getUserId();
 		Long colBooksId = colBooksService.readLendColBooksId(lendForm.getBookId());
 		
-		Lending lending = new Lending(userId, colBooksId,LocalDateTime.now(), lendForm.getScheduledReturnDate());
+		Lending lending = new Lending(userId, colBooksId,LocalDateTime.now().minusSeconds(1), lendForm.getScheduledReturnDate());
 		
 		lending=lendingService.saveLend(lending);
 		ColBooks colBooks = colBooksService.readColBooksId(lending.getColBooksId());

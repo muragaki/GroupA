@@ -180,6 +180,10 @@ public class ReceiveController {
 		
 	}
 	
-	
+	@PostMapping("/user/receive/reservedelete")
+	public String reserveDelete(@RequestParam Long reserveId) {
+		reserveService.deleteReserve(reserveId);
+		return "redirect:/user/receive";
+	}
 	
 }
