@@ -1,16 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>貸出画面</title>
+  <meta charset="UTF-8">
+  <title>貸出画面</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1473181488821-2d23949a045a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 10rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      max-width: 400px;
+      margin: 2rem auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 1px solid rgb(0, 64, 64);
+    }
+
+    form {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    input[type="date"], input[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      max-width: 250px;
+      margin-bottom: 1rem;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #558c5e;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      color: rgb(0, 64, 128);
+      text-decoration: none;
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
-	<form th:action="@{/user/books/lendconf}" method="post" th:object="${lendForm}">
-		<input type="hidden" name="bookId" th:value="*{bookId}">
-		<input type="date" th:field="*{scheduledReturnDate}">
-		<input type="submit" value="登録">
-	</form>
-	<a th:href="@{/user/books/{id}(id=${lendForm.bookId})}">詳細に戻る</a>
-
+  <h2>貸出登録</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>返却日を選択してください。</th>
+      </tr>
+    </thead>
+  </table>
+  <form th:action="@{/user/books/lendconf}" method="post" th:object="${lendForm}">
+    <input type="hidden" name="bookId" th:value="*{bookId}">
+    <input type="date" th:field="*{scheduledReturnDate}">
+    <input type="submit" value="登録">
+  </form>
+  <a th:href="@{/user/books/{id}(id=${lendForm.bookId})}">詳細に戻る</a>
 </body>
 </html>

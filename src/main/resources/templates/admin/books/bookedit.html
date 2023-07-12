@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>書籍編集</title>
+<style>
+    body {
+      margin: 2rem;
+      background-color: #e0f8d8;
+      }
+</style>
 </head>
 <body>
-  <h2>書籍登録</h2>
+  <h2>書籍編集・登録</h2>
   <form th:action="@{/admin/books/booksave}" method="POST" th:object="${adminBooksForm}">
 	<input type="hidden" th:field="*{bookId}" th:value="*{bookId}">
 	<label for="title">書名:</label>

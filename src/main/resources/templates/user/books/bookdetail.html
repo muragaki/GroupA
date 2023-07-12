@@ -4,6 +4,17 @@
   <title>利用書籍詳細</title>
   <link th:href="@{/css/user/books.bookdetail.css}" rel="styleSheet">
 </head>
+<style>
+    body {
+      background-image: url('https://cdn.pixabay.com/photo/2019/04/13/07/47/poster-4123962_1280.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 6rem;
+    }
+
+  </style>
 <body>
   <h2>利用書籍詳細</h2>
 
@@ -22,15 +33,21 @@
     </div>
   </div>
   
+  
   <br>
   <div th:if="${check == 'true'}">
-	  <form th:action="@{/user/books/lend}">
-		  <input type="hidden" name="bookId" th:value="${book.bookId}">
-		  <input type="submit" value="貸出">
- 	 </form>
+    <form th:action="@{/user/books/lend}">
+      <input type="hidden" name="bookId" th:value="${book.bookId}">
+      <input type="submit" value="貸出">
+    </form>
   </div>
   <div th:if="${check == 'false'}">
-	 貸出中
+    貸出中
+  </div>
+  
+  <br>
+  <div>
+    <a th:href="@{/user/books}" class="return-button">Books Listへ戻る</a>
   </div>
 </body>
 </html>

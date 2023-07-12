@@ -1,81 +1,157 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Books List</title>
+  <meta charset="UTF-8">
+  <title>Books List</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <style>
+    body {
+      margin: 1rem;
+      background-color: #e0f8d8;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 2000px;
+      margin: 0 auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background-color: #f8f8f8;
+    }
+
+    th,
+    td {
+      padding: 0.65rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+
+    .no-books {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    
+    .search-form {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .search-input {
+      padding: 0.5rem;
+      width: 100%;
+    }
+
+    .search-button {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: white;
+      border: none;
+      width: 100%;
+    }
+
+    .search-inputs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .search-inputs label {
+      margin-right: 1rem;
+    }
+  </style>
 </head>
 <body>
-	<a th:href="@{/admin/books/newbooks}">書籍登録</a>
-	
-	
-	<table>
-		<tr>
-			<th>ジャンル</th>
-			<th>書名</th>
-			<th>著者</th>
-			<th>出版社</th>
-			<th>検索日(開始日)</th>
-			<th>検索日(終了日)</th>
-			<th>概要</th>
-		</tr>
-		
-		
-		<form th:action="@{/admin/books/bookssearch}"} method="post" th:object="${adminSearchBooksForm}">
-			<tr>
-				<td>
-					<select name="genre" th:field="*{genreName}">
-						<option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreName}" />
-					</select>
-				</td>
-				<td>
-					<input type="text" th:value="*{title}" th:field="*{title}">
-				</td>
-				<td>
-					<input type="text" th:value="*{author}" th:field="*{author}">
-				</td>
-				<td>
-					<select name="publisher" th:field="*{publisherName}">
-						<option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherName}" />
-					</select>
-				</td>
-				<td>
-					<input type="date" th:value="*{fromDate}" th:field="*{fromDate}">
-				</td>
-				<td>
-					<input type="date" th:value="*{toDate}" th:field="*{toDate}">
-				</td>
-				<td>
-					<input type="text" th:value="*{overview}" th:field="*{overview}">
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="submit" text="検索">
-				</td>
-			</tr>
-		</form>
-		
-	<table>
-		<tr>
-			<th>ジャンル</th>
-			<th>書名</th>
-			<th>著者</th>
-			<th>出版社</th>
-			<th>発売日</th>
-			<th>編集</th>
-		</tr>
-		<tr th:each="book : ${bookslist}">
-			<td th:text="${book.genre.genreName}" / >	
-			<td th:text="${book.title}" / >
-			<td th:text="${book.author}" / >
-			<td th:text="${book.releaseDate}" / >
-			<td th:text="${book.publisher.publisherName}" / >
-			<td>
-				<form th:action="@{/admin/books/edit/{id}(id=${book.bookId})}">
-					<input type="submit" value="編集">
-				</form>
-			</td>
-		</tr>
-	</table>
+  <h2>Books List</h2>
+
+  <div class="container">
+    <a th:href="@{/admin/books/newbooks}">書籍登録</a>
+  
+    <div class="search-form">
+      <form th:action="@{/admin/books/bookssearch}" method="post" th:object="${adminSearchBooksForm}">
+        <table>
+			  <tr>
+        <th>ジャンル</th>
+        <th>書名</th>
+        <th>著者</th>
+        <th>出版社</th>
+        <th>発売日</th>
+        <th></th>
+        <th>概要</th>
+      </tr>
+          <tr>
+            <td>
+              <select name="genre" th:field="*{genreName}">
+                <option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreName}" />
+              </select>
+            </td>
+            <td>
+              <input class="search-input" type="text" th:value="*{title}" th:field="*{title}">
+            </td>
+            <td>
+              <input class="search-input" type="text" th:value="*{author}" th:field="*{author}">
+            </td>
+            <td>
+              <select name="publisher" th:field="*{publisherName}">
+                <option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherName}" />
+              </select>
+            </td>
+            <td>
+              <input class="search-input" type="date" th:value="*{fromDate}" th:field="*{fromDate}">
+            </td>
+            <td>
+              <input class="search-input" type="date" th:value="*{toDate}" th:field="*{toDate}">
+            </td>
+            <td>
+              <input class="search-input" type="text" th:value="*{overview}" th:field="*{overview}">
+            </td>
+            <td>
+              <button class="search-button" type="submit">検索</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  
+    <table>
+      <tr>
+        <th>ジャンル</th>
+        <th>書名</th>
+        <th>著者</th>
+        <th>出版社</th>
+        <th>発売日</th>
+        <th>編集</th>
+      </tr>
+      <tr th:each="book : ${bookslist}">
+        <td th:text="${book.genre.genreName}"></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.publisher.publisherName}"></td>
+        <td th:text="${book.releaseDate}"></td>
+        <td>
+          <form th:action="@{/admin/books/edit/{id}(id=${book.bookId})}">
+            <input type="submit" value="編集">
+          </form>
+        </td>
+      </tr>
+    </table>
+    
+    <div th:if="${bookslist == null or bookslist.size() == 0}" class="no-books">
+      <p>書籍はありません。</p>
+    </div>
+  </div>
 </body>
 </html>

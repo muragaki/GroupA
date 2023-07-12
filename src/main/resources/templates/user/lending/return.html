@@ -1,43 +1,129 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Return Book</title>
+  <meta charset="UTF-8">
+  <title>Return Book</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 10rem;
+    }
+
+    h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      max-width: 400px;
+      margin: 2rem auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px; /* 外枠の角を丸くする */
+    }
+
+    td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    td:first-child {
+      font-weight: bold;
+    }
+
+    td:nth-child(even) {
+      text-align: right;
+    }
+
+    form {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center; /* ボタンを中央に配置 */
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .button-group button {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-left: 1rem; /* ボタン間のスペースを縮める */
+    }
+
+    .button-group button:hover {
+      background-color: #558c5e;
+    }
+
+    /* 追加したスタイル */
+    .button-group button[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-left: 10; /* ボタン間のスペースを縮める */
+    }
+
+    .button-group button[type="submit"]:hover {
+      background-color: #558c5e;
+    }
+  </style>
 </head>
 <body>
-	<h3>返却確認</h3>
-	
- 	<table th:object="${lending}">
-		 <tr>
-			 <td>識別番号</td>
-			 <td th:text="*{colBooks.books.title}" />
-		 </tr>
-		 <tr>
-			 <td>書名</td>
-			 <td th:text="*{colBooks.books.title}" />
-		 </tr>
-		 <tr>
-			 <td>著者</td>
-			 <td th:text="*{colBooks.books.author}" />
-		 </tr>
-		 <tr>
-			 <td>出版社</td>
-			 <td th:text="*{colBooks.books.publisher.publisherName}" />
-		 </tr>
-		 <tr>
-			 <td>貸出日</td>
-		 	<td th:text="*{#temporals.format(loanDateTime,'yyyy/MM/dd HH:mm:ss')}" />
-		 </tr>
-		 <tr>
-			 <td>返却予定日</td>
-			<td th:text="*{scheduledReturnDate}" />
-		 </tr>
-	 </table>
-	 <br>
-	 <form th:action="@{/user/lending/returnconf}" method="post">
-		 <input type="hidden" name="lendingId" th:value="${lending.lendingId}">
-		 <input type="submit" value="返却">
-	 </form>
+  <h3>返却確認</h3>
+  
+  <table th:object="${lending}">
+    <tr>
+      <td>識別番号</td>
+      <td th:text="*{colBooks.books.title}" />
+    </tr>
+    <tr>
+      <td>書名</td>
+      <td th:text="*{colBooks.books.title}" />
+    </tr>
+    <tr>
+      <td>著者</td>
+      <td th:text="*{colBooks.books.author}" />
+    </tr>
+    <tr>
+      <td>出版社</td>
+      <td th:text="*{colBooks.books.publisher.publisherName}" />
+    </tr>
+    <tr>
+      <td>貸出日</td>
+      <td th:text="*{#temporals.format(loanDateTime,'yyyy/MM/dd HH:mm:ss')}" />
+    </tr>
+    <tr>
+      <td>返却予定日</td>
+      <td th:text="*{scheduledReturnDate}" />
+    </tr>
+  </table>
 
+  <div class="button-group">
+    <form th:action="@{/user/lending/returnconf}" method="post">
+      <input type="hidden" name="lendingId" th:value="${lending.lendingId}">
+      <button type="submit">返却</button>
+    </form>
+
+    <form th:action="@{/user/lending}" method="get">
+      <button type="submit">戻る</button>
+    </form>
+  </div>
 </body>
 </html>

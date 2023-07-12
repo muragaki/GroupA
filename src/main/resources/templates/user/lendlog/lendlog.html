@@ -1,27 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>leging list</title>
+  <meta charset="UTF-8">
+  <title>Lending List</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1576872381149-7847515ce5d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8JUU2JTlDJUFDfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 10rem;
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+      color: #333;
+    }
+
+    td {
+      background-color: #fff;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-	<h3>貸出一覧</h3>
-	<table>
-		<tr>
-			<th>書名</th>
-			<th>作者</th>
-			<th>出版社</th>
-			<th>貸出日</th>
-			<th>返却日</th>
-		</tr>
-		<tr th:each="lendlog : ${lendloglist}">
-			<td th:text="${lendlog.colBooks.books.title}" />
-			<td th:text="${lendlog.colBooks.books.author}" />
-			<td th:text="${lendlog.colBooks.books.publisher.publisherName}" />
-			<td th:text="${#temporals.format(lendlog.loanDateTime,'yyyy/MM/dd HH:mm:ss')}" />
-			<td th:text="${#temporals.format(lendlog.returnDateTime,'yyyy/MM/dd HH:mm:ss')}" />
-		</tr>
-	</table>
-
+  <h3>利用履歴一覧</h3>
+  <table>
+    <tr>
+      <th>書名</th>
+      <th>作者</th>
+      <th>出版社</th>
+      <th>貸出日</th>
+      <th>返却日</th>
+    </tr>
+    <tr th:each="lendlog : ${lendloglist}">
+      <td th:text="${lendlog.colBooks.books.title}"></td>
+      <td th:text="${lendlog.colBooks.books.author}"></td>
+      <td th:text="${lendlog.colBooks.books.publisher.publisherName}"></td>
+      <td th:text="${#temporals.format(lendlog.loanDateTime,'yyyy/MM/dd HH:mm:ss')}"></td>
+      <td th:text="${#temporals.format(lendlog.returnDateTime,'yyyy/MM/dd HH:mm:ss')}"></td>
+    </tr>
+  </table>
 </body>
 </html>

@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Books List</title>
+<style>
+    body {
+      margin: 2rem;
+      background-color: #e0f8d8;
+      }
+</style>
 </head>
 <body>
 	  <h2>書籍登録</h2>
@@ -22,7 +28,7 @@
 		  <tr th:each="book : ${colBooksList}">
 			<td th:text="|${book.booksId}-${book.identifyNumber}|" />
 			<td th:text="${book.registrationDate}" />
-			<td th:text="${book.situation}" />
+			<td th:text="${book.situationName}" />
 		  </tr>
 	  </table>
 	

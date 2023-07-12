@@ -2,13 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>新規ユーザー登録</title>
+  <style>
+    body {
+      background-image: url('https://cdn.pixabay.com/photo/2017/12/31/12/38/paper-3052246_1280.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: #000;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 2rem;
+      border-radius: 8px;
+    }
+
+    label {
+      display: inline-block;
+      width: 100px;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      display: inline-block;
+      width: 200px;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .submit-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    input[type="submit"] {
+      padding: 0.75rem 1.5rem;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
   <h2>新規ユーザー登録</h2>
-  <form th:action="@{/signup}" method="POST" th:object="${signupForm}" >
-	<div th:if="${signupError}">
-		<div th:text="${signupError}"></div>
-	</div>
+  <form th:action="@{/signup}" method="POST" th:object="${signupForm}">
+    <div th:if="${signupError}">
+      <div th:text="${signupError}"></div>
+    </div>
     <label for="lastName">性:</label>
     <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required>
     <span th:errors="*{lastName}"></span><br><br>
@@ -16,7 +66,6 @@
     <label for="firstName">名:</label>
     <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required>
     <span th:errors="*{firstName}"></span><br><br>
-
 
     <label for="userId">ユーザーID:</label>
     <input type="uerId" id="userId" name="userId" th:field="*{userId}" required>
@@ -26,7 +75,9 @@
     <input type="password" id="password" name="password" th:field="*{password}" required>
     <span th:errors="*{password}"></span><br><br>
 
-    <input type="submit" value="登録">
+    <div class="submit-wrapper">
+      <input type="submit" value="登録">
+    </div>
   </form>
 </body>
 </html>
