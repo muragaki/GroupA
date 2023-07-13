@@ -15,7 +15,7 @@
 	  
 	  <form th:action="@{/admin/books/colbooksadd}" method="post" th:object="${colBooksForm}">
 		  <input type="hidden" name="bookId" th:value="*{bookId}">
-		  <input type="date" th:field="${colBooksForm.registrationDate}">
+		  <input type="date" name="registrationDate" th:value="*{registrationDate}">
 		  <input type="submit" value="登録">
 	  </form>
 	  
@@ -24,14 +24,27 @@
 			  <th>識別番号</th>
 			  <th>登録日</th>
 			  <th>貸出状況</th>
+			  <th colspan="2">更新</th>
 		  </tr>
-		  <tr th:each="book : ${colBooksList}">
-			<td th:text="|${book.booksId}-${book.identifyNumber}|" />
-			<td th:text="${book.registrationDate}" />
-			<td th:text="${book.situationName}" />
+		  <tr th:each="book : ${colBooksList}" th:object="${book}">
+			<td th:text="|*{booksId}-*{identifyNumber}|" />
+			<td th:text="*{registrationDate}" />
+			<td th:text="*{situationName.text}" />
+			<form th:action="@{/admin/books/updatesituation}" method="post">
+				<td>
+					<select name="situationName">
+						<option th:each="situation : ${situationlist}"
+							th:value="${situation.value}"
+							th:text="${situation.text}" />
+					</select>
+				</td>
+				<td>
+					<input type="hidden" name="colBooksId" th:value="*{colBooksId}">
+					<input type="submit" value="更新">
+				</td>
+			</form>
 		  </tr>
 	  </table>
-	
 
 </body>
 </html>

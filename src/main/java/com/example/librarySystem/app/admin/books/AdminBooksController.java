@@ -1,5 +1,7 @@
 package com.example.librarySystem.app.admin.books;
 
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.librarySystem.domain.model.Books;
 import com.example.librarySystem.domain.model.ColBooks;
 import com.example.librarySystem.domain.model.Genre;
 import com.example.librarySystem.domain.model.Publisher;
+import com.example.librarySystem.domain.model.SituationName;
 import com.example.librarySystem.domain.service.BooksService;
 import com.example.librarySystem.domain.service.ColBooksService;
 import com.example.librarySystem.domain.service.GenreService;
@@ -141,7 +145,12 @@ public class AdminBooksController {
 		List<ColBooks> colBooksList = colBooksService.findBookId(id);
 		
 		colBooksForm.setBookId(id);
+		colBooksForm.setRegistrationDate(LocalDate.now());
+		
+		List<SituationName> situationList = Arrays.asList(SituationName.AVAILABLE,SituationName.LENDING,SituationName.NOT_AVAILABLE);
+		
 		model.addAttribute("colBooksList", colBooksList);
+		model.addAttribute("situationlist", situationList);
 		
 		return "admin/books/colbooks";
 		
@@ -149,7 +158,7 @@ public class AdminBooksController {
 	
 	@PostMapping("admin/books/colbooksadd")
 	public String saveColBooks(@Validated ColBooksForm colBooksForm ,BindingResult br,Model model,RedirectAttributes redirectAttributes) {
-		System.out.println(colBooksForm);
+
 		if(br.hasErrors()) {
 			List<ColBooks> colBooksList = colBooksService.findBookId(colBooksForm.getBookId());
 			model.addAttribute("colBooksList", colBooksList);
@@ -159,6 +168,20 @@ public class AdminBooksController {
 		colBooksService.addColBooks(colBooksForm.getBookId(), colBooksForm.getRegistrationDate());
 		
 		redirectAttributes.addAttribute("id",colBooksForm.getBookId());
+		
+		return "redirect:/admin/books/addcolbook/{id}";
+	}
+	
+	@PostMapping("admin/books/updatesituation")
+	public String updateSituation(@RequestParam Long colBooksId,@RequestParam SituationName situationName, RedirectAttributes redirectAttributes) {
+		
+		System.out.println(situationName);
+		
+		ColBooks colbooks = colBooksService.readColBooksId(colBooksId);
+		colbooks.setSituationName(situationName);
+		
+		colBooksService.saveColBooks(colbooks);
+		redirectAttributes.addAttribute("id", colbooks.getBooksId());
 		
 		return "redirect:/admin/books/addcolbook/{id}";
 	}

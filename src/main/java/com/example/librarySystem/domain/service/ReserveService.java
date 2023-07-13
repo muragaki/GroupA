@@ -34,6 +34,7 @@ public class ReserveService {
 	LendingRepository lendingRepository;
 	
 	final long MAX_RESERVE_PERIOD =7L;
+	final long NON_PESERVE_ID = -1L;
 	
 	public List<Reserve> findDayReserveList(String userId,LocalDate day){
 		return reserveRepository.findByUserIdAndReserveDate(userId, day);
@@ -54,7 +55,7 @@ public class ReserveService {
 	}
 	
 	public Long getReserveColBooksId(ReserveForm reserveForm) {
-		return getReserveColBooksId(reserveForm.getBooksId(),reserveForm.getReserveDate(),reserveForm.getScheduledReturnDate(),-1L);
+		return getReserveColBooksId(reserveForm.getBooksId(),reserveForm.getReserveDate(),reserveForm.getScheduledReturnDate(),this.NON_PESERVE_ID);
 	}
 	
 	
@@ -62,7 +63,7 @@ public class ReserveService {
 		TreeSet<Long> colBooksSet = this.checkReserveSet(booksId,reserveDate,reserveId);
 		
 		if(colBooksSet.size()==0) {
-			return -1L;
+			return this.NON_PESERVE_ID;
 		}
 		
 		Reserve reserve = reserveRepository.findTopByColBooksIdInAndReserveDateAfterOrderByReserveDateAsc(colBooksSet, scheduledReturnDate);
@@ -118,11 +119,11 @@ public class ReserveService {
 	}
 	
 	public TreeSet<Long> checkReserveSet(ReserveDateForm reserveDateForm) {
-		return this.checkReserveSet(reserveDateForm.getBooksId(), reserveDateForm.getReserveDate(),-1L);
+		return this.checkReserveSet(reserveDateForm.getBooksId(), reserveDateForm.getReserveDate(),this.NON_PESERVE_ID);
 	}
 	
 	public TreeSet<Long> checkReserveSet(ReserveForm reserveForm) {
-		return this.checkReserveSet(reserveForm.getBooksId(), reserveForm.getReserveDate(),-1L);
+		return this.checkReserveSet(reserveForm.getBooksId(), reserveForm.getReserveDate(),this.NON_PESERVE_ID);
 	}
 	
 	
@@ -156,11 +157,11 @@ public class ReserveService {
 	}
 	
 	public long searchMaxReservePeriod(ReserveDateForm reserveDateForm) {
-		return searchMaxReservePeriod(reserveDateForm.getBooksId(),reserveDateForm.getReserveDate(),-1L);
+		return searchMaxReservePeriod(reserveDateForm.getBooksId(),reserveDateForm.getReserveDate(),this.NON_PESERVE_ID);
 	}
 	
 	public long searchMaxReservePeriod(ReserveForm reserveForm) {
-		return searchMaxReservePeriod(reserveForm.getBooksId(),reserveForm.getReserveDate(),-1L);
+		return searchMaxReservePeriod(reserveForm.getBooksId(),reserveForm.getReserveDate(),this.NON_PESERVE_ID);
 	}
 	
 	
