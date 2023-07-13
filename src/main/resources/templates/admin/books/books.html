@@ -11,87 +11,126 @@
       background-color: #e0f8d8;
     }
 
-    h2 {
-      text-align: center;
-    }
+   h2 {
+  text-align: center;
+}
 
-    .container {
-      max-width: 2000px;
-      margin: 0 auto;
-    }
+.container {
+  max-width: 2000px;
+  margin: 0 auto;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      background-color: #f8f8f8;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #f8f8f8;
+}
 
-    th,
-    td {
-      padding: 0.65rem;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
+th,
+td {
+  padding: 0.65rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
 
-    th {
-      background-color: #f5f5f5;
-      font-weight: bold;
-    }
+th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
 
-    .no-books {
-      text-align: center;
-      margin-top: 1rem;
-    }
-    
-    .search-form {
-      margin-top: 1rem;
-      text-align: center;
-    }
+.no-books {
+  text-align: center;
+  margin-top: 1rem;
+}
 
-    .search-input {
-      padding: 0.5rem;
-      width: 100%;
-    }
+.search-form {
+  margin-top: 1rem;
+  text-align: center;
+}
 
-    .search-button {
-      padding: 0.5rem 1rem;
-      background-color: #6CAE75;
-      color: white;
-      border: none;
-      width: 100%;
-    }
+.search-input {
+  padding: 0.5rem;
+  width: 100%;
+}
 
-    .search-inputs {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
+.search-button {
+  padding: 0.1rem 1rem;
+  background-color: #6CAE75;
+  color: white;
+  border: none;
+  width: 100%;
+}
 
-    .search-inputs label {
-      margin-right: 1rem;
-    }
+.search-inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.search-inputs label {
+  margin-right: 1rem;
+}
+
+.button-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.button-link a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #6CAE75;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  border: none;
+}
+
+.button-link a:hover {
+  background-color: #558c5e;
+}
+
+.button-link button {
+  display: inline-block;
+  padding: 0.1rem 1rem;
+  background-color: #6CAE75;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 1s ease;
+  border: none;
+}
+
+.button-link button:hover {
+  background-color: #558c5e;
+}
+
   </style>
 </head>
 <body>
   <h2>Books List</h2>
-
+  
   <div class="container">
-    <a th:href="@{/admin/books/newbooks}">書籍登録</a>
+    <div class="button-link">
+      <button onclick="location.href='/admin/books/newbooks'">書籍登録</button>
+      <a th:href="@{/admin/menu}">戻る</a>
+    </div>
   
     <div class="search-form">
       <form th:action="@{/admin/books/bookssearch}" method="post" th:object="${adminSearchBooksForm}">
         <table>
-			  <tr>
-        <th>ジャンル</th>
-        <th>書名</th>
-        <th>著者</th>
-        <th>出版社</th>
-        <th>発売日</th>
-        <th></th>
-        <th>概要</th>
-      </tr>
+          <tr>
+            <th>ジャンル</th>
+            <th>書名</th>
+            <th>著者</th>
+            <th>出版社</th>
+            <th>発売日</th>
+            <th></th>
+            <th>概要</th>
+          </tr>
           <tr>
             <td>
               <select name="genre" th:field="*{genreName}">

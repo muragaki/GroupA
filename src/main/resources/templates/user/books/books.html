@@ -10,25 +10,26 @@
     }
 
     body {
-      background-image: url('https://images.unsplash.com/photo-1591951425328-48c1fe7179cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80');
+       background-image: url('https://images.unsplash.com/photo-1591951425328-48c1fe7179cd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
+      background-attachment: fixed; /* 背景固定を追加 */
       margin: 0;
       padding: 10rem;
     }
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 2rem;
-      border-radius: 8px;
+      border-radius: 10px;
       background-color: rgba(255, 255, 255, 0.8);
     }
 
     h1 {
       text-align: center;
       color: #333;
-      margin-bottom: 2rem;
+      margin-bottom: 10rem;
     }
 
     table {
@@ -149,6 +150,8 @@
     .no-underline {
       text-decoration: none;
     }
+    
+    
   </style>
 </head>
 
@@ -160,6 +163,7 @@
       <div class="form-group">
         <label for="genre">ジャンル:</label>
         <select name="genre" id="genre" th:field="*{genreName}">
+          <option value="">全て</option>
           <option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreName}" />
         </select>
       </div>
@@ -174,6 +178,7 @@
       <div class="form-group">
         <label for="publisher">出版社:</label>
         <select name="publisher" id="publisher" th:field="*{publisherName}">
+          <option value="">全て</option>
           <option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherName}" />
         </select>
       </div>
