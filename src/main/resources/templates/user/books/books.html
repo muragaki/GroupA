@@ -160,7 +160,6 @@
       <div class="form-group">
         <label for="genre">ジャンル:</label>
         <select name="genre" id="genre" th:field="*{genreName}">
-          <option value="">全て</option>
           <option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreName}" />
         </select>
       </div>
@@ -175,7 +174,6 @@
       <div class="form-group">
         <label for="publisher">出版社:</label>
         <select name="publisher" id="publisher" th:field="*{publisherName}">
-          <option value="">全て</option>
           <option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherName}" />
         </select>
       </div>
