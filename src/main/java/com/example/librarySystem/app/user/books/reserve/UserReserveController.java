@@ -54,8 +54,8 @@ public class UserReserveController {
 	
 	
 	@PostMapping("user/books/reserve")
-	public String reserve(@RequestParam("bookId") Integer bookId, ReserveForm reserveDateForm, Model model) {
-		reserveDateForm.setBooksId(bookId);
+	public String reserve(@RequestParam("bookId") Integer bookId, ReserveForm reserveForm, Model model) {
+		reserveForm.setBooksId(bookId);
 		return "/user/books/reserve/reserve";
 	}
 	
