@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
@@ -29,12 +29,12 @@ public class Lending {
 	private Long lendingId;
 	@NotNull
 	private String userId;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="userId", insertable=false, updatable=false)
 	private User user;
 	@NotNull
 	private Long colBooksId;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="colBooksId", insertable=false, updatable=false)
 	private ColBooks colBooks;
 	@Past

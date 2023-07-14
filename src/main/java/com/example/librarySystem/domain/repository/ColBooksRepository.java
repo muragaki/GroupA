@@ -16,6 +16,12 @@ public interface ColBooksRepository extends JpaRepository<ColBooks, Long> {
 	List<ColBooks> findByBooksIdAndSituationName(Integer booksId,SituationName situationName);
 
 	List<ColBooks> findByBooksIdAndSituationNameIn(Integer booksId,List<SituationName> stiuationName);
-	
+	/*
+	@Query( "SELECT colbooks FROM ColBooks colbooks "
+			+ "LEFT JOIN (SELECT books FROM Books books "
+						+ "LEFT JOIN Publisher publisher ON books.publisherId = publisher.publisherId) "
+			+ "ON colbooks.booksId = books.bookId")
+	List<ColBooks> test();
+	*/
 	
 }
