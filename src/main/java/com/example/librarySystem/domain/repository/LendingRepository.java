@@ -21,20 +21,18 @@ public interface LendingRepository extends JpaRepository<Lending, Long> {
 	
 	
 	@Query("SELECT lending FROM Lending lending "
-		 + "JOIN ColBooks colBooks ON lending.colBooksId = colBooks.colBooksId "
-		 + "WHERE CASE WHEN :title IS NULL THEN true "
+		 + "WHERE CASE WHEN :bookId IS NULL THEN true "
+		 	+ "ELSE lending.colBooks.booksId = :bookId END "
+		 + "AND CASE WHEN :identifyNumber IS NULL THEN true "
+		 	+ "ELSE lending.colBooks.identifyNumber = :identifyNumber END "
+		 + "AND CASE WHEN :title IS NULL THEN true "
 			+ "ELSE lending.colBooks.books.title LIKE %:title% END "
 		 + "AND CASE WHEN :author IS NULL THEN true "
 			+ "ELSE lending.colBooks.books.author LIKE %:author% END " 
 		 + "AND lending.loanDateTime BETWEEN :fromLoanDateTime AND :toLoanDateTime "
-		 + "AND lending.scheduledReturnDate BETWEEN :fromReturnDate AND :toReturnDate "
-		 + "AND CASE WHEN :bookId IS NULL THEN true "
-		 	+ "ELSE lending.colBooks.booksId = :bookId END "
-		 + "AND CASE WHEN :identifyNumber IS NULL THEN true "
-		 	+ "ELSE lending.colBooks.identifyNumber = :identifyNumber END")
-	public List<Books> findSearch(String title,  String author,
-								  LocalDateTime fromLoanDateTime,LocalDateTime toLoanDateTime,
-								  LocalDate fromReturnDate,  LocalDate toReturnDate,
-								  Integer bookId , Integer identifyNumber);
+		 + "AND lending.scheduledReturnDate BETWEEN :fromReturnDate AND :toReturnDate ")
+	public List<Books> findSearch(Integer bookId, Integer identifyNumber,String title, String author,
+								  LocalDateTime fromLoanDateTime, LocalDateTime toLoanDateTime,
+								  LocalDate fromReturnDate, LocalDate toReturnDate);
 			
 }

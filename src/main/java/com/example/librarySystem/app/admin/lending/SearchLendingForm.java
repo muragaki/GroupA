@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class SearchlLendingForm {
+public class SearchLendingForm {
 
 	private Integer booksId;
 	private Integer identifyNumber;
@@ -22,7 +22,7 @@ public class SearchlLendingForm {
 	@Past
 	private LocalDate toLoanDate;
 	@Past
-	private LocalDate fromreRurnDate;
+	private LocalDate fromReurnDate;
 	@Past
 	private LocalDate toReturnDate;
 	
