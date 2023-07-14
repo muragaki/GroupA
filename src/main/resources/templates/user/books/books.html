@@ -159,7 +159,7 @@
   <div class="container">
     <h1>Books List</h1>
 
-    <form th:action="@{/user/books}" method="post" th:object="${userSearchBooksForm}" class="text-center">
+    <form th:action="@{/user/books}" method="post" th:object="${searchBooksForm}" class="text-center">
       <div class="form-group">
         <label for="genre">ジャンル:</label>
         <select name="genre" id="genre" th:field="*{genreName}">

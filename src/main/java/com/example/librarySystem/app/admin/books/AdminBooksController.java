@@ -5,11 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +24,7 @@ import com.example.librarySystem.domain.model.Books;
 import com.example.librarySystem.domain.model.ColBooks;
 import com.example.librarySystem.domain.model.Genre;
 import com.example.librarySystem.domain.model.Publisher;
+import com.example.librarySystem.domain.model.SearchBooksForm;
 import com.example.librarySystem.domain.model.SituationName;
 import com.example.librarySystem.domain.service.BooksService;
 import com.example.librarySystem.domain.service.ColBooksService;
@@ -52,17 +56,22 @@ public class AdminBooksController {
 		return new ColBooksForm();
 	}
 	
-	@ModelAttribute("adminSearchBooksForm")
-	public AdminSearchBooksForm setUserSearchBooksForm() {
+	@ModelAttribute("searchBooksForm")
+	public SearchBooksForm setSearchBooksForm() {
 		return new AdminSearchBooksForm();
+	}
+	
+	@InitBinder("searchBooksForm")
+	public void initBinderForuserSerchBooksForm(WebDataBinder webDataBinder) {
+		webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 
 	@RequestMapping("admin/books")
-	public String books(AdminSearchBooksForm adminsearchBooksForm ,Model model) {
+	public String books(SearchBooksForm searchBooksForm ,Model model) {
 		
-		System.out.println(adminsearchBooksForm);
+		System.out.println(searchBooksForm);
 		
-		List<Books> bookslist = booksService.searchBooks(adminsearchBooksForm);
+		List<Books> bookslist = booksService.searchBooks(searchBooksForm);
 		List<Genre> genrelist = genreService.readSearchAll();
 		List<Publisher> publisherlist = publisherService.readSearchAll();
 		

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.example.librarySystem.app.user.books.reserve.ReserveDateForm;
 import com.example.librarySystem.app.user.books.reserve.ReserveForm;
 import com.example.librarySystem.domain.model.ColBooks;
+import com.example.librarySystem.domain.model.DayMaxPeriod;
 import com.example.librarySystem.domain.model.Lending;
 import com.example.librarySystem.domain.model.Reserve;
 import com.example.librarySystem.domain.model.SituationName;
@@ -171,6 +172,23 @@ public class ReserveService {
 	
 	public void deleteReserve(Long reserveId) {
 		reserveRepository.deleteById(reserveId);
+	}
+	
+	public List<DayMaxPeriod> findMaxPeriodList(Integer booksId){
+		
+		List<DayMaxPeriod> monthList = new ArrayList<DayMaxPeriod>();
+		LocalDate startDay = LocalDate.now();
+		
+		for(int i = 1 ; i <= 30 ; i++) {
+			DayMaxPeriod day = new DayMaxPeriod();
+			day.setDay(startDay.plusDays(i));
+			day.setMaxPeriod(this.searchMaxReservePeriod(booksId, day.getDay(), this.NON_PESERVE_ID));
+			monthList.add(day);
+		}
+		
+		return monthList;
+		
+		
 	}
 	
 }

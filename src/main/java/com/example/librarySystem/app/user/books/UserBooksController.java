@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import com.example.librarySystem.domain.model.ColBooks;
 import com.example.librarySystem.domain.model.Genre;
 import com.example.librarySystem.domain.model.Lending;
 import com.example.librarySystem.domain.model.Publisher;
+import com.example.librarySystem.domain.model.SearchBooksForm;
 import com.example.librarySystem.domain.model.SituationName;
 import com.example.librarySystem.domain.service.BooksService;
 import com.example.librarySystem.domain.service.ColBooksService;
@@ -69,15 +71,22 @@ public class UserBooksController {
 		webDataBinder.addValidators(lendValidator);
 	}
 	
-	@ModelAttribute("userSerchBooksForm")
-	public UserSearchBooksForm setUserSearchBooksForm() {
-		return new UserSearchBooksForm();
+	@ModelAttribute("serchBooksForm")
+	public SearchBooksForm setSearchBooksForm() {
+		return new SearchBooksForm();
+	}
+	
+	@InitBinder("searchBooksForm")
+	public void initBinderForuserSerchBooksForm(WebDataBinder webDataBinder) {
+		webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 
 	@RequestMapping("user/books")
-	public String books(UserSearchBooksForm userSearchBooksForm ,Model model) {
+	public String books(SearchBooksForm searchBooksForm ,Model model) {
 		
-		List<Books> bookslist = booksService.searchBooks(userSearchBooksForm);
+		System.out.println(searchBooksForm);
+		
+		List<Books> bookslist = booksService.searchBooks(searchBooksForm);
 		List<Genre> genrelist = genreService.readSearchAll();
 		List<Publisher> publisherlist = publisherService.readSearchAll();
 		

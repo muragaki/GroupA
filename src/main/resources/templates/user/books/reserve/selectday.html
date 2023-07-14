@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>日付選択</h3>
+	
+	<table>
+		<tr>
+			<th>日付</th>
+			<th>予約可能日数</th>
+			<th>選択</th>
+		</tr>
+		<tr th:each="day : ${monthlist}">
+			<td th:text="${day.day}" />
+			<td th:text="|最大 ${day.maxPeriod} 日|" />
+			<td>
+			<form th:action="@{/user/books/reserve}" method="post">
+				<input type="hidden" name="reserveDate" th:value="${day.day}">
+				<input type="hidden" name="bookId" th:value="${bookId}">
+				<input type="submit" value="選択">
+			</form>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

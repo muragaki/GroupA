@@ -107,7 +107,7 @@
 	  <div th:if="${check == 'false'}">
 		  <input type="submit" value="貸出中" style="padding: 0.5rem 1rem; background-color: rgb(128, 128, 128); color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;" disable>
 	  </div>
-    <form th:action="@{/user/books/reserve}" method="post">
+    <form th:action="@{/user/books/reserve/selectday}" method="post">
       <input type="hidden" name="bookId" th:value="${book.bookId}">
       <input type="submit" value="予約" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
     </form>

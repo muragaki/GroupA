@@ -1,5 +1,8 @@
 package com.example.librarySystem.app.user.books.reserve;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.librarySystem.domain.model.DayMaxPeriod;
 import com.example.librarySystem.domain.model.Reserve;
 import com.example.librarySystem.domain.service.ColBooksService;
 import com.example.librarySystem.domain.service.LendingService;
@@ -54,8 +58,9 @@ public class UserReserveController {
 	
 	
 	@PostMapping("user/books/reserve")
-	public String reserve(@RequestParam("bookId") Integer bookId, ReserveForm reserveForm, Model model) {
+	public String reserve(@RequestParam("bookId") Integer bookId,@RequestParam LocalDate reserveDate, ReserveForm reserveForm, Model model) {
 		reserveForm.setBooksId(bookId);
+		reserveForm.setReserveDate(reserveDate);
 		return "/user/books/reserve/reserve";
 	}
 	
@@ -88,6 +93,14 @@ public class UserReserveController {
 		
 		return "/user/books/reserve/reserveconf";
 		
+	}
+	
+	@PostMapping("/user/books/reserve/selectday")
+	public String selectDay(@RequestParam("bookId") Integer bookId,Model model) {
+		List<DayMaxPeriod> monthList = reserveService.findMaxPeriodList(bookId);
+		model.addAttribute("monthlist", monthList);
+		model.addAttribute("bookId", bookId);
+		return "user/books/reserve/selectday";
 	}
 
 }
