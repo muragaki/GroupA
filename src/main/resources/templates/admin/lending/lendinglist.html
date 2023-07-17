@@ -84,7 +84,7 @@
 
   <div class="container">
     <div class="search-form">
-      <form th:action="@{/lending/search}" method="get" th:object>
+      <form th:action="@{/admin/lending}" method="post" th:object="${searchLendingForm}">
        <table>
 		   <tr>
 			   <th colspan="3">識別番号</th>

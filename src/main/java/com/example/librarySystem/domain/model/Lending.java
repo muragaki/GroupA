@@ -3,6 +3,7 @@ package com.example.librarySystem.domain.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,8 +38,10 @@ public class Lending {
 	@OneToOne
 	@JoinColumn(name="colBooksId", insertable=false, updatable=false)
 	private ColBooks colBooks;
+	@Column(columnDefinition = "TIMESTAMP")
 	@Past
 	private LocalDateTime loanDateTime;
+	@Column(columnDefinition = "DATE")
 	@Future
 	private LocalDate scheduledReturnDate;
 	

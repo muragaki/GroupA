@@ -1,7 +1,6 @@
 package com.example.librarySystem.domain.service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +38,28 @@ public class LendingService {
 	
 	public List<Lending> findSearch(SearchLendingForm searchLendingForm){
 		
-		if(searchLendingForm.getFromLoanDate()==null) {
-			searchLendingForm.setFromLoanDate(LocalDate.of(1,1,1));
-		}
-		if(searchLendingForm.getToLoanDate()==null) {
-			searchLendingForm.setToLoanDate(LocalDate.now());
-		}
 		
-		LocalDateTime fromLoanDateTime = searchLendingForm.getFromLoanDate().atStartOfDay();
-		LocalDateTime toLoanDateTime =searchLendingForm.getToLoanDate().atTime(23, 59, 59);
+		Date fromLoanDateTime = null;
+		Date toLoanDateTime = null;
 		
-		return null;
+		/*
+		if(searchLendingForm.getFromLoanDate() != null) {
+			fromLoanDateTime = Timestamp.valueOf(searchLendingForm.getFromLoanDate().atStartOfDay()).toString();
+		}
+		if(searchLendingForm.getToLoanDate() != null) {
+			//toLoanDateTime = Date.from(ZonedDateTime.of(searchLendingForm.getToLoanDate().atTime(23, 59, 59),ZoneId.systemDefault()).toInstant());
+			toLoanDateTime = Timestamp.valueOf(searchLendingForm.getToLoanDate().atTime(23, 59, 59)).toString();
+		}
+		*/
+		return lendingRepository.findSearch(fromLoanDateTime, toLoanDateTime);
+		
+		/*
+		return lendingRepository.findSearch(searchLendingForm.getBooksId(), searchLendingForm.getIdentifyNumber(),
+											searchLendingForm.getTitle(), searchLendingForm.getAuthor(),
+											fromLoanDateTime,toLoanDateTime,
+											searchLendingForm.getFromLoanDate(),searchLendingForm.getToReturnDate());
+		
+		*/
 		
 	}
 }
