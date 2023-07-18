@@ -96,7 +96,7 @@ public class UserReserveController {
 	
 	@PostMapping("/user/books/reserve/selectday")
 	public String selectDay(@RequestParam("bookId") Integer bookId,Model model) {
-		List<DayMaxPeriod> monthList = reserveService.findMaxPeriodList(bookId);
+		List<List<DayMaxPeriod>> monthList = reserveService.findMaxPeriodList(bookId);
 		model.addAttribute("monthlist", monthList);
 		model.addAttribute("bookId", bookId);
 		return "user/books/reserve/selectday";

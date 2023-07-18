@@ -1,6 +1,7 @@
 package com.example.librarySystem.domain.service;
 
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -88,20 +89,28 @@ public class ReserveService {
 		return reserveRepository.save(reserve);
 	}
 	
-	
-	public TreeSet<Long> checkReserveSet(Integer booksId,LocalDate reserveDate,Long reserveId){
-		TreeSet<Long> colBooksSet = new TreeSet<>();
-		
+	public TreeSet<Long> checkAvailableBooksSet(Integer booksId){
+
+		TreeSet<Long> availableBooksSet = new TreeSet<>();
+
 		List<SituationName> situationNamelist = new ArrayList<SituationName>(Arrays.asList(SituationName.AVAILABLE,SituationName.LENDING));
 		List<ColBooks> colBooksList = colBooksRepository.findByBooksIdAndSituationNameIn(booksId, situationNamelist);
-		
+
 		if(colBooksList.isEmpty()) {
-			return colBooksSet;
+			return availableBooksSet;
+		}
+
+		for(ColBooks cb : colBooksList) {
+			availableBooksSet.add(cb.getColBooksId());
 		}
 		
-		for(ColBooks cb : colBooksList) {
-			colBooksSet.add(cb.getColBooksId());
-		}
+		return availableBooksSet;
+	}
+	
+	
+	public TreeSet<Long> checkReserveSet(TreeSet<Long> availableBooksSet,LocalDate reserveDate,Long reserveId){
+		
+		TreeSet<Long> colBooksSet = new TreeSet<>(availableBooksSet);
 		
 		List<Lending> lendinlist = lendingRepository.findByColBooksIdInAndScheduledReturnDateGreaterThanEqual(colBooksSet, reserveDate);
 		if(!lendinlist.isEmpty()) {
@@ -117,6 +126,10 @@ public class ReserveService {
 		
 		return colBooksSet;
 		
+	}
+	
+	public TreeSet<Long> checkReserveSet(Integer booksId,LocalDate reserveDate,Long reserveId){
+		return this.checkReserveSet(checkAvailableBooksSet(booksId), reserveDate, reserveId);
 	}
 	
 	public TreeSet<Long> checkReserveSet(ReserveDateForm reserveDateForm) {
@@ -153,6 +166,10 @@ public class ReserveService {
 		return maxPeriod;
 	}
 	
+	public long searchMaxReservePeriod(TreeSet<Long> availableBooksSet,LocalDate reserveDate,Long reserveId) {
+		return searchMaxReservePeriod(checkReserveSet(availableBooksSet,reserveDate,reserveId),reserveDate);
+	}
+	
 	public long searchMaxReservePeriod(Integer booksId,LocalDate reserveDate,Long reserveId) {
 		return searchMaxReservePeriod(checkReserveSet(booksId,reserveDate,reserveId),reserveDate);
 	}
@@ -166,6 +183,8 @@ public class ReserveService {
 	}
 	
 	
+	
+	
 	public Reserve readReserve(long id,String userId) {
 		return reserveRepository.findByReserveIdAndUserId(id,userId);
 	}
@@ -174,21 +193,46 @@ public class ReserveService {
 		reserveRepository.deleteById(reserveId);
 	}
 	
-	public List<DayMaxPeriod> findMaxPeriodList(Integer booksId){
+	public List<List<DayMaxPeriod>> findMaxPeriodList(Integer booksId){
 		
-		List<DayMaxPeriod> monthList = new ArrayList<DayMaxPeriod>();
+		List<List<DayMaxPeriod>> monthList = new ArrayList<List<DayMaxPeriod>>();
 		LocalDate startDay = LocalDate.now();
+		
+		List<DayMaxPeriod> weekList = new ArrayList<DayMaxPeriod>();
+	
+		if(!startDay.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+			int minus = startDay.getDayOfWeek().getValue();
+			if(minus == DayOfWeek.SUNDAY.getValue()) {
+				minus = 0;
+			}
+			for(int i = 0 ; i <= minus ; i++) {
+				weekList.add(new DayMaxPeriod( null , -1L));
+			}
+
+		}
+		
+		TreeSet<Long> availableBooksSet = checkAvailableBooksSet(booksId);
 		
 		for(int i = 1 ; i <= 30 ; i++) {
 			DayMaxPeriod day = new DayMaxPeriod();
 			day.setDay(startDay.plusDays(i));
-			day.setMaxPeriod(this.searchMaxReservePeriod(booksId, day.getDay(), this.NON_PESERVE_ID));
-			monthList.add(day);
+			day.setMaxPeriod(this.searchMaxReservePeriod(availableBooksSet, day.getDay(), this.NON_PESERVE_ID));
+			weekList.add(day);
+			if(day.getDay().getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+				monthList.add(weekList);
+				weekList = new ArrayList<DayMaxPeriod>();
+			}
+		}
+		
+		if(!weekList.isEmpty()) {
+			for(int i = weekList.get(weekList.size()-1).getDay().getDayOfWeek().getValue() ; i < DayOfWeek.SATURDAY.getValue() ;i++) {
+				weekList.add(new DayMaxPeriod(null, -1L));
+			}
+			monthList.add(weekList);
 		}
 		
 		return monthList;
-		
-		
+	
 	}
 	
 }

@@ -9,21 +9,25 @@
 	
 	<table>
 		<tr>
-			<th>日付</th>
-			<th>予約可能日数</th>
-			<th>選択</th>
+			<th>日曜日</th>
+			<th>月曜日</th>
+			<th>火曜日</th>
+			<th>水曜日</th>
+			<th>木曜日</th>
+			<th>金曜日</th>
+			<th>土曜日</th>
 		</tr>
-		<tr th:each="day : ${monthlist}">
-			<td th:text="${day.day}" />
-			<td th:text="|最大 ${day.maxPeriod} 日|" />
-			<td>
-			<form th:action="@{/user/books/reserve}" method="post">
-				<input type="hidden" name="reserveDate" th:value="${day.day}">
-				<input type="hidden" name="bookId" th:value="${bookId}">
-				<input type="submit" value="選択">
-			</form>
-			</td>
-		</tr>
+			<tr th:each="weeklist : ${monthlist}">
+				<td th:each="day : ${weeklist}">
+					[[${#temporals.format(day.day,'M月dd日')}]] <br>
+				<form th:action="@{/user/books/reserve}" method="post">
+					<input type="hidden" name="reserveDate" th:value="${day.day}">
+					<input type="hidden" name="bookId" th:value="${bookId}">
+					<input th:if="${day.maxPeriod} > 0 " type="submit" th:value="|最大 ${day.maxPeriod} 日|">
+					<input th:if="${day.maxPeriod} == null " type="submit" value="予約不可" disable>
+				</form>
+				</td>
+			</tr>
 	</table>
 
 </body>
