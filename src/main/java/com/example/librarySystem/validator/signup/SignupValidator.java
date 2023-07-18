@@ -23,8 +23,9 @@ public class SignupValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		
 		SignupForm form = (SignupForm)target;
+		
 		if(superUserDetailsService.checkId(form.getUserId())) {
-			errors.rejectValue("userId", "com.example.librarySystem.validator.signup.SignupValidator.message");
+			errors.rejectValue("userId", "com.example.librarySystem.validator.signup.SignupValidator.SameIdMessage");
 		}
 		
 	}
