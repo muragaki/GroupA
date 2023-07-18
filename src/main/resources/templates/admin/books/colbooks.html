@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <title>Books List</title>
@@ -7,44 +8,74 @@
     body {
       margin: 2rem;
       background-color: #e0f8d8;
-      }
+    }
+    
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    
+    .button-container form {
+      margin: 0 0.5rem;
+    }
+    
+    .button-container input[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .button-container input[type="submit"]:hover {
+      background-color: #558c5e;
+    }
 </style>
 </head>
 <body>
-	  <h2>書籍登録</h2>
-	  
-	  <form th:action="@{/admin/books/colbooksadd}" method="post" th:object="${colBooksForm}">
-		  <input type="hidden" name="bookId" th:value="*{bookId}">
-		  <input type="date" name="registrationDate" th:value="*{registrationDate}">
-		  <input type="submit" value="登録">
-	  </form>
-	  
-	  <table>
-		  <tr>
-			  <th>識別番号</th>
-			  <th>登録日</th>
-			  <th>貸出状況</th>
-			  <th colspan="2">更新</th>
-		  </tr>
-		  <tr th:each="book : ${colBooksList}" th:object="${book}">
-			<td th:text="|*{booksId}-*{identifyNumber}|" />
-			<td th:text="*{registrationDate}" />
-			<td th:text="*{situationName.text}" />
-			<form th:action="@{/admin/books/updatesituation}" method="post">
-				<td>
-					<select name="situationName">
-						<option th:each="situation : ${situationlist}"
-							th:value="${situation.value}"
-							th:text="${situation.text}" />
-					</select>
-				</td>
-				<td>
-					<input type="hidden" name="colBooksId" th:value="*{colBooksId}">
-					<input type="submit" value="更新">
-				</td>
-			</form>
-		  </tr>
-	  </table>
+  <h2>書籍登録</h2>
+  
+  <form th:action="@{/admin/books/colbooksadd}" method="post" th:object="${colBooksForm}">
+    <input type="hidden" name="bookId" th:value="*{bookId}">
+    <input type="date" name="registrationDate" th:value="*{registrationDate}">
+    <input type="submit" value="登録">
+  </form>
+  
+  <table>
+    <tr>
+      <th>識別番号</th>
+      <th>登録日</th>
+      <th>貸出状況</th>
+      <th colspan="2">更新</th>
+    </tr>
+    <tr th:each="book : ${colBooksList}" th:object="${book}">
+      <td th:text="|*{booksId}-*{identifyNumber}|" />
+      <td th:text="*{registrationDate}" />
+      <td th:text="*{situationName.text}" />
+      <form th:action="@{/admin/books/updatesituation}" method="post">
+        <td>
+          <select name="situationName">
+            <option th:each="situation : ${situationlist}"
+              th:value="${situation.value}"
+              th:text="${situation.text}" />
+          </select>
+        </td>
+        <td>
+          <input type="hidden" name="colBooksId" th:value="*{colBooksId}">
+          <input type="submit" value="更新">
+        </td>
+      </form>
+    </tr>
+  </table>
+
+  <div class="button-container">
+    <form th:action="@{/admin/books/edit/30}" method="get">
+      <input type="submit" value="戻る" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
+    </form>
+  </div>
 
 </body>
 </html>

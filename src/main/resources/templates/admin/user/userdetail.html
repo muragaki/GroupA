@@ -14,9 +14,14 @@
       text-align: center;
       color: #333;
     }
+     h4 {
+      text-align: center;
+      color: #333;
+      
+    }
 
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
@@ -31,13 +36,13 @@
 
     .no-record {
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 4rem;
     }
 
     table {
       border-collapse: collapse;
       width: 100%;
-      margin-top: 2rem;
+      margin-top: 4rem;
       background-color: #f8f8f8;
     }
 
@@ -52,24 +57,31 @@
       background-color: #f2f2f2;
     }
 
-    .edit-button {
+    .button-container {
       text-align: center;
       margin-top: 2rem;
     }
 
-    .edit-button input[type="submit"] {
-      padding: 0.5rem 1rem;
+    .button-container form {
+      display: inline-block;
+      margin-right: 0.5px;
+    }
+
+    .button-container input[type="submit"] {
+      padding: 0.5rem 2rem;
       background-color: #6CAE75;
       color: #fff;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 2s ease;
+      font-size: 1.2rem;
     }
 
-    .edit-button input[type="submit"]:hover {
+    .button-container input[type="submit"]:hover {
       background-color: #558c5e;
     }
+
   </style>
 </head>
 <body>
@@ -87,6 +99,7 @@
     </div>
     
     <table>
+		<h4>現在利用中</h4>
       <tr>
         <th>書籍名</th>
         <th>作者</th>
@@ -104,6 +117,7 @@
     </table>
     
     <table>
+		<h4>利用履歴</h4>
       <tr>
         <th>書籍名</th>
         <th>作者</th>
@@ -120,10 +134,13 @@
       </tr>
     </table>
 
-    <div class="edit-button">
+    <div class="button-container">
       <form th:action="@{/admin/user/useredit}">
         <input type="hidden" name="userId" th:value="${u.userId}">
         <input type="submit" value="編集">
+      </form>
+      <form th:action="@{/admin/user}" method="get">
+        <input type="submit" value="戻る">
       </form>
     </div>
   </div>

@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
 <style>
 body {
-  margin: 2rem;
+  margin: 0;
   background-image: url('https://cdn.pixabay.com/photo/2017/08/07/15/18/boy-2604853_1280.jpg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -17,6 +17,7 @@ body {
   justify-content: center;
   height: 100vh;
   font-family: Arial, sans-serif;
+  color: rgb(0, 0, 64);
 }
 
 .container {
@@ -26,14 +27,15 @@ body {
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
 }
 
 table {
   margin: 0 auto;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
+  color: #333;
 }
 
 td:first-child {
@@ -47,7 +49,7 @@ td:first-child {
 }
 
 a {
-  color: #333;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -77,9 +79,11 @@ a:hover {
       <td th:text="${lending.scheduledReturnDate}" />
     </tr>
   </table>
-
-  <div class="message">
-    <a th:href="@{/user/books}">書籍一覧に戻る</a>
+	
+  <div class="button-container">
+    <form th:action="@{/user/books}" method="get">
+      <input type="submit" value="書籍一覧に戻る" style="padding: 0.2rem 0.5rem; background-color: rgba(128, 128, 255, 0.8); color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
+    </form>
   </div>
 </div>
 </body>

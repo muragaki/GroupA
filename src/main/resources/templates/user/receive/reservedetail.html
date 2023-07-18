@@ -3,34 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <title>貸出画面</title>
+
+<style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1514593214839-ce1849100055?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 8rem;
+      color: #000;
+    }
+
+    input[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #4CAF50; 
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .form-actions {
+      margin-bottom: 2rem; 
+      display: flex;
+    }
+
+    .form-actions form {
+      margin-right: 1rem;
+    }
+
+    .button-link {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #4CAF50;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.1s ease;
+      border: none;
+    }
+
+    .button-link:hover {
+      background-color: #45a049;
+    }
+     .text-format {
+      padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      width: 25%; /* 横幅を調整する値を指定します */
+      margin: 15 auto; /* 中央に配置するためのマージン指定 */
+      
+      }
+        .button-container {
+      margin-top: 1rem;
+    }
+
+</style>
+
 </head>
 <body>
-	<table th:object="${reserve}">
-		<tr>
-			<td>書名</td><td th:text="*{colBooks.books.title}" />
-		</tr>
-		<tr>
-			<td>著者</td><td th:text="*{colBooks.books.author}" />
-		</tr>
-		<tr>
-			<td>出版社</td><td th:text="*{colBooks.books.publisher.publisherName}" />
-		</tr>
-		<tr>
-			<td>予約日</td><td th:text="*{reserveDate}" />
-		</tr>
-		<tr>
-			<td>返却日</td><td th:text="*{scheduledReturnDate}" />
-		</tr>	
-	</table>
-	<form th:action="@{/user/receive/reserveedit}" method="post">
-		<input type="hidden" name="reserveId" th:value="${reserve.reserveId}">
-		<input type="submit" value="変更">
-	</form>
-	<form th:action="@{/user/receive/reservedelete}" method="post">
-		<input type="hidden" name="reserveId" th:value="${reserve.reserveId}">
-		<input type="submit" value="削除">
-	</form>
-	<br>
-	<a th:href="@{/user/receive}">書籍一覧へ戻る</a>
+	<h2>予約変更・削除</h2>
+	<div class="text-format">
+  <table th:object="${reserve}">
+    <tr>
+      <td>書名</td>
+      <td th:text="*{colBooks.books.title}" />
+    </tr>
+    <tr>
+      <td>著者</td>
+      <td th:text="*{colBooks.books.author}" />
+    </tr>
+    <tr>
+      <td>出版社</td>
+      <td th:text="*{colBooks.books.publisher.publisherName}" />
+    </tr>
+    <tr>
+      <td>予約日</td>
+      <td th:text="*{reserveDate}" />
+    </tr>
+    <tr>
+      <td>返却日</td>
+      <td th:text="*{scheduledReturnDate}" />
+    </tr>	
+  </table>
+  <div class="form-actions">
+	  
+    <form th:action="@{/user/receive/reserveedit}" method="post">
+      <input type="hidden" name="reserveId" th:value="${reserve.reserveId}">
+      <input type="submit" value="変更">
+    </form>
+    <form th:action="@{/user/receive/reservedelete}" method="post">
+      <input type="hidden" name="reserveId" th:value="${reserve.reserveId}">
+      <input type="submit" value="削除">
+    </form>
+  </div>
+  <br>
+  <a class="button-link" th:href="@{/user/receive}">書籍一覧へ戻る</a>
 </body>
 </html>

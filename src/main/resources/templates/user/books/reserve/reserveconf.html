@@ -3,26 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <title>貸出画面</title>
+<style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1504520169123-768da2d62b57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 8rem;
+      font-family: Arial, sans-serif;
+      color: #333333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #ffffff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    table {
+      width: 100%;
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      padding: 2rem;
+      color: #333333;
+    }
+
+    table tr {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    table td:first-child {
+      font-weight: bold;
+    }
+
+    a {
+      display: block;
+      width: fit-content;
+      margin: 2rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #4CAF50;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.1s ease;
+      text-align: center;
+    }
+
+    a:hover {
+      background-color: #45a049;
+    }
+</style>
 </head>
 <body>
-	<table th:object="${reserve}">
-		<tr>
-			<td>書名</td><td th:text="*{colBooks.books.title}" />
-		</tr>
-		<tr>
-			<td>著者</td><td th:text="*{colBooks.books.author}" />
-		</tr>
-		<tr>
-			<td>出版社</td><td th:text="*{colBooks.books.publisher.publisherName}" />
-		</tr>
-		<tr>
-			<td>予約日</td><td th:text="*{reserveDate}" />
-		</tr>
-		<tr>
-			<td>返却日</td><td th:text="*{scheduledReturnDate}" />
-		</tr>	
-	</table>
-	
-	<a th:href="@{/user/books}">書籍一覧へ戻る</a>
+    <h2>予約確定</h2>
+    <table th:object="${reserve}">
+        <tr>
+            <td>書名</td>
+            <td th:text="*{colBooks.books.title}" />
+        </tr>
+        <tr>
+            <td>著者</td>
+            <td th:text="*{colBooks.books.author}" />
+        </tr>
+        <tr>
+            <td>出版社</td>
+            <td th:text="*{colBooks.books.publisher.publisherName}" />
+        </tr>
+        <tr>
+            <td>予約日</td>
+            <td th:text="*{reserveDate}" />
+        </tr>
+        <tr>
+            <td>返却日</td>
+            <td th:text="*{scheduledReturnDate}" />
+        </tr>
+    </table>
+    <div>
+        <a th:href="@{/user/books}">書籍一覧へ戻る</a>
+    </div>
 </body>
 </html>

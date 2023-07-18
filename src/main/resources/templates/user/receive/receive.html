@@ -3,65 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <title>予約一覧</title>
+
+<style>
+    body {
+      background-image: url('https://cdn.pixabay.com/photo/2016/11/29/13/52/book-1870000_1280.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 8rem;
+      color: #fff;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 2rem;
+      border-radius: 10px;
+    }
+
+    table {
+      margin-bottom: 2rem;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 6px;
+      text-align: left;
+      color: #000;
+    }
+
+    th {
+      background-color: #dddddd;
+    }
+
+    .button-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .button-link a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: rgb(64, 128, 128);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.1s ease;
+      border: none;
+    }
+
+    .button-link a:hover {
+      background-color: #558c5e;
+    }
+
+</style>
+
 </head>
 <body>
-	<h3>予約一覧</h3>
-	
-	<table>
-		<tr>
-			<th>予約番号</th>
-			<th>予約日</th>
-			<th>書名</th>
-			<th>著者</th>
-			<th>出版社</th>
-			<th>返却予定日</th>
-			<th>受付</th>
-		</tr>
-		<tr th:each="reserve : ${toDayReserveList}" th:object="${reserve}">
-			<td th:text="*{reserveId}" />
-			<td th:text="*{reserveDate}" />
-			<td th:text="*{colBooks.books.title}" />
-			<td th:text="*{colBooks.books.author}" />
-			<td th:text="*{colBooks.books.publisher.publisherName}" />
-			<td th:text="*{scheduledReturnDate}" />
-			<td>
-				<form th:action="@{/user/receive/receiving}" method="post">
-					<input type="hidden" name="reserveId" th:value="*{reserveId}">
-					<input type="submit" value="受付">
-				</form>
-			</td>
-			
-		</tr>
-	</table>
-	
-	<table>
-		<tr>
-			<th>予約番号</th>
-			<th>予約日</th>
-			<th>書名</th>
-			<th>著者</th>
-			<th>出版社</th>
-			<th>返却予定日</th>
-			<th>変更</th>
-		</tr>
-		<tr th:each="reserve : ${afterDayReserveList}" th:object="${reserve}">
-			<td th:text="*{reserveId}" />
-			<td th:text="*{reserveDate}" />
-			<td th:text="*{colBooks.books.title}" />
-			<td th:text="*{colBooks.books.author}" />
-			<td th:text="*{colBooks.books.publisher.publisherName}" />
-			<td th:text="*{scheduledReturnDate}" />
-			<td>
-				<form th:action="@{/user/receive/reservedetail}" method="post">
-					<input type="hidden" name="reserveId" th:value="*{reserveId}">
-					<input type="submit" value="変更">
-				</form>
-			</td>
-			
-		</tr>
-	</table>
-	
-	<a th:href="@{/user/menu}">メニューへ戻る</a>
+  <div class="container">
+    <h3>予約一覧</h3>
 
+    <table>
+      <caption>当日予約一覧</caption>
+      <tr>
+        <th>予約番号</th>
+        <th>予約日</th>
+        <th>書名</th>
+        <th>著者</th>
+        <th>出版社</th>
+        <th>返却予定日</th>
+        <th>受付</th>
+      </tr>
+      <tr th:each="reserve : ${toDayReserveList}" th:object="${reserve}">
+        <td th:text="*{reserveId}" />
+        <td th:text="*{reserveDate}" />
+        <td th:text="*{colBooks.books.title}" />
+        <td th:text="*{colBooks.books.author}" />
+        <td th:text="*{colBooks.books.publisher.publisherName}" />
+        <td th:text="*{scheduledReturnDate}" />
+        <td>
+          <form th:action="@{/user/receive/receiving}" method="post">
+            <input type="hidden" name="reserveId" th:value="*{reserveId}">
+            <input type="submit" value="受付">
+          </form>
+        </td>
+      </tr>
+    </table>
+
+    <table>
+      <caption>予約予定一覧</caption>
+      <tr>
+        <th>予約番号</th>
+        <th>予約日</th>
+        <th>書名</th>
+        <th>著者</th>
+        <th>出版社</th>
+        <th>返却予定日</th>
+        <th>変更</th>
+      </tr>
+      <tr th:each="reserve : ${afterDayReserveList}" th:object="${reserve}">
+        <td th:text="*{reserveId}" />
+        <td th:text="*{reserveDate}" />
+        <td th:text="*{colBooks.books.title}" />
+        <td th:text="*{colBooks.books.author}" />
+        <td th:text="*{colBooks.books.publisher.publisherName}" />
+        <td th:text="*{scheduledReturnDate}" />
+        <td>
+          <form th:action="@{/user/receive/reservedetail}" method="post">
+            <input type="hidden" name="reserveId" th:value="*{reserveId}">
+            <input type="submit" value="変更">
+          </form>
+        </td>
+      </tr>
+    </table>
+
+    <div class="button-link">
+      <a th:href="@{/user/menu}">メニューへ戻る</a>
+    </div>
+  </div>
 </body>
 </html>
