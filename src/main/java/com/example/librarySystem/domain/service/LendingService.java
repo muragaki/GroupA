@@ -1,6 +1,7 @@
 package com.example.librarySystem.domain.service;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,28 +39,51 @@ public class LendingService {
 	
 	public List<Lending> findSearch(SearchLendingForm searchLendingForm){
 		
+		Integer bookId = 0;
+		Integer identifyNumber = 0;
+		String title = "%";
+		String author = "%";
+		LocalDateTime fromLoanDateTime = LocalDateTime.of(1,1,1,1,1,1);
+		LocalDateTime toLoanDateTime = LocalDateTime.now();
+		LocalDate fromReturnDate = LocalDate.now().minusYears(1);
+		LocalDate toReturnDate = LocalDate.now().plusYears(1);
 		
-		Date fromLoanDateTime = null;
-		Date toLoanDateTime = null;
+		if(searchLendingForm.getBooksId() != null) {
+			bookId = searchLendingForm.getBooksId();
+		}
 		
-		/*
+		if(searchLendingForm.getIdentifyNumber() != null) {
+			identifyNumber = searchLendingForm.getIdentifyNumber();
+		}
+		
+		if(searchLendingForm.getTitle() != null) {
+			title = "%" + searchLendingForm.getTitle() + "%";
+		}
+		
+		if(searchLendingForm.getAuthor() != null) {
+			author = "%" + searchLendingForm.getAuthor() + "%";
+		}
+		
 		if(searchLendingForm.getFromLoanDate() != null) {
-			fromLoanDateTime = Timestamp.valueOf(searchLendingForm.getFromLoanDate().atStartOfDay()).toString();
+			fromLoanDateTime = searchLendingForm.getFromLoanDate().atStartOfDay();
 		}
+		
 		if(searchLendingForm.getToLoanDate() != null) {
-			//toLoanDateTime = Date.from(ZonedDateTime.of(searchLendingForm.getToLoanDate().atTime(23, 59, 59),ZoneId.systemDefault()).toInstant());
-			toLoanDateTime = Timestamp.valueOf(searchLendingForm.getToLoanDate().atTime(23, 59, 59)).toString();
+			toLoanDateTime = searchLendingForm.getToLoanDate().atTime(23, 59, 59);
 		}
-		*/
-		return lendingRepository.findSearch(fromLoanDateTime, toLoanDateTime);
 		
-		/*
-		return lendingRepository.findSearch(searchLendingForm.getBooksId(), searchLendingForm.getIdentifyNumber(),
-											searchLendingForm.getTitle(), searchLendingForm.getAuthor(),
-											fromLoanDateTime,toLoanDateTime,
-											searchLendingForm.getFromLoanDate(),searchLendingForm.getToReturnDate());
+		if(searchLendingForm.getFromReurnDate() != null) {
+			fromReturnDate = searchLendingForm.getFromReurnDate();
+		}
 		
-		*/
+		if(searchLendingForm.getToReturnDate() != null) {
+			toReturnDate = searchLendingForm.getToReturnDate();
+		}
+		
+		return lendingRepository.findSearch(bookId, identifyNumber,title, author,
+											fromLoanDateTime,toLoanDateTime,fromReturnDate,toReturnDate);
+		
+		
 		
 	}
 }

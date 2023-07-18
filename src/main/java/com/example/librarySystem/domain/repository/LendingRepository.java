@@ -1,8 +1,7 @@
 package com.example.librarySystem.domain.repository;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -21,32 +20,26 @@ public interface LendingRepository extends JpaRepository<Lending, Long> {
 	
 	
 	@Query("SELECT lending FROM Lending lending "
-		 + "WHERE CASE WHEN :bookId IS NULL THEN true "
+			
+		 + "WHERE CASE WHEN :bookId = 0 THEN true "
 		 	+ "ELSE lending.colBooks.booksId = :bookId END "
-		 + "AND CASE WHEN :identifyNumber IS NULL THEN true "
+		 
+		 + "AND CASE WHEN :identifyNumber = 0 THEN true "
 		 	+ "ELSE lending.colBooks.identifyNumber = :identifyNumber END "
-		 + "AND CASE WHEN :title IS NULL THEN true "
-			+ "ELSE lending.colBooks.books.title LIKE %:title% END "
-		 + "AND CASE WHEN :author IS NULL THEN true "
-			+ "ELSE lending.colBooks.books.author LIKE %:author% END " 
-		 + "AND CASE WHEN :fromLoanDateTime IS NULL THEN true END "
-		 /*	+ "ELSE lending.loanDateTime >= :fromLoanDateTime END "*/
-		 + "AND CASE WHEN :toLoanDateTime IS NULL THEN true END "
-		 /*	+ "ELSE lending.loanDateTime <= :toLoanDateTime END "*/
-		 + "AND CASE WHEN :fromReturnDate IS NULL THEN true "
-		 	+ "ELSE lending.scheduledReturnDate >= :fromReturnDate END "
-		 + "AND CASE WHEN :toReturnDate IS NULL THEN true "
-		 	+ "ELSE lending.scheduledReturnDate <= :toReturnDate END ")
-	public List<Lending> findSearch(Integer bookId, Integer identifyNumber,String title, String author,
-								  Timestamp fromLoanDateTime, Timestamp toLoanDateTime,
-								  LocalDate fromReturnDate, LocalDate toReturnDate);
-	
-	@Query("SELECT lending FROM Lending lending "
-			 + "WHERE CASE WHEN :fromLoanDateTime IS NULL THEN true "
-			 	+ "ELSE lending.loanDateTime >= :fromLoanDateTime END "
-			 + "AND CASE WHEN :toLoanDateTime IS NULL THEN true "
-			 	+ "ELSE lending.loanDateTime <= :toLoanDateTime END ")
-		public List<Lending> findSearch(Date fromLoanDateTime, Date toLoanDateTime);
+		 
+		 	+ "AND lending.colBooks.books.title LIKE :title "
+		 
+			+ "AND lending.colBooks.books.author LIKE :author " 
 		
+		 	+ "AND lending.loanDateTime >= :fromLoanDateTime "
+		 
+		 	+ "AND lending.loanDateTime <= :toLoanDateTime  "
+		 
+		 	+ "AND lending.scheduledReturnDate >= :fromReturnDate "
+		 
+			+ "AND lending.scheduledReturnDate <= :toReturnDate ")
+	public List<Lending> findSearch(Integer bookId, Integer identifyNumber,String title, String author,
+								  LocalDateTime fromLoanDateTime, LocalDateTime toLoanDateTime,
+								  LocalDate fromReturnDate, LocalDate toReturnDate);
 	
 }

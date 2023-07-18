@@ -2,6 +2,7 @@ package com.example.librarySystem.domain.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,8 +36,10 @@ public class LendLog {
 	@ManyToOne
 	@JoinColumn(name="colBooksId", insertable=false, updatable=false)
 	private ColBooks colBooks;
+	@Column(columnDefinition = "TIMESTAMP")
 	@Past
 	private LocalDateTime loanDateTime;
+	@Column(columnDefinition = "TIMESTAMP")
 	@Past
 	private LocalDateTime returnDateTime;
 	
