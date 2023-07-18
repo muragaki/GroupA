@@ -7,107 +7,106 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   <style>
     body {
-      margin: 1rem;
+      margin: 4rem;
       background-color: #e0f8d8;
     }
 
-   h2 {
-  text-align: center;
-}
+    h2 {
+      text-align: center;
+    }
 
-.container {
-  max-width: 2000px;
-  margin: 0 auto;
-}
+    .container {
+      max-width: 2000px;
+      margin: 5rem auto;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  background-color: #f8f8f8;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background-color: #f8f8f8;
+    }
 
-th,
-td {
-  padding: 0.65rem;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
+    th,
+    td {
+      padding: 0.8rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
 
-th {
-  background-color: #f5f5f5;
-  font-weight: bold;
-}
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
 
-.no-books {
-  text-align: center;
-  margin-top: 1rem;
-}
+    .no-books {
+      text-align: center;
+      margin-top: 1rem;
+    }
 
-.search-form {
-  margin-top: 1rem;
-  text-align: center;
-}
+    .search-form {
+      margin-top: 1rem;
+      text-align: center;
+    }
 
-.search-input {
-  padding: 0.5rem;
-  width: 100%;
-}
+    .search-input {
+      padding: 0.5rem;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
 
-.search-button {
-  padding: 0.1rem 1rem;
-  background-color: #6CAE75;
-  color: white;
-  border: none;
-  width: 100%;
-}
+    .search-button {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: white;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.1s ease;
+    }
 
-.search-inputs {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-}
+    .search-inputs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
 
-.search-inputs label {
-  margin-right: 1rem;
-}
+    .search-inputs label {
+      margin-right: 1rem;
+    }
 
-.button-link {
-  text-align: center;
-  margin-top: 1rem;
-}
+    .button-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
 
-.button-link a {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: #6CAE75;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-  border: none;
-}
+    .button-link a,
+    .button-link button {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.1s ease;
+      border: none;
+      margin-right: 0.5rem;
+    }
 
-.button-link a:hover {
-  background-color: #558c5e;
-}
+    .button-link a:hover,
+    .button-link button:hover {
+      background-color: #558c5e;
+    }
 
-.button-link button {
-  display: inline-block;
-  padding: 0.1rem 1rem;
-  background-color: #6CAE75;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 1s ease;
-  border: none;
-}
+    .text-right {
+      text-align: center;
+    }
 
-.button-link button:hover {
-  background-color: #558c5e;
-}
-
+    .text-space {
+      text-align: justify;
+    }
   </style>
 </head>
 <body>
@@ -115,7 +114,7 @@ th {
   
   <div class="container">
     <div class="button-link">
-      <button onclick="location.href='/admin/books/newbooks'">書籍登録</button>
+      <a th:href="@{/admin/books/newbooks}">書籍登録</a>
       <a th:href="@{/admin/menu}">戻る</a>
     </div>
   
@@ -166,26 +165,30 @@ th {
     </div>
   
     <table>
-      <tr>
-        <th>ジャンル</th>
-        <th>書名</th>
-        <th>著者</th>
-        <th>出版社</th>
-        <th>発売日</th>
-        <th>編集</th>
-      </tr>
-      <tr th:each="book : ${bookslist}">
-        <td th:text="${book.genre.genreName}"></td>
-        <td th:text="${book.title}"></td>
-        <td th:text="${book.author}"></td>
-        <td th:text="${book.publisher.publisherName}"></td>
-        <td th:text="${book.releaseDate}"></td>
-        <td>
-          <form th:action="@{/admin/books/edit/{id}(id=${book.bookId})}">
-            <input type="submit" value="編集">
-          </form>
-        </td>
-      </tr>
+      <thead>
+        <tr>
+          <th>ジャンル</th>
+          <th>書名</th>
+          <th>著者</th>
+          <th>出版社</th>
+          <th>発売日</th>
+          <th class="text-right">編集</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="book : ${bookslist}">
+          <td th:text="${book.genre.genreName}"></td>
+          <td th:text="${book.title}"></td>
+          <td th:text="${book.author}"></td>
+          <td th:text="${book.publisher.publisherName}"></td>
+          <td th:text="${book.releaseDate}"></td>
+          <td class="text-center">
+            <form th:action="@{/admin/books/edit/{id}(id=${book.bookId})}">
+              <input type="submit" value="編集">
+            </form>
+          </td>
+        </tr>
+      </tbody>
     </table>
     
     <div th:if="${bookslist == null or bookslist.size() == 0}" class="no-books">

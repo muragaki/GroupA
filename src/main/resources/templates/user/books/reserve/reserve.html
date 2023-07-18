@@ -3,34 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <title>貸出画面</title>
+<style>
+    body {
+        background-image: url('https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=773&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 8rem;
+      color: #fff;
+    }
+
+ h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: rgba(201, 233, 232, 0.7);
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+}
+
+th, td {
+    padding: 0.5rem 0;
+}
+
+input[type="date"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 0.875rem;
+}
+
+input[type="submit"],
+.back-button {
+    display: block;
+    width: 20%;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.1s ease;
+}
+
+input[type="submit"]:hover,
+.back-button:hover {
+    background-color: #45a049;
+}
+
+.back-button {
+    background-color: #cccccc;
+}
+
+</style>
 </head>
 <body>
-	<h3>予約開始日</h3>
-	<form th:action="@{/user/books/reservesave}" method="post" >
-		<table>
-			<tr>
-				<th>予約開始日</th>
-				<td>
-					<input type="date" name="reserveDate" th:value="${reserveForm.reserveDate}">
-				</td>
-				<td>
-					<span th:errors="${reserveForm.reserveDate}" />
-				</td>
-			</tr>
-			<tr>
-				<th>返却予定日</th>
-				<td>
-					<input type="date" name="scheduledReturnDate" th:value="${reserveForm.scheduledReturnDate}">
-				</td>
-				<td>
-					<span th:errors="${reserveForm.scheduledReturnDate}" />
-				</td>
-			</tr>
-		</table>
-		<input type="hidden" name="booksId" th:value="${reserveForm.booksId}">
-		<input type="submit" value="予約">
-	</form>
-	<a th:href="@{/user/books/{id}(id=${reserveForm.booksId})}">詳細に戻る</a>
-
+    <h3>予約開始日</h3>
+    <form th:action="@{/user/books/reservesave}" method="post">
+        <table>
+            <tr>
+                <th>予約開始日</th>
+                <td>
+                    <input type="date" name="reserveDate" th:value="${reserveForm.reserveDate}">
+                </td>
+                <td>
+                    <span class="error-message" th:errors="${reserveForm.reserveDate}" />
+                </td>
+            </tr>
+            <tr>
+                <th>返却予定日</th>
+                <td colspan="2">
+                    <input type="date" name="scheduledReturnDate" th:value="${reserveForm.scheduledReturnDate}">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <span class="error-message" th:errors="${reserveForm.scheduledReturnDate}" />
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" name="booksId" th:value="${reserveForm.booksId}">
+        <input type="submit" value="予約">
+    </form>
+    <a class="back-button" th:href="@{/user/books/{id}(id=${reserveForm.booksId})}">詳細に戻る</a>
 </body>
 </html>

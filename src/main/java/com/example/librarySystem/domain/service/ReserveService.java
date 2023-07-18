@@ -11,10 +11,10 @@ import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.librarySystem.app.user.books.reserve.DayMaxPeriod;
 import com.example.librarySystem.app.user.books.reserve.ReserveDateForm;
 import com.example.librarySystem.app.user.books.reserve.ReserveForm;
 import com.example.librarySystem.domain.model.ColBooks;
-import com.example.librarySystem.domain.model.DayMaxPeriod;
 import com.example.librarySystem.domain.model.Lending;
 import com.example.librarySystem.domain.model.Reserve;
 import com.example.librarySystem.domain.model.SituationName;

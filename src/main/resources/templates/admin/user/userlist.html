@@ -8,7 +8,6 @@
       background-color: #e0f8d8;
     }
 
-
     table {
       border-collapse: collapse;
       width: 100%;
@@ -29,6 +28,29 @@
       background-color: #f8f8f8;
     }
 
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .button-container form {
+      margin: 0 0.5rem;
+    }
+
+    .button-container input[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button-container input[type="submit"]:hover {
+      background-color: #558c5e;
+    }
   </style>
 </head>
 <body>
@@ -44,18 +66,26 @@
       </tr>
     </thead>
     <tbody>
-      <tr th:each="user : ${userlist}"></td>
+      <tr th:each="user : ${userlist}">
         <td th:text="${user.userId}"></td>
         <td th:text="${user.firstName}"></td>
         <td th:text="${user.lastName}"></td>
         <td th:text="${user.roleName}"></td>
         <td>
-		<form th:action="@{'/admin/user/userdetail'}" method="post">
-			<input type="hidden" name="userId" th:value="${user.userId}"/>
-        	<input type="submit" value="詳細"/>
-		</form>
+          <form th:action="@{'/admin/user/userdetail'}" method="post">
+            <input type="hidden" name="userId" th:value="${user.userId}"/>
+            <input type="submit" value="詳細"/>
+          </form>
+        </td>
       <tr>
     </tbody>
   </table>
+
+  <div class="button-container">
+    <form th:action="@{/admin/menu}" method="get">
+      <input type="submit" value="TOPへ戻る" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
+    </form>
+  </div>
+
 </body>
 </html>
