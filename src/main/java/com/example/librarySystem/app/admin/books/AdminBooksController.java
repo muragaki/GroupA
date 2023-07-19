@@ -58,7 +58,7 @@ public class AdminBooksController {
 	
 	@ModelAttribute("searchBooksForm")
 	public SearchBooksForm setSearchBooksForm() {
-		return new AdminSearchBooksForm();
+		return new SearchBooksForm();
 	}
 	
 	@InitBinder("searchBooksForm")
@@ -92,9 +92,8 @@ public class AdminBooksController {
 	}
 	
 	@PostMapping("admin/books/bookssearch")
-	public String booksSearch(AdminSearchBooksForm adminsearchBooksForm ,Model model) {
+	public String booksSearch(SearchBooksForm searchBooksForm ,Model model) {
 		
-		System.out.println(adminsearchBooksForm);
 		
 		return "forward:/admin/books";
 	}

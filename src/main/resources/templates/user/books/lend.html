@@ -106,7 +106,8 @@ background-color: #558c5e;
 	<form th:action="@{/user/books/lendconf}" method="post" th:object="${lendForm}">
 		<input type="hidden" name="bookId" th:value="*{bookId}">
 		<input type="hidden" name="reserveDate" th:value="*{reserveDate}">
-		<input type="date" th:field="*{scheduledReturnDate}" style="background-color: #fff; color: #333;">
+		<input type="date" th:field="*{scheduledReturnDate}" style="background-color: #fff; color: #333;"
+				th:min="*{minReturnDate}" th:max="*{maxReturnDate}">
 		<input type="submit" value="登録"><br>
 		<span th:errors="*{scheduledReturnDate}" style="background-color: #fff;color:rgb(255,64,64)" /> 
 	</form>

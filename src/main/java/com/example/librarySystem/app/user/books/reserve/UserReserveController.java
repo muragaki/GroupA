@@ -57,9 +57,11 @@ public class UserReserveController {
 	
 	
 	@PostMapping("user/books/reserve")
-	public String reserve(@RequestParam("bookId") Integer bookId,@RequestParam LocalDate reserveDate, ReserveForm reserveForm, Model model) {
+	public String reserve(@RequestParam("bookId") Integer bookId,@RequestParam LocalDate reserveDate,@RequestParam Long maxPeriod, ReserveForm reserveForm, Model model) {
 		reserveForm.setBooksId(bookId);
 		reserveForm.setReserveDate(reserveDate);
+		reserveForm.setMaxReturnDate(reserveDate.plusDays(maxPeriod));
+		reserveForm.setMinReturnDate(reserveDate.plusDays(1));
 		return "/user/books/reserve/reserve";
 	}
 	

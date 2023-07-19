@@ -19,5 +19,6 @@ public class ReserveForm {
 	@NotNull
 	@Future
 	private LocalDate scheduledReturnDate;
-	
+	private LocalDate minReturnDate;
+	private LocalDate maxReturnDate;
 }

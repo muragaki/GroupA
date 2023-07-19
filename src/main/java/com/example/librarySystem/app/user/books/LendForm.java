@@ -14,5 +14,8 @@ public class LendForm {
 	public LocalDate reserveDate;
 	
 	private LocalDate scheduledReturnDate;
+	
+	private LocalDate minReturnDate;
+	private LocalDate maxReturnDate;
 
 }

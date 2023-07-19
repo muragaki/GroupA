@@ -25,6 +25,7 @@
 				<form th:action="@{/user/books/reserve}" method="post">
 					<input type="hidden" name="reserveDate" th:value="${day.day}">
 					<input type="hidden" name="bookId" th:value="${bookId}">
+					<input type="hidden" name="maxPeriod" th:value="${day.maxPeriod}">
 					<input th:if="${day.maxPeriod} > 0 " type="submit" th:value="|最大 ${day.maxPeriod} 日|">
 					<input th:if="${day.maxPeriod} == 0 " type="submit" value="予約不可" disabled>
 				</form>

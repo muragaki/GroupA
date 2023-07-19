@@ -98,7 +98,7 @@ input[type="submit"]:hover,
             <tr>
                 <th>返却予定日</th>
                 <td colspan="2">
-                    <input type="date" name="scheduledReturnDate" th:value="${reserveForm.scheduledReturnDate}">
+                    <input type="date" name="scheduledReturnDate" th:value="${reserveForm.scheduledReturnDate}" th:max="${reserveForm.maxReturnDate}" th:min="${reserveForm.minReturnDate}">
                 </td>
             </tr>
             <tr>
@@ -107,6 +107,8 @@ input[type="submit"]:hover,
                 </td>
             </tr>
         </table>
+    	<input type="hidden" name="maxReturnDate" th:value="${reserveForm.maxReturnDate}">
+    	<input type="hidden" name="maxReturnDate" th:value="${reserveForm.minReturnDate}">
         <input type="hidden" name="booksId" th:value="${reserveForm.booksId}">
         <input type="submit" value="予約">
     </form>
