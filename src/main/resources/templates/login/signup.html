@@ -32,7 +32,7 @@
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"]{
       display: inline-block;
       width: 200px;
       padding: 0.5rem;
@@ -60,24 +60,25 @@
       <div th:text="${signupError}"></div>
     </div>
     <label for="lastName">性:</label>
-    <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required>
-    <span th:errors="*{lastName}"></span><br><br>
+    <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required><br>
+    <span th:errors="*{lastName}"></span><br>
 
     <label for="firstName">名:</label>
-    <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required>
-    <span th:errors="*{firstName}"></span><br><br>
+    <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required><br>
+    <span th:errors="*{firstName}"></span><br>
 
     <label for="userId">ユーザーID:</label>
-    <input type="uerId" id="userId" name="userId" th:field="*{userId}" required>
-    <span th:errors="*{userId}"></span><br><br>
+    <input type="text" id="userId" name="userId" th:field="*{userId}" required><br>
+    <span th:errors="*{userId}"></span><br>
 
     <label for="password">パスワード:</label>
-    <input type="password" id="password" name="password" th:field="*{password}" required>
-    <span th:errors="*{password}"></span><br><br>
+    <input type="password" id="password" name="password" th:field="*{password}" required><br>
+    <span th:errors="*{password}"></span><br>
 
     <div class="submit-wrapper">
       <input type="submit" value="登録">
     </div>
   </form>
+  <a th:href="@{/login}">ログイン画面へ戻る</a>
 </body>
 </html>

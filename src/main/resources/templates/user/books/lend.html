@@ -95,16 +95,20 @@ background-color: #558c5e;
 	<h2>貸出登録</h2>
   	<table>
     	<thead>
-      		<tr>
+      	 <tr>
         	<th style="border: none;">返却日を選択してください。</th>
      	 </tr>
+     	 <tr>
+			<td style="text-align: center">最大 [[${maxperiod}]] 日間利用可能です。</td>
+		 </tr>
    		</thead>
   	</table>
 	<form th:action="@{/user/books/lendconf}" method="post" th:object="${lendForm}">
 		<input type="hidden" name="bookId" th:value="*{bookId}">
 		<input type="hidden" name="reserveDate" th:value="*{reserveDate}">
-		<input type="date" th:field="*{scheduledReturnDate}" style="background-color: #fff; color: #333;"><span th:errors="*{scheduledReturnDate}" /> 
-		<input type="submit" value="登録">
+		<input type="date" th:field="*{scheduledReturnDate}" style="background-color: #fff; color: #333;">
+		<input type="submit" value="登録"><br>
+		<span th:errors="*{scheduledReturnDate}" style="background-color: #fff;color:rgb(255,64,64)" /> 
 	</form>
 	<div class="button-link">
 		<a th:href="@{/user/books/{id}(id=${lendForm.bookId})}" style="background-color: #6CAE75;">詳細に戻る</a>

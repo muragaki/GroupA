@@ -35,8 +35,8 @@ public class ReserveService {
 	@Autowired
 	LendingRepository lendingRepository;
 	
-	final long MAX_RESERVE_PERIOD =7L;
-	final long NON_PESERVE_ID = -1L;
+	public final long MAX_RESERVE_PERIOD =7L;
+	public final long NON_PESERVE_ID = -1L;
 	
 	public List<Reserve> findDayReserveList(String userId,LocalDate day){
 		return reserveRepository.findByUserIdAndReserveDate(userId, day);

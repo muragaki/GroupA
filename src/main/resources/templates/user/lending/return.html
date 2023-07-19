@@ -91,7 +91,7 @@
   <table th:object="${lending}">
     <tr>
       <td>識別番号</td>
-      <td th:text="*{colBooks.books.title}" />
+      <td th:text="|*{colBooks.booksId}-*{colBooks.identifyNumber}|" />
     </tr>
     <tr>
       <td>書名</td>

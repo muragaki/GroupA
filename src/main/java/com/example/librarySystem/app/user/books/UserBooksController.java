@@ -82,9 +82,18 @@ public class UserBooksController {
 	}
 
 	@RequestMapping("user/books")
-	public String books(SearchBooksForm searchBooksForm ,Model model) {
+	public String books(@Validated SearchBooksForm searchBooksForm ,BindingResult bindingResult,Model model) {
 		
-		System.out.println(searchBooksForm);
+		if(bindingResult.hasErrors()) {
+			List<Books> bookslist = booksService.readAll();
+			List<Genre> genrelist = genreService.readSearchAll();
+			List<Publisher> publisherlist = publisherService.readSearchAll();
+			
+			model.addAttribute("bookslist", bookslist);
+			model.addAttribute("genrelist", genrelist);
+			model.addAttribute("publisherlist", publisherlist);
+			return "user/books/books";
+		}
 		
 		List<Books> bookslist = booksService.searchBooks(searchBooksForm);
 		List<Genre> genrelist = genreService.readSearchAll();
@@ -122,7 +131,8 @@ public class UserBooksController {
 		
 		lendForm.setBookId(bookId);
 		lendForm.setReserveDate(LocalDate.now());
-		lendForm.setScheduledReturnDate(LocalDate.now().plusDays(1));	
+		lendForm.setScheduledReturnDate(LocalDate.now().plusDays(1));
+		model.addAttribute("maxperiod", reserveService.searchMaxReservePeriod(bookId, LocalDate.now(), reserveService.NON_PESERVE_ID));
 		
 		return "user/books/lend";
 	}

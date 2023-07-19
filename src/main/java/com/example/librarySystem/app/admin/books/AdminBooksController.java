@@ -67,10 +67,19 @@ public class AdminBooksController {
 	}
 
 	@RequestMapping("admin/books")
-	public String books(SearchBooksForm searchBooksForm ,Model model) {
+	public String books(@Validated SearchBooksForm searchBooksForm ,BindingResult bindingResult, Model model) {
 		
-		System.out.println(searchBooksForm);
-		
+		if(bindingResult.hasErrors()) {
+			List<Books> bookslist = booksService.readAll();
+			List<Genre> genrelist = genreService.readSearchAll();
+			List<Publisher> publisherlist = publisherService.readSearchAll();
+			
+			model.addAttribute("bookslist", bookslist);
+			model.addAttribute("genrelist", genrelist);
+			model.addAttribute("publisherlist", publisherlist);
+			return "admin/books/books";
+		}
+
 		List<Books> bookslist = booksService.searchBooks(searchBooksForm);
 		List<Genre> genrelist = genreService.readSearchAll();
 		List<Publisher> publisherlist = publisherService.readSearchAll();
