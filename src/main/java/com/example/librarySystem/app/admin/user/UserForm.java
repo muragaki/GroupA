@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.librarySystem.domain.model.RoleName;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,8 +16,10 @@ import lombok.NoArgsConstructor;
 public class UserForm {
 	@Size(min=4, max=4)
 	private String username;
+	@NotBlank
 	@Size(min=1, max=8)
 	private String firstname;
+	@NotBlank
 	@Size(min=1, max=8)
 	private String lastname;
 	private RoleName rolename;

@@ -17,10 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.librarySystem.domain.model.LendLog;
 import com.example.librarySystem.domain.model.Lending;
+import com.example.librarySystem.domain.model.Reserve;
 import com.example.librarySystem.domain.model.RoleName;
 import com.example.librarySystem.domain.model.User;
 import com.example.librarySystem.domain.service.LendLogService;
 import com.example.librarySystem.domain.service.LendingService;
+import com.example.librarySystem.domain.service.ReserveService;
 import com.example.librarySystem.domain.service.SuperUserDetailsService;
 
 @Controller
@@ -35,6 +37,9 @@ public class AdminUserController {
 	@Autowired
 	LendLogService lendLogService;
 	
+	@Autowired
+	ReserveService reserveService;
+	
 	
 	@RequestMapping("admin/user")
 	String userlist(Model model) {
@@ -48,10 +53,13 @@ public class AdminUserController {
 	String userdetail(@RequestParam String userId, Model model) {
 		List<LendLog> lendLoglist = lendLogService.findUserList(userId);
 		List<Lending> lendinglist = lendingService.findUserList(userId);
+		List<Reserve> reservelist = reserveService.findUserList(userId);
 		User user = superUserDetailsService.findById(userId);
 		
 		model.addAttribute("lendLoglist", lendLoglist);
+		model.addAttribute("reservelist", reservelist);
 		model.addAttribute("lendinglist", lendinglist);
+	
 		model.addAttribute("u", user);
 		return "admin/user/userdetail";
 		
@@ -73,7 +81,8 @@ public class AdminUserController {
 	@PostMapping("admin/user/editconf")
 	String editconf(@ModelAttribute("userForm") @Validated UserForm userForm, BindingResult br, RedirectAttributes redirectAttributes, Model model) {
 		if (br.hasErrors()) {
-			return "admin/useredit";
+			model.addAttribute("userForm", userForm);
+			return "admin/user/useredit";
 		}
 		User user = superUserDetailsService.findById(userForm.getUsername());
 		if (!user.getFirstName().equals(userForm.getFirstname())) {

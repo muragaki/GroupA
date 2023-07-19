@@ -117,6 +117,24 @@
     </table>
     
     <table>
+		<h4>利用予約</h4>
+      <tr>
+        <th>書籍名</th>
+        <th>作者</th>
+        <th>出版社</th>
+        <th>貸出予定日</th>
+        <th>返却予定日</th>
+      </tr>
+      <tr th:each="reserve : ${reservelist}">
+        <td th:text="${reserve.colBooks.books.title}"></td>
+        <td th:text="${reserve.colBooks.books.author}"></td>
+        <td th:text="${reserve.colBooks.books.publisher.publisherName}"></td>
+        <td th:text="${reserve.reserveDate}"></td>
+        <td th:text="${reserve.scheduledReturnDate}"></td>
+      </tr>
+    </table>
+    
+    <table>
 		<h4>利用履歴</h4>
       <tr>
         <th>書籍名</th>

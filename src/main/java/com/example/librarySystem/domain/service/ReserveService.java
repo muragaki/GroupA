@@ -38,6 +38,10 @@ public class ReserveService {
 	public final long MAX_RESERVE_PERIOD =7L;
 	public final long NON_PESERVE_ID = -1L;
 	
+	public List<Reserve> findUserList(String userId){
+		return reserveRepository.findByUserIdOrderByReserveDateAsc(userId);
+	}
+	
 	public List<Reserve> findDayReserveList(String userId,LocalDate day){
 		return reserveRepository.findByUserIdAndReserveDate(userId, day);
 	}

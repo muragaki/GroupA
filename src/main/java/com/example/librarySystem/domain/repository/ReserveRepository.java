@@ -36,6 +36,7 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
 	
 	Reserve findByReserveIdAndUserId(Long reserveId,String userId);
 	
+	List<Reserve> findByUserIdOrderByReserveDateAsc(String userId);
 	List<Reserve> findByUserIdAndReserveDate(String userId,LocalDate reserveId);
 	List<Reserve> findByUserIdAndReserveDateAfter(String userId,LocalDate reserveId);
 	

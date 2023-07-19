@@ -79,12 +79,14 @@
 	  <input type="text" name="username" th:value="${userForm.username}" th:readonly="true" />
       <div class="form-group">
         <label for="firstName">姓:</label>
-        <input type="text" name="firstname" th:value="${userForm.firstname}" />
+        <input type="text" name="firstname" th:value="${userForm.firstname}" /><br>
+        <span th:errors="${userForm.firstname}" /><br>
       </div>
 
       <div class="form-group">
         <label for="lastName">名:</label>
-        <input type="text" name="lastname" th:value="${userForm.lastname}" />
+        <input type="text" name="lastname" th:value="${userForm.lastname}" /><br>
+        <span th:errors="${userForm.lastname}" /><br>
       </div>
       
       <div class="form-group">
@@ -100,12 +102,13 @@
       
       <div class="form-actions">
         <div class="button-container">
-          <button type="submit">更新</button>
-          <form th:action="@{/admin/user/userdetail}" method="get">
-            <input type="submit" value="戻る">
-          </form>
+          <input type="submit" value="更新">
         </div>
       </div>
+    </form>
+    <form th:action="@{/admin/user/userdetail}" method="post">
+		<input type="hidden" name="userId" th:value="${userForm.username}">
+		<input type="submit" value="戻る">
     </form>
   </div>
 </body>
