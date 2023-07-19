@@ -2,10 +2,93 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
 <title>select day</title>
 <link th:href="@{/css/user/books/selectday.css}" rel="styleSheet">
+=======
+<title>日付選択</title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1527176930608-09cb256ab504?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=874&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h3 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      color: #333;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    td:last-child {
+      white-space: nowrap;
+    }
+
+    td form {
+      display: inline-block;
+    }
+
+    td form input[type="submit"] {
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    td form input[type="submit"]:hover {
+      background-color: #558c5e;
+    }
+
+    .return-button {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .return-button a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #6CAE75;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .return-button a:hover {
+      background-color: #558c5e;
+    }
+</style>
+>>>>>>> refs/remotes/origin/matuo
 </head>
 <body>
+<<<<<<< HEAD
 	<h3>日付選択</h3>
 	
 	<table class="calendar">
@@ -33,5 +116,32 @@
 	<form th:action="@{/user/books/{id}(id=${bookId})}">
 		<input type="submit" value="戻る">
 	</form>
+=======
+  <h3>日付選択</h3>
+  
+  <table>
+    <tr>
+      <th>日付</th>
+      <th>予約可能日数</th>
+      <th>選択</th>
+    </tr>
+    <tr th:each="day : ${monthlist}">
+      <td th:text="${day.day}"></td>
+      <td th:text="|最大 ${day.maxPeriod} 日|"></td>
+      <td>
+        <form th:action="@{/user/books/reserve}" method="post">
+          <input type="hidden" name="reserveDate" th:value="${day.day}">
+          <input type="hidden" name="bookId" th:value="${bookId}">
+          <input type="submit" value="選択">
+        </form>
+      </td>
+    </tr>
+  </table>
+
+  <div class="return-button">
+    <a href="javascript:history.back()" style="display: inline-block; padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; text-decoration: none; border-radius: 4px; transition: background-color 0.3s ease;">戻る</a>
+  </div>
+
+>>>>>>> refs/remotes/origin/matuo
 </body>
 </html>

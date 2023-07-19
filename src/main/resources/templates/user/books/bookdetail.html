@@ -72,6 +72,7 @@
       text-decoration: none;
       border-radius: 4px;
       transition: background-color 0.3s ease;
+      font-size: 0.9rem;
     }
 
     .return-button a:hover {
@@ -88,7 +89,7 @@
       <p><strong>著者:</strong> <span th:text="${book.author}"></span></p>
       <p><strong>出版年月日:</strong> <span th:text="${book.releaseDate}"></span></p>
       <p><strong>ジャンル:</strong> <span th:text="${book.genre.genreName}"></span></p>
-      <p><strong>出版社:</strong> <span th:text="${book.publisher.publisherName}"><	/span></p>
+      <p><strong>出版社:</strong> <span th:text="${book.publisher.publisherName}"></span></p>
       <p><strong>概要:</strong></p>
       <p th:utext="${book.overview}"></p>
     </div>
@@ -98,15 +99,15 @@
   </div>
   
   <div class="button-container">
-	  <div th:if="${check == 'true'}">
-    	<form th:action="@{/user/books/lend}">
-      		<input type="hidden" name="bookId" th:value="${book.bookId}">
-      		<input type="submit" value="貸出" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
-    	</form>
-	  </div>
-	  <div th:if="${check == 'false'}">
-		  <input type="submit" value="貸出中" style="padding: 0.5rem 1rem; background-color: rgb(128, 128, 128); color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;" disable>
-	  </div>
+    <div th:if="${check == 'true'}">
+      <form th:action="@{/user/books/lend}">
+        <input type="hidden" name="bookId" th:value="${book.bookId}">
+        <input type="submit" value="貸出" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
+      </form>
+    </div>
+    <div th:if="${check == 'false'}">
+      <input type="submit" value="貸出中" style="padding: 0.5rem 1rem; background-color: rgb(128, 128, 128); color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;" disabled>
+    </div>
     <form th:action="@{/user/books/reserve/selectday}" method="post">
       <input type="hidden" name="bookId" th:value="${book.bookId}">
       <input type="submit" value="予約" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
@@ -114,8 +115,8 @@
   </div>
 
   <div class="return-button">
-  <a href="javascript:history.back()" style="display: inline-block; padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; text-decoration: none; border-radius: 4px; transition: background-color 0.3s ease; font-size: 0.9rem;">戻る</a>
-</div>
+    <a href="/user/books" style="display: inline-block; padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; text-decoration: none; border-radius: 4px; transition: background-color 0.3s ease; font-size: 0.9rem;">戻る</a>
+  </div>
 
 </body>
 </html>

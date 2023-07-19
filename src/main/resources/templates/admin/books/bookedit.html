@@ -37,6 +37,15 @@
     .center {
       text-align: center;
     }
+    
+    .text-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      display: inline-block;
+      text-align: left;
+    }
 </style>
 </head>
 <body>
@@ -44,28 +53,29 @@
     <h2>書籍編集・登録</h2>
     <form th:action="@{/admin/books/booksave}" method="POST" th:object="${adminBooksForm}">
       <input type="hidden" th:field="*{bookId}" th:value="*{bookId}">
-      <label for="title">書名:</label>
-      <input type="text" th:field="*{title}"><span th:errors="*{title}"></span> <br><br>
+      <div class="text-container">
+        <label for="title">書名:</label>
+        <input type="text" th:field="*{title}"><span th:errors="*{title}"></span> <br><br>
 
-      <label for="author">著者:</label>
-      <input type="text" id="author" name="author" th:field="*{author}"><br><br>
+        <label for="author">著者:</label>
+        <input type="text" id="author" name="author" th:field="*{author}"><br><br>
 
-      <label for="publish_date">発刊年月日:</label>
-      <input type="date" id="releaseDate" name="releaseDate" th:value="*{releaseDate}"><br><br>
+        <label for="publish_date">発刊年月日:</label>
+        <input type="date" id="releaseDate" name="releaseDate" th:value="*{releaseDate}"><br><br>
 
-      <label for="genre_id">ジャンル:</label>
-      <select name="genre" th:field="*{genreId}">
-        <option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreId}" />
-      </select><br><br>
+        <label for="genre_id">ジャンル:</label>
+        <select name="genre" th:field="*{genreId}">
+          <option th:each="genre : ${genrelist}" th:text="${genre.genreName}" th:value="${genre.genreId}" />
+        </select><br><br>
 
-      <label for="publisher_id">出版社:</label>
-      <select name="publisher" th:field="*{publisherId}">
-        <option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherId}" />
-      </select><br><br>
+        <label for="publisher_id">出版社:</label>
+        <select name="publisher" th:field="*{publisherId}">
+          <option th:each="publisher : ${publisherlist}" th:text="${publisher.publisherName}" th:value="${publisher.publisherId}" />
+        </select><br><br>
 
-      <label for="overview">概要:</label>
-      <textarea id="overview" name="overview" th:field="*{overview}"></textarea><br><br>
-
+        <label for="overview">概要:</label>
+        <textarea id="overview" name="overview" th:field="*{overview}"></textarea><br><br>
+      </div>
 
       <div class="button-container">
         <input type="submit" value="登録">

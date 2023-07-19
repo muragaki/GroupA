@@ -8,15 +8,22 @@
     body {
       margin: 2rem;
       background-color: #e0f8d8;
+      font-family: Arial, sans-serif;
     }
 
     h2 {
       text-align: center;
+      color: #333;
+      margin-bottom: 2rem;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 1500px;
       margin: 0 auto;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     }
 
     table {
@@ -31,6 +38,7 @@
       padding: 0.5rem;
       text-align: left;
       border-bottom: 1px solid #ddd;
+      color: #333;
     }
 
     th {
@@ -40,13 +48,14 @@
     .no-records {
       text-align: center;
       margin-top: 2rem;
+      color: #555;
     }
 
     .search-form {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      flex-wrap: wrap;
       margin-top: 2rem;
       margin-bottom: 1rem;
     }
@@ -55,6 +64,7 @@
       display: flex;
       align-items: center;
       margin-right: 1rem;
+      margin-bottom: 1rem;
     }
 
     .search-input-container label {
@@ -71,6 +81,24 @@
       color: white;
       border: none;
     }
+
+    .button-container {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .search-input-container input[type="text"],
+    .search-input-container input[type="date"] {
+      width: 100%;
+      max-width: 150px;
+    }
+
+    @media (min-width: 600px) {
+      .search-input-container input[type="text"],
+      .search-input-container input[type="date"] {
+        max-width: 200px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -79,46 +107,72 @@
   <div class="container">
     <div class="search-form">
       <form th:action="@{/admin/lendlog}" method="post" th:object="${searchLendLogForm}">
-       <table>
-		   <tr>
-			   <th colspan="3">識別番号</th>
-			   <th>書籍名</th>
-			   <th>作者</th>
-			   <th>貸出日</th>
-			   <th>返却予定日</th>
-		   </tr>
-		   <tr>
-			   <td>
-				   <input type="text" name="booksId" th:value="*{booksId}">
-			   </td>
-			   <td>-</td>
-			   <td>
-				   <input type="text" name="identifyNumber" th:value="*{identifyNumber}">
-			   </td>
-			   <td>
-				   <input type="text" name="title" th:value="*{title}">
-			   </td>
-			   <td>
-				   <input type="text" name="author" th:value="*{author}">
-			   </td>
-			   <td>
-				   <input type="date" name="fromLoanDate" th:value="*{fromLoanDate}">
-			   </td>
-			   <td>
-				   <input type="date" name="fromReurnDate" th:value="*{fromReurnDate}">
-			   </td>
-		   </tr>
-		   <tr>
-			   <td colspan="5"></td>
-			   <td>
-				   <input type="date" name="toLoanDate" th:value="*{toLoanDate}">
-			   </td>
-			   <td>
-				   <input type="date" name="toReturnDate" th:value="*{toReturnDate}">
-			   </td>
-		   </tr>
-	   </table>
-	   		<input type="submit" value="検索">
+        <table>
+          <tr>
+            <th colspan="3">識別番号</th>
+            <th>書籍名</th>
+            <th>作者</th>
+            <th>貸出日</th>
+            <th>返却予定日</th>
+          </tr>
+          <tr>
+            <td>
+              <div class="search-input-container">
+                
+                <input type="text" id="booksId" name="booksId" th:value="*{booksId}">
+              </div>
+            </td>
+            <td>-</td>
+            <td>
+              <div class="search-input-container">
+               
+                <input type="text" id="identifyNumber" name="identifyNumber" th:value="*{identifyNumber}">
+              </div>
+            </td>
+            <td>
+              <div class="search-input-container">
+               
+                <input type="text" id="title" name="title" th:value="*{title}">
+              </div>
+            </td>
+            <td>
+              <div class="search-input-container">
+                
+                <input type="text" id="author" name="author" th:value="*{author}">
+              </div>
+            </td>
+            <td>
+              <div class="search-input-container">
+                
+                <input type="date" id="fromLoanDate" name="fromLoanDate" th:value="*{fromLoanDate}">
+              </div>
+            </td>
+            <td>
+              <div class="search-input-container">
+                
+                <input type="date" id="fromReurnDate" name="fromReurnDate" th:value="*{fromReurnDate}">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5"></td>
+            <td>
+              <div class="search-input-container">
+                
+                <input type="date" id="toLoanDate" name="toLoanDate" th:value="*{toLoanDate}">
+              </div>
+            </td>
+            <td>
+              <div class="search-input-container">
+                
+                <input type="date" id="toReturnDate" name="toReturnDate" th:value="*{toReturnDate}">
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div style="text-align: center; margin-top: 1rem;">
+          <input type="submit" value="検索" class="search-button">
+        </div>
       </form>
     </div>
 
@@ -151,11 +205,11 @@
     <div th:unless="${lendloglist != null && lendloglist.size() > 0}" class="no-records">
       <p>貸出履歴はありません。</p>
     </div>
-      <div class="button-container">
-    <form th:action="@{/admin/menu}" method="get">
-      <input type="submit" value="TOPへ戻る" style="padding: 0.5rem 1rem; background-color: #6CAE75; color: #fff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease;">
-    </form>
-  </div>
+    <div class="button-container">
+      <form th:action="@{/admin/menu}" method="get">
+        <input type="submit" value="TOPへ戻る" class="search-button">
+      </form>
+    </div>
   </div>
 </body>
 </html>
