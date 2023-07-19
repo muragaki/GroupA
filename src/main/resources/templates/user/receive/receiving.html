@@ -3,36 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <title>予約貸出受付</title>
+
+<style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1679165806351-728a24f0635b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 10rem;
+      color: #000;
+      text-align: center;
+    }
+
+    input[type="submit"],
+    .button {
+      padding: 0.5rem 1rem;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-right: 1rem;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .button.rounded {
+      border-radius: 4px;
+    }
+
+    .button-container {
+      margin-top: 2rem;
+    }
+
+    .table-wrapper {
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 1rem;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      display: inline-block;
+    }
+</style>
 </head>
 <body>
 	<h3>予約貸出受付</h3>
-	<table>
-		<tr>
-			<td>書名</td><td th:text="*{reserve.colBooks.books.title}" />
-		</tr>
-		<tr>
-			<td>著者</td><td th:text="*{reserve.colBooks.books.author}" />
-		</tr>
-		<tr>
-			<td>出版社</td><td th:text="*{reserve.colBooks.books.publisher.publisherName}" />
-		</tr>
-		<tr>
-			<td>予約日</td><td th:text="*{reserve.reserveDate}" />
-		</tr>
-		<tr>
-			<td>返却日</td><td th:text="*{reserve.scheduledReturnDate}" />
-		</tr>	
-	</table>
-	<div th:if="${notbook}">
+	<div class="table-wrapper">
+		<table style="margin: 0 auto;">
+			<tr>
+				<td>書名</td><td th:text="*{reserve.colBooks.books.title}" />
+			</tr>
+			<tr>
+				<td>著者</td><td th:text="*{reserve.colBooks.books.author}" />
+			</tr>
+			<tr>
+				<td>出版社</td><td th:text="*{reserve.colBooks.books.publisher.publisherName}" />
+			</tr>
+			<tr>
+				<td>予約日</td><td th:text="*{reserve.reserveDate}" />
+			</tr>
+			<tr>
+				<td>返却日</td><td th:text="*{reserve.scheduledReturnDate}" />
+			</tr>	
+		</table>
+	</div>
+	<div th:if="${notbook}" style="text-align: center;">
 		<form th:action="@{/user/receive/receivesave}" method="post" th:object="${receiveForm}">
 			<input type="hidden" name="reserveId" th:value="${reserve.reserveId}">
 			<input type="hidden" name="colBooksId" th:value="${reserve.colBooksId}">
 			<input type="hidden" name="reserveDate" th:value="${reserve.reserveDate}">
 			<input type="hidden" name="scheduledReturnDate" th:value="${reserve.scheduledReturnDate}">
-			<input type="submit" th:value="${notbook}">
+			<div class="button-container">
+				<input type="submit" value="受付" class="button">
+				<a href="javascript:history.back()" class="button rounded" style="font-size: 1rem;">一つ前に戻る</a>
+			</div>
 		</form>
 	</div>
-	<div th:unless="${notbook}">
+	<div th:unless="${notbook}" style="text-align: center;">
 		<li>貸し出せる書籍がありません。</li>
 	</div>
 	
