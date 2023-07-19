@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+body{
+	text-align: center;
+}
+
+table{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table td:nth-child(1),th:nth-child(1){
+	background-color: rgb(255,128,128);
+}
+
+/* テーブル(偶数行) */
+table td:nth-child(7),th:nth-child(7){
+	background-color: rgb(128,255,255);
+}

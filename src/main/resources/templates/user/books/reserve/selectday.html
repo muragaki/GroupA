@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>select day</title>
+<link th:href="@{/css/user/books/selectday.css}" rel="styleSheet">
 </head>
 <body>
 	<h3>日付選択</h3>
 	
-	<table>
+	<table class="calendar">
 		<tr>
 			<th>日曜日</th>
 			<th>月曜日</th>
@@ -18,17 +19,19 @@
 			<th>土曜日</th>
 		</tr>
 			<tr th:each="weeklist : ${monthlist}">
-				<td th:each="day : ${weeklist}">
+				<td th:each="day : ${weeklist}" class="week">
 					[[${#temporals.format(day.day,'M月dd日')}]] <br>
 				<form th:action="@{/user/books/reserve}" method="post">
 					<input type="hidden" name="reserveDate" th:value="${day.day}">
 					<input type="hidden" name="bookId" th:value="${bookId}">
 					<input th:if="${day.maxPeriod} > 0 " type="submit" th:value="|最大 ${day.maxPeriod} 日|">
-					<input th:if="${day.maxPeriod} == null " type="submit" value="予約不可" disable>
+					<input th:if="${day.maxPeriod} == 0 " type="submit" value="予約不可" disable>
 				</form>
 				</td>
 			</tr>
 	</table>
-
+	<form th:action="@{/user/books/{id}(id=${bookId})}">
+		<input type="submit" value="戻る">
+	</form>
 </body>
 </html>
