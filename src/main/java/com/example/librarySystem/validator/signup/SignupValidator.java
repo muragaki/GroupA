@@ -24,6 +24,7 @@ public class SignupValidator implements Validator {
 		
 		SignupForm form = (SignupForm)target;
 		
+		//入力されたuserIdと同一のuserIdがあればエラーを込める
 		if(superUserDetailsService.checkId(form.getUserId())) {
 			errors.rejectValue("userId", "com.example.librarySystem.validator.signup.SignupValidator.SameIdMessage");
 		}

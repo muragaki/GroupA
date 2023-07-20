@@ -11,35 +11,71 @@ import com.example.librarySystem.app.admin.lending.SearchLendingForm;
 import com.example.librarySystem.domain.model.Lending;
 import com.example.librarySystem.domain.repository.LendingRepository;
 
+/**
+ * 
+ * LendingServiceクラス
+ * @author 3030673
+ *
+ */
 @Service
 public class LendingService {
 	
 	@Autowired
 	LendingRepository lendingRepository;
 	
+	/**
+	 * userIdに一致するデータを取得
+	 * @param userId
+	 * @return List Lending
+	 */
 	public List<Lending> findUserList(String userId){
 		return lendingRepository.findByUserId(userId);
 	}
 	
+	/**
+	 * lendingデータを保存
+	 * @param lending
+	 * @return Lending
+	 */
 	public Lending saveLend(Lending lending) {
 		return lendingRepository.save(lending);
 	}
 	
+	/**
+	 * lendingIdのデータを削除
+	 * @param lendingId
+	 */
 	public void deleteLend(Long lendingId) {
 		lendingRepository.deleteById(lendingId);
 	}
 	
+	/**
+	 * lendingIdと一致するデータを取得
+	 * @param lendingId
+	 * @return Lending
+	 */
 	public Lending readByLendingId(Long lendingId) {
 		return lendingRepository.findById(lendingId).get();
 	}
 	
+	/**
+	 * Lendingテーブルの全データを取得
+	 * @return List Lending
+	 */
 	public List<Lending> findAll(){
 		return lendingRepository.findAll();
 	}
 	
+	/**
+	 * 条件に一致するLendingデータをリストで取得
+	 * @param searchLendingForm
+	 * @return List Lending
+	 */
 	public List<Lending> findSearch(SearchLendingForm searchLendingForm){
 		
-		Integer bookId = 0;
+		
+		//検索用データの宣言、初期化
+		Integer booksId = 0;
 		Integer identifyNumber = 0;
 		String title = "%";
 		String author = "%";
@@ -48,11 +84,13 @@ public class LendingService {
 		LocalDate fromReturnDate = LocalDate.now().minusYears(1);
 		LocalDate toReturnDate = LocalDate.now().plusYears(1);
 		
+		//入力があるデータを代入
+		
 		if(searchLendingForm.getBooksId() != null) {
-			bookId = searchLendingForm.getBooksId();
+			booksId = searchLendingForm.getBooksId();
 		}
 		
-		if(searchLendingForm.getIdentifyNumber() != null) {
+		if(searchLendingForm.getIdentifyNumber() != null) {							
 			identifyNumber = searchLendingForm.getIdentifyNumber();
 		}
 		
@@ -80,7 +118,8 @@ public class LendingService {
 			toReturnDate = searchLendingForm.getToReturnDate();
 		}
 		
-		return lendingRepository.findSearch(bookId, identifyNumber,title, author,
+		
+		return lendingRepository.findSearch(booksId, identifyNumber,title, author,
 											fromLoanDateTime,toLoanDateTime,fromReturnDate,toReturnDate);
 		
 		

@@ -6,6 +6,14 @@ import org.springframework.validation.Validator;
 
 import com.example.librarySystem.app.admin.lending.SearchLendingForm;
 
+
+/**
+ * 
+ * SearchLendingValidatorクラス
+ * 
+ * @author 3030673
+ *
+ */
 @Component
 public class SearchLendingValidator implements Validator {
 
@@ -19,6 +27,7 @@ public class SearchLendingValidator implements Validator {
 		
 		SearchLendingForm searchLendingForm = (SearchLendingForm)target;
 		
+		//booksIdに入力がなく、identifyNumberに入力があればエラーを込める
 		if(searchLendingForm.getBooksId() == null && searchLendingForm.getIdentifyNumber() != null) {
 			errors.rejectValue("identifyNumber", "com.example.librarySystem.validator.lending.SearchLendingValidator.NoBookIdMessage");
 		}

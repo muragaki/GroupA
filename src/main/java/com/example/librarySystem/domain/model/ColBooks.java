@@ -15,6 +15,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+/**
+ * ColBooksクラス
+ * 
+ * 蔵書管理DB
+ * @author 3030673
+ *
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,15 +30,37 @@ import lombok.NoArgsConstructor;
 @Table(name = "col_books")
 public class ColBooks {
 	
+	/**
+	 * 蔵書ID 主キー
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long colBooksId;
-	private Integer booksId;
-	private Integer identifyNumber;
-	private LocalDate registrationDate;
-	@Enumerated(EnumType.STRING)
-	private SituationName situationName;		//権限
 	
+	/**
+	 * 書籍ID
+	 */
+	private Integer booksId;
+	
+	/**
+	 * 書籍別蔵書ナンバー
+	 */
+	private Integer identifyNumber;
+	
+	/**
+	 * 蔵書登録日
+	 */
+	private LocalDate registrationDate;
+	
+	/**
+	 * 蔵書利用状況
+	 */
+	@Enumerated(EnumType.STRING)
+	private SituationName situationName;		
+	
+	/**
+	 * 書籍データ
+	 */
 	@ManyToOne
 	@JoinColumn(name="booksId", insertable=false, updatable=false)
 	private Books books;

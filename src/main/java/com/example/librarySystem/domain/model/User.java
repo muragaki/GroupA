@@ -9,6 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Userクラス
+ * @author 3030673
+ *
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +21,30 @@ import lombok.NoArgsConstructor;
 @Table(name = "usr")
 public class User {
 	
+	/**
+	 * ユーザーID　主キー
+	 */
 	@Id
-	private String userId;			//ユーザーID	
-	private String password;		//パスワード
-	private String firstName;		//名前(ファーストネーム)
-	private String lastName;		//苗字(ラストネーム)
+	private String userId;
+	
+	/**
+	 * パスワード
+	 */
+	private String password;
+	
+	/**
+	 * ファーストネーム（名前)
+	 */
+	private String firstName;
+	
+	/**
+	 * ラストネーム(苗字)
+	 */
+	private String lastName;
+	
+	/**
+	 * 権限
+	 */
 	@Enumerated(EnumType.STRING)
 	private RoleName roleName;		//権限
 	
