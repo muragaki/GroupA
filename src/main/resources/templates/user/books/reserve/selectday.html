@@ -21,7 +21,7 @@
 			</tr>
 			<tr th:each="weeklist : ${monthlist}">
 				<td th:each="day : ${weeklist}" class="week">
-					[[${#temporals.format(day.day,'M月dd日')}]] <br>
+					[[${#temporals.format(day.day,'M/d')}]] <br>
 				<form th:action="@{/user/books/reserve}" method="post">
 					<input type="hidden" name="reserveDate" th:value="${day.day}">
 					<input type="hidden" name="bookId" th:value="${bookId}">

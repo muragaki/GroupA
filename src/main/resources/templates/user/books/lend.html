@@ -99,7 +99,7 @@ background-color: #558c5e;
         	<th style="border: none;">返却日を選択してください。</th>
      	 </tr>
      	 <tr>
-			<td style="text-align: center">最大 [[${maxperiod}]] 日間利用可能です。</td>
+			<td style="text-align: center">最大 [[${lendForm.maxperiod}]] 日間利用可能です。</td>
 		 </tr>
    		</thead>
   	</table>
@@ -108,6 +108,9 @@ background-color: #558c5e;
 		<input type="hidden" name="reserveDate" th:value="*{reserveDate}">
 		<input type="date" th:field="*{scheduledReturnDate}" style="background-color: #fff; color: #333;"
 				th:min="*{minReturnDate}" th:max="*{maxReturnDate}">
+		<input type="hidden" name="maxperiod" th:value="*{maxperiod}">
+		<input type="hidden" name="minReturnDate" th:value="*{minReturnDate}">
+		<input type="hidden" name="maxReturnDate" th:value="*{maxReturnDate}">
 		<input type="submit" value="登録"><br>
 		<span th:errors="*{scheduledReturnDate}" style="background-color: #fff;color:rgb(255,64,64)" /> 
 	</form>

@@ -12,8 +12,10 @@ public class LendForm {
 	private Integer bookId;
 	@NotNull
 	public LocalDate reserveDate;
-	
+	@NotNull
 	private LocalDate scheduledReturnDate;
+	
+	private Long maxperiod;
 	
 	private LocalDate minReturnDate;
 	private LocalDate maxReturnDate;

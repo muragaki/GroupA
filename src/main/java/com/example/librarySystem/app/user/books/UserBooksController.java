@@ -133,9 +133,8 @@ public class UserBooksController {
 		lendForm.setReserveDate(LocalDate.now());
 		lendForm.setMinReturnDate(LocalDate.now().plusDays(1));
 		lendForm.setScheduledReturnDate(LocalDate.now().plusDays(1));
-		long maxPeriod = reserveService.searchMaxReservePeriod(bookId, LocalDate.now(), reserveService.NON_PESERVE_ID);
-		lendForm.setMaxReturnDate(LocalDate.now().plusDays(maxPeriod));
-		model.addAttribute("maxperiod", maxPeriod);
+		lendForm.setMaxperiod(reserveService.searchMaxReservePeriod(bookId, LocalDate.now(), reserveService.NON_PESERVE_ID) );
+		lendForm.setMaxReturnDate(LocalDate.now().plusDays(lendForm.getMaxperiod()));
 		
 		return "user/books/lend";
 	}

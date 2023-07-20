@@ -26,7 +26,10 @@ public class ReserveValidator implements Validator {
 		
 		ReserveForm reserveForm = (ReserveForm)target;
 		
-		System.out.println(reserveService.checkReserveSet(reserveForm.getBooksId(), reserveForm.getReserveDate(),-1L));
+		if(reserveForm.getScheduledReturnDate() == null) {
+			errors.rejectValue("scheduledReturnDate", "com.example.librarySystem.validator.reserve.ReserveValidator.NullMessage");
+			return;
+		}
 		
 		if(reserveService.checkReserveSet(reserveForm.getBooksId(), reserveForm.getReserveDate(),-1L).size()==0) {
 			errors.rejectValue("reserveDate", "com.example.librarySystem.validator.receive.ReserveEditValidator.NotLendBookMessage");

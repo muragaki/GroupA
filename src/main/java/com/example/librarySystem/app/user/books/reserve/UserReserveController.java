@@ -23,7 +23,6 @@ import com.example.librarySystem.domain.service.ColBooksService;
 import com.example.librarySystem.domain.service.LendingService;
 import com.example.librarySystem.domain.service.ReserveService;
 import com.example.librarySystem.domain.service.SuperUserDetails;
-import com.example.librarySystem.validator.reserve.ReserveDateValidator;
 import com.example.librarySystem.validator.reserve.ReserveValidator;
 
 @Controller
@@ -40,10 +39,6 @@ public class UserReserveController {
 	
 	@Autowired
 	ReserveValidator reserveValidator;
-	
-	@Autowired
-	ReserveDateValidator reserveDateValidator;
-	
 	
 	@ModelAttribute("reserveForm")
 	public ReserveForm setReserveForm() {
@@ -67,7 +62,7 @@ public class UserReserveController {
 	
 	
 	@PostMapping("user/books/reservesave")
-	public String reservesave(@Validated ReserveForm reserveForm,BindingResult br,Model model,RedirectAttributes redirectAttributes) {
+	public String reservesave(@Validated ReserveForm reserveForm, BindingResult br,Model model,RedirectAttributes redirectAttributes) {
 		
 		if(br.hasErrors()) {
 			return "/user/books/reserve/reserve";

@@ -26,6 +26,11 @@ public class LendValidator implements Validator {
 		
 		LendForm lendForm = (LendForm)target;
 		
+		if(lendForm.getReserveDate() == null) {
+			errors.rejectValue("returnDate", "com.example.librarySystem.validator.lending.LendValidator.NullMessage");
+			return;
+		}
+		
 		if(lendForm.getScheduledReturnDate() == null) {
 			errors.rejectValue("scheduledReturnDate", "com.example.librarySystem.validator.lending.LendValidator.NullMessage");
 			return;

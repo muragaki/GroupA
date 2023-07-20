@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.librarySystem.app.user.books.reserve.DayMaxPeriod;
-import com.example.librarySystem.app.user.books.reserve.ReserveDateForm;
 import com.example.librarySystem.app.user.books.reserve.ReserveForm;
 import com.example.librarySystem.domain.model.ColBooks;
 import com.example.librarySystem.domain.model.Lending;
@@ -136,10 +135,6 @@ public class ReserveService {
 		return this.checkReserveSet(checkAvailableBooksSet(booksId), reserveDate, reserveId);
 	}
 	
-	public TreeSet<Long> checkReserveSet(ReserveDateForm reserveDateForm) {
-		return this.checkReserveSet(reserveDateForm.getBooksId(), reserveDateForm.getReserveDate(),this.NON_PESERVE_ID);
-	}
-	
 	public TreeSet<Long> checkReserveSet(ReserveForm reserveForm) {
 		return this.checkReserveSet(reserveForm.getBooksId(), reserveForm.getReserveDate(),this.NON_PESERVE_ID);
 	}
@@ -176,10 +171,6 @@ public class ReserveService {
 	
 	public long searchMaxReservePeriod(Integer booksId,LocalDate reserveDate,Long reserveId) {
 		return searchMaxReservePeriod(checkReserveSet(booksId,reserveDate,reserveId),reserveDate);
-	}
-	
-	public long searchMaxReservePeriod(ReserveDateForm reserveDateForm) {
-		return searchMaxReservePeriod(reserveDateForm.getBooksId(),reserveDateForm.getReserveDate(),this.NON_PESERVE_ID);
 	}
 	
 	public long searchMaxReservePeriod(ReserveForm reserveForm) {
@@ -229,7 +220,11 @@ public class ReserveService {
 		}
 		
 		if(!weekList.isEmpty()) {
-			for(int i = weekList.get(weekList.size()-1).getDay().getDayOfWeek().getValue() ; i < DayOfWeek.SATURDAY.getValue() ;i++) {
+			int currentDay = weekList.get(weekList.size()-1).getDay().getDayOfWeek().getValue();
+			if(currentDay == 7) {
+				currentDay = 0;
+			}
+			for(int i = currentDay ; i < DayOfWeek.SATURDAY.getValue() ;i++) {
 				weekList.add(new DayMaxPeriod(null, -1L));
 			}
 			monthList.add(weekList);
