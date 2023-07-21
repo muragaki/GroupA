@@ -76,13 +76,12 @@
 			<input type="hidden" name="scheduledReturnDate" th:value="${reserve.scheduledReturnDate}">
 			<div class="button-container">
 				<input type="submit" value="受付" class="button">
-				<a href="javascript:history.back()" class="button rounded" style="font-size: 1rem;">一つ前に戻る</a>
 			</div>
 		</form>
 	</div>
 	<div th:unless="${notbook}" style="text-align: center;">
 		<li>貸し出せる書籍がありません。</li>
 	</div>
-	
+	<a th:href="@{/user/receive}">予約一覧へ戻る</a>
 </body>
 </html>

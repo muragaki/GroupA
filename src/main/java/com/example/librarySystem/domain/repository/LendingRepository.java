@@ -30,6 +30,13 @@ public interface LendingRepository extends JpaRepository<Lending, Long> {
 	List<Lending> findByUserId(String userId);
 	
 	/**
+	 * colBooksIdが一致するデータを取得
+	 * @param colBooksId
+	 * @return
+	 */
+	Lending findTopByColBooksId(Long colBooksId);
+	
+	/**
 	 * colBooksIdの一致 及び scheduledReturnDate以降
 	 * @param colBooksId
 	 * @param scheduledReturnDate

@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -343,13 +345,55 @@ public class ReserveService {
 		//利用可能蔵書のセットを取得
 		TreeSet<Long> availableBooksSet = checkAvailableBooksSet(booksId);
 		
+		//利用可能蔵書のIDから各貸出情報、予約情報を獲得
+		HashMap<Long, Lending> lendingMap = new HashMap<>();
+		HashMap<Long, LinkedList<Reserve>> reserveMap = new HashMap<>();
+		
+		for(Long colBooksId : availableBooksSet) {
+			lendingMap.put(colBooksId, lendingRepository.findTopByColBooksId(colBooksId));
+			reserveMap.put(colBooksId, reserveRepository.findByColBooksIdAndReserveDateGreaterThanEqualOrderByReserveDateAsc(colBooksId, startDay));
+		}
+		
 		
 		for(int i = 1 ; i <= 30 ; i++) {
 			
 			//日ごとの最長日数を取得しweekListへ追加
 			DayMaxPeriod day = new DayMaxPeriod();
 			day.setDay(startDay.plusDays(i));
-			day.setMaxPeriod(this.searchMaxReservePeriod(availableBooksSet, day.getDay(), this.NON_PESERVE_ID));
+			Long maxPeriod = 0L;
+			
+			for(Long colBooksId : availableBooksSet) {
+				
+				Lending lending = lendingMap.get(colBooksId);
+				
+				//検索日が返却予定日より後の日にちの場合
+				if( lending == null || day.getDay().isAfter(lending.getScheduledReturnDate()) ) {
+					
+					//予約情報が無ければ最長日数を設定しループを脱出
+					if(reserveMap.get(colBooksId).isEmpty()){
+						maxPeriod = MAX_RESERVE_PERIOD;
+						break;
+					}else {
+						
+						Reserve reserve = reserveMap.get(colBooksId).getFirst();
+						
+						//検索日が次の貸出予定日より前ならば可能日数を計算し設定する
+						if( day.getDay().isBefore(reserve.getReserveDate())) {
+							Long period = ChronoUnit.DAYS.between(day.getDay(), reserve.getReserveDate().minusDays(1));
+							if(period >= MAX_RESERVE_PERIOD) {
+								maxPeriod = MAX_RESERVE_PERIOD;
+								break;
+							}else if(period > maxPeriod) {
+								maxPeriod = period;
+							}
+						}else if(reserve.getScheduledReturnDate().equals(day.getDay())) { //検索日が返却予定日ならば予約リストを次の予約に設定
+							reserveMap.get(colBooksId).poll();
+						}
+					}
+				}	
+			}
+			
+			day.setMaxPeriod(maxPeriod);
 			weekList.add(day);
 			
 			//土曜日であればweekListをmonthListに追加し新しくリストを生成

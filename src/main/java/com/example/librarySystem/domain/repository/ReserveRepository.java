@@ -1,6 +1,7 @@
 package com.example.librarySystem.domain.repository;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,6 +31,14 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
 	 * @return List Reserve
 	 */
 	List<Reserve> findByColBooksIdAndReserveDateBefore(Long colBooksId,LocalDate reserveDate);
+	
+	/**
+	 * colBooksIdが一致し、reserveDateより後のデータをLinkedリストで取得
+	 * @param colBooksId
+	 * @param reserveDate
+	 * @return LinkedList Reserve
+	 */
+	LinkedList<Reserve> findByColBooksIdAndReserveDateGreaterThanEqualOrderByReserveDateAsc(Long colBooksId,LocalDate reserveDate);
 	
 	/**
 	 * colBooksIdのいずれかでresrveDateより後ろの最も上位のReserveを検索
