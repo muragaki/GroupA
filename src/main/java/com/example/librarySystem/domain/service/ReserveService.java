@@ -48,6 +48,8 @@ public class ReserveService {
 	 */
 	public final long MAX_RESERVE_PERIOD =7L; 
 	
+	public final int MAX_RESERVE_DAY = 30;
+	
 	/**
 	 * 未登録
 	 */
@@ -355,7 +357,7 @@ public class ReserveService {
 		}
 		
 		
-		for(int i = 1 ; i <= 30 ; i++) {
+		for(int i = 1 ; i <= MAX_RESERVE_DAY ; i++) {
 			
 			//日ごとの最長日数を取得しweekListへ追加
 			DayMaxPeriod day = new DayMaxPeriod();
@@ -406,7 +408,7 @@ public class ReserveService {
 		//週が残っていれば土曜日まで埋める
 		if(!weekList.isEmpty()) {
 			int currentDay = weekList.get(weekList.size()-1).getDay().getDayOfWeek().getValue();
-			if(currentDay == 7) {
+			if(currentDay == DayOfWeek.SUNDAY.getValue()) {
 				currentDay = 0;
 			}
 			for(int i = currentDay ; i < DayOfWeek.SATURDAY.getValue() ;i++) {
