@@ -25,6 +25,15 @@ import com.example.librarySystem.domain.service.LendingService;
 import com.example.librarySystem.domain.service.ReserveService;
 import com.example.librarySystem.domain.service.SuperUserDetailsService;
 
+/**
+ * 
+ * AdminUserControllerクラス
+ * 
+ * 管理者 利用者コントローラー
+ * 
+ * @author 中尾 寿晃
+ *
+ */
 @Controller
 public class AdminUserController {
 	
@@ -40,7 +49,13 @@ public class AdminUserController {
 	@Autowired
 	ReserveService reserveService;
 	
-	
+	/**
+	 * 
+	 * userListメソッド
+	 * 利用者一覧
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("admin/user")
 	String userlist(Model model) {
 		List<User> userlist = superUserDetailsService.getUserAll();
@@ -48,7 +63,15 @@ public class AdminUserController {
 		return "admin/user/userlist";
 	}
 	
-	
+	/**
+	 * userdetailメソッド
+	 * 
+	 * 利用者詳細
+	 * 
+	 * @param userId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("admin/user/userdetail")
 	String userdetail(@RequestParam String userId, Model model) {
 		List<LendLog> lendLoglist = lendLogService.findUserList(userId);
@@ -60,10 +83,21 @@ public class AdminUserController {
 		model.addAttribute("reservelist", reservelist);
 		model.addAttribute("lendinglist", lendinglist);
 	
-		model.addAttribute("u", user);
+		model.addAttribute("user", user);
 		return "admin/user/userdetail";
 		
 	}
+	
+	/**
+	 * usereditメソッド
+	 * 
+	 * 利用者情報編集
+	 * 
+	 * @param userId
+	 * @param userForm
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("admin/user/useredit")
 	String useredit(@RequestParam String userId,UserForm userForm, Model model) {
 		User user = superUserDetailsService.findById(userId);
@@ -78,12 +112,26 @@ public class AdminUserController {
 				
 	}
 	
+	/**
+	 * editconfメソッド
+	 * 
+	 * 利用者情報更新
+	 * 
+	 * @param userForm
+	 * @param br
+	 * @param redirectAttributes
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("admin/user/editconf")
 	String editconf(@ModelAttribute("userForm") @Validated UserForm userForm, BindingResult br, RedirectAttributes redirectAttributes, Model model) {
+		
 		if (br.hasErrors()) {
 			model.addAttribute("userForm", userForm);
 			return "admin/user/useredit";
 		}
+		
+		//更新がある情報を書き換えてデータベースを更新
 		User user = superUserDetailsService.findById(userForm.getUsername());
 		if (!user.getFirstName().equals(userForm.getFirstname())) {
 			user.setFirstName(userForm.getFirstname());
@@ -95,7 +143,8 @@ public class AdminUserController {
 			user.setRoleName(userForm.getRolename());
 		}
 		superUserDetailsService.userRewrite(user);
-		model.addAttribute("userForm", userForm);
+		
+		//ユーザーIDを渡してリダイレクト
 		redirectAttributes.addAttribute("userId", userForm.getUsername());
 		
 		return "redirect:/admin/user/userdetail";

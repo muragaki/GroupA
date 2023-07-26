@@ -17,6 +17,16 @@ import com.example.librarySystem.domain.model.Lending;
 import com.example.librarySystem.domain.service.LendingService;
 import com.example.librarySystem.validator.lending.SearchLendingValidator;
 
+
+/**
+ * 
+ * AdminLendingControllerクラス
+ * 
+ * 管理者貸出コントローラー
+ * 
+ * @author 中尾 寿晃
+ *
+ */
 @Controller
 public class AdminLendingController {
 	
@@ -26,27 +36,41 @@ public class AdminLendingController {
 	@Autowired
 	SearchLendingValidator searchLendingValidator;
 	
+	//form-backing bean初期化
 	@ModelAttribute("searchLendingForm")
 	public SearchLendingForm setSearchLendingForm() {
 		return new SearchLendingForm();
 	}
 	
+	//未入力フィールドをnullに設定
+	//バリエーションを追加
 	@InitBinder("searchLendingForm")
 	public void initBinderForSearchLendingForm(WebDataBinder webDataBinder) {
 		webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 		webDataBinder.addValidators(searchLendingValidator);
 	}
 
+	/**
+	 * lensinglistメソッド
+	 * 
+	 * 貸出一覧
+	 * 
+	 * @param searchLendingForm
+	 * @param bindingResult
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("admin/lending")
 	public String lendinglist(@Validated SearchLendingForm searchLendingForm, BindingResult bindingResult, Model model) {
 		
+		//バリデーションエラー時、一覧を取得し前のページ
 		if(bindingResult.hasErrors()) {
 			List<Lending> lendinglist = lendingService.findAll();
 			model.addAttribute("lendinglist", lendinglist);
 			return "admin/lending/lendinglist";
-		
 		}
 		
+		//検索条件の一覧を取得しビューへ渡す
 		List<Lending> lendinglist = lendingService.findSearch(searchLendingForm);
 		model.addAttribute("lendinglist", lendinglist);
 	

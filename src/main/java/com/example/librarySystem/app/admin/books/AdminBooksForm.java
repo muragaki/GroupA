@@ -14,18 +14,45 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdminBooksForm {
 
+	/**
+	 * 書籍ID
+	 */
 	private Integer bookId;
+	/**
+	 * 書名
+	 * 1文字以上 30文字以内の未入力禁止
+	 */
 	@NotNull
 	@Size(min = 1 , max = 30)
 	private String title;
+	/**
+	 * 著者名
+	 * 1文字以上 20文字以内の未入力禁止
+	 */
 	@NotNull
 	@Size(min = 1 , max = 20)
 	private String author;
+	
+	/**
+	 * 発売日
+	 * 過去の日付指定 未入力禁止
+	 */
 	@NotNull
 	@Past
 	private LocalDate releaseDate;
+	/**
+	 * ジャンルID
+	 */
 	private Integer genreId;
+	
+	/**
+	 * 出版社ID
+	 */
 	private Integer publisherId;
+	
+	/**
+	 * 概要
+	 */
 	private String overview;
 	
 

@@ -11,7 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DayMaxPeriod {
 	
+	/**
+	 * 指定年月日
+	 */
 	private LocalDate day;
+	
+	/**
+	 * 最大予約可能日数
+	 */
 	private Long maxPeriod;
 
 }

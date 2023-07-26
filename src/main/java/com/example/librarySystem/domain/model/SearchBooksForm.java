@@ -11,16 +11,47 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchBooksForm {
 
+	/**
+	 * 書名
+	 * 30文字以内
+	 */
 	@Size(max = 30)
 	private String title;
+	
+	/**
+	 * 著者名
+	 * 20文字以内
+	 */
 	@Size(max = 20)
 	private String author;
+	
+	/**
+	 * 発売日の検索開始年月日
+	 * 過去限定
+	 */
 	@Past
 	private LocalDate fromDate;
+	
+	/**
+	 * 発売日の検索終了年月日
+	 * 過去限定
+	 */
 	@Past
 	private LocalDate toDate;
+	
+	/**
+	 * ジャンル名
+	 */
 	private String genreName;
+	
+	/**
+	 * 出版社名
+	 */
 	private String publisherName;
+	
+	/**
+	 * 概要
+	 */
 	private String overview;
 	
 	public SearchBooksForm(SearchBooksForm searchBooksForm) {

@@ -88,13 +88,13 @@
   <h2>ユーザー詳細</h2>
 
   <div class="container">
-    <div class="user-details" th:if="${u != null}">
-      <p><strong>ユーザーID:</strong> <span th:text="${u.userId}"></span></p>
-      <p><strong>姓:</strong> <span th:text="${u.firstName}"></span></p>
-      <p><strong>名:</strong> <span th:text="${u.lastName}"></span></p>
-      <p><strong>権限:</strong> <span th:text="${u.roleName}"></span></p>
+    <div class="user-details" th:if="${user != null}">
+      <p><strong>ユーザーID:</strong> <span th:text="${user.userId}"></span></p>
+      <p><strong>姓:</strong> <span th:text="${user.firstName}"></span></p>
+      <p><strong>名:</strong> <span th:text="${user.lastName}"></span></p>
+      <p><strong>権限:</strong> <span th:text="${user.roleName}"></span></p>
     </div>
-    <div class="no-record" th:unless="${u != null}">
+    <div class="no-record" th:unless="${user != null}">
       <p>ユーザーの詳細情報はありません。</p>
     </div>
     
@@ -154,7 +154,7 @@
 
     <div class="button-container">
       <form th:action="@{/admin/user/useredit}">
-        <input type="hidden" name="userId" th:value="${u.userId}">
+        <input type="hidden" name="userId" th:value="${user.userId}">
         <input type="submit" value="編集">
       </form>
       <form th:action="@{/admin/user}" method="get">

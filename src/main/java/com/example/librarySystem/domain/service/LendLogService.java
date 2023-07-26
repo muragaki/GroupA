@@ -39,7 +39,7 @@ public class LendLogService {
 	 * 現在の時刻を追加し、データベースへ登録
 	 * @param lending
 	 */
-	public void saveLendingNow(Lending lending) {
+	public void saveLendlogNow(Lending lending) {
 		LendLog lendLog = new LendLog(lending);
 		lendLog.setReturnDateTime(LocalDateTime.now().minusSeconds(1));		//プログラム、データベース間の時差によるエラー防止のため-1秒
 		lendLogRepository.save(lendLog);
